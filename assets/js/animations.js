@@ -642,7 +642,7 @@
 
     if (eyebrow) {
       const words = split(eyebrow, { type: 'words' }, 'words');
-      tl.fromTo(eyebrow, { '--line': 0 }, { '--line': 1, duration: 0.55, ease: 'power2.inOut' });
+      tl.fromTo(eyebrow, { '--line-scale': 0 }, { '--line-scale': 1, duration: 0.55, ease: 'power2.inOut' });
       tl.from(words, { opacity: 0, x: -12, stagger: 0.05, duration: 0.45 }, '-=0.1');
     }
     if (title) {
