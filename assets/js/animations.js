@@ -347,6 +347,136 @@
      Sin movimiento: la cinta queda quieta y el carrusel se desliza a mano. */
   add('[data-loop]', (el, env) => (env.motion ? createLoop(el) : undefined), { editor: true });
 
+  /* ---------- Vitrina de juegos (como el hero de Thunderful) ----------
+     En escritorio los paneles se superponen: cada uno deja ver una franja y
+     el activo se abre empujando a los demás hacia la derecha. Solo se mueve
+     transform (x), así va a 60 fps. Se activa con el mouse, el teclado o un toque. */
+  add('[data-showcase]', (el, env) => {
+    const items = Array.from(el.querySelectorAll('.showcase-item'));
+    if (items.length < 2) return undefined;
+
+    const desktop = window.matchMedia('(min-width: 1100px)');
+    let active = Math.max(0, items.findIndex((item) => item.classList.contains('is-active')));
+
+    const layout = (animate) => {
+      if (!desktop.matches) { // celular y tablet: tarjetas apiladas
+        el.classList.remove('is-ready');
+        gsap.set(items, { clearProps: 'x,zIndex' });
+        return;
+      }
+      el.classList.add('is-ready');
+      const width = el.clientWidth;
+      const slice = gsap.utils.clamp(180, 320, width * 0.19); // franja visible de cada panel cerrado
+      const expanded = width - slice * (items.length - 1); // ancho del panel abierto
+      el.style.setProperty('--slice', `${slice}px`);
+      el.style.setProperty('--expanded', `${expanded}px`);
+      items.forEach((item, i) => {
+        item.classList.toggle('is-active', i === active);
+        gsap.set(item, { zIndex: i + 1 });
+        gsap.to(item, {
+          x: i * slice + (i > active ? expanded - slice : 0),
+          duration: animate && env.motion ? 0.85 : 0,
+          ease: 'power3.inOut',
+          overwrite: 'auto',
+        });
+      });
+    };
+
+    const activate = (i) => {
+      if (i === active) return;
+      active = i;
+      layout(true);
+    };
+
+    const offs = [];
+    items.forEach((item, i) => {
+      const onEnter = (e) => { if (e.pointerType === 'mouse') activate(i); };
+      const onFocus = () => activate(i);
+      item.addEventListener('pointerenter', onEnter);
+      item.addEventListener('focusin', onFocus);
+      item.addEventListener('click', onFocus);
+      offs.push(() => {
+        item.removeEventListener('pointerenter', onEnter);
+        item.removeEventListener('focusin', onFocus);
+        item.removeEventListener('click', onFocus);
+      });
+    });
+
+    // El carrusel de destacados puede pedir abrir un juego (ver más abajo).
+    const onOpen = (e) => {
+      const i = items.findIndex((item) => item.dataset.game === e.detail.game);
+      if (i >= 0) activate(i);
+    };
+    document.addEventListener('mandoca:open-game', onOpen);
+
+    let timer;
+    const onResize = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => layout(false), 150);
+    };
+    window.addEventListener('resize', onResize);
+    layout(false);
+
+    return () => {
+      offs.forEach((off) => off());
+      document.removeEventListener('mandoca:open-game', onOpen);
+      window.removeEventListener('resize', onResize);
+      el.classList.remove('is-ready');
+      gsap.set(items, { clearProps: 'x,zIndex' });
+    };
+  }, { editor: true });
+
+  /* ---------- 4a. Vitrina: entrada y parallax ----------
+     Los paneles suben en cascada, el arte se mueve dentro de su marco con el
+     scroll y los títulos crecen un poco al aparecer. */
+  add('[data-showcase]', (el, env) => {
+    if (!env.motion) return;
+    const enter = { trigger: el, start: 'top 80%', once: true };
+    gsap.from(el.querySelectorAll('.showcase-item'), { yPercent: 14, opacity: 0, duration: 1, stagger: 0.12, scrollTrigger: enter });
+    gsap.from(el.querySelectorAll('.showcase-title'), { scale: 0.8, transformOrigin: '0% 100%', duration: 1.1, stagger: 0.12, scrollTrigger: enter });
+    el.querySelectorAll('.showcase-img').forEach((img) => {
+      gsap.fromTo(img, { yPercent: -5 }, {
+        yPercent: 5,
+        ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+      });
+    });
+  });
+
+  /* ---------- 4b. Juegos en bloques ----------
+     El arte hace parallax dentro de su marco, el título del arte escala un
+     poco y el texto entra desde el lado contrario al arte. */
+  add('.game', (game, env) => {
+    if (!env.motion) return;
+    const art = game.querySelector('.game-art');
+    const img = game.querySelector('.game-img');
+    const title = game.querySelector('.art-title');
+    const info = game.querySelector('.game-info');
+    const textFromRight = !game.classList.contains('game-reverse');
+    const enter = { trigger: game, start: 'top 80%', once: true };
+    const scrub = { trigger: art, start: 'top bottom', end: 'bottom top', scrub: true };
+
+    gsap.from(art, { opacity: 0, y: 50, duration: 1, scrollTrigger: enter });
+    gsap.from(info, { opacity: 0, x: textFromRight ? 90 : -90, duration: 1.1, scrollTrigger: enter });
+    if (img) gsap.fromTo(img, { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: scrub });
+    if (title) gsap.fromTo(title, { scale: 0.88 }, { scale: 1.06, transformOrigin: '0% 100%', ease: 'none', scrollTrigger: scrub });
+  });
+
+  /* ---------- Etiquetas de estado ----------
+     Se balancean solas (como el sticker "NEW" de Thunderful) y dan un
+     saltito al pasar el mouse por su juego. */
+  add('[data-badge]', (badge, env) => {
+    if (!env.motion) return undefined;
+    const wobble = gsap.fromTo(badge, { rotation: -5 }, { rotation: 3, duration: 1.1, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+    const host = badge.closest('.showcase-item, .card') || badge;
+    const pop = () => gsap.fromTo(badge, { scale: 1 }, { scale: 1.2, duration: 0.18, ease: 'power2.out', yoyo: true, repeat: 1 });
+    host.addEventListener('pointerenter', pop);
+    return () => {
+      wobble.kill();
+      host.removeEventListener('pointerenter', pop);
+    };
+  }, { editor: true });
+
   /* ---------- Entradas al hacer scroll ----------
      Reemplaza al IntersectionObserver de antes: cada bloque sube y aparece
      cuando entra en pantalla (una sola vez). */

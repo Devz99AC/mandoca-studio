@@ -134,15 +134,19 @@ abstract class Mandoca_Widget_Base extends \Elementor\Widget_Base {
 	 *
 	 * @param string $key   Nombre del campo.
 	 * @param string $label Etiqueta en el panel.
+	 * @param array  $extra Opciones extra de Elementor (por ejemplo, 'condition').
 	 */
-	protected function add_switch( $key, $label ) {
+	protected function add_switch( $key, $label, $extra = array() ) {
 		$this->add_control(
 			$key,
-			array(
-				'label'        => $label,
-				'type'         => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'default'      => $this->default_value( $key ) ? 'yes' : '',
+			array_merge(
+				array(
+					'label'        => $label,
+					'type'         => Controls_Manager::SWITCHER,
+					'return_value' => 'yes',
+					'default'      => $this->default_value( $key ) ? 'yes' : '',
+				),
+				$extra
 			)
 		);
 	}

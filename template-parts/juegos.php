@@ -1,9 +1,14 @@
 <?php
 /**
- * Sección: juegos en desarrollo (un bloque grande por juego).
+ * Sección: juegos.
  *
- * Los juegos salen del panel (Games). Si un juego no tiene imagen destacada se
- * muestra el arte provisional hecho con CSS.
+ * Dos diseños (se elige en el widget Mandoca Games):
+ * - "showcase": vitrina a todo el ancho, como el hero de Thunderful. Cada
+ *   juego es un panel alto; al pasar el mouse se abre y muestra su texto.
+ * - "blocks": un bloque grande por juego, con el arte y el texto alternados.
+ *
+ * Los juegos salen del panel (Games). Si un juego no tiene imagen destacada
+ * se muestra un arte provisional hecho con CSS.
  *
  * @package Mandoca_Studio
  *
@@ -12,11 +17,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$mandoca_games = is_array( $args['games'] ) ? $args['games'] : mandoca_get_games( (int) $args['limit'] );
+$mandoca_games  = is_array( $args['games'] ) ? $args['games'] : mandoca_get_games( (int) $args['limit'] );
+$mandoca_layout = 'blocks' === $args['layout'] ? 'blocks' : 'showcase';
 ?>
-<section class="section<?php echo $args['alt'] ? ' section-alt' : ''; ?>"<?php echo $args['section_id'] ? ' id="' . esc_attr( $args['section_id'] ) . '"' : ''; ?>>
-	<div class="container">
-		<?php if ( $args['eyebrow'] || $args['title'] ) : ?>
+<section class="section section-games section-games--<?php echo esc_attr( $mandoca_layout ); ?><?php echo $args['alt'] ? ' section-alt' : ''; ?>"<?php echo $args['section_id'] ? ' id="' . esc_attr( $args['section_id'] ) . '"' : ''; ?>>
+	<?php if ( $args['eyebrow'] || $args['title'] ) : ?>
+		<div class="container">
 			<header class="section-head">
 				<?php if ( $args['eyebrow'] ) : ?>
 					<p class="eyebrow"><?php echo esc_html( $args['eyebrow'] ); ?></p>
@@ -25,59 +31,84 @@ $mandoca_games = is_array( $args['games'] ) ? $args['games'] : mandoca_get_games
 					<h2><?php echo mandoca_highlight( $args['title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escapado en mandoca_highlight(). ?></h2>
 				<?php endif; ?>
 			</header>
-		<?php endif; ?>
+		</div>
+	<?php endif; ?>
 
-		<?php foreach ( $mandoca_games as $mandoca_i => $mandoca_game ) : ?>
-			<?php
-			$mandoca_reverse = $args['zigzag'] && 1 === $mandoca_i % 2;
-			$mandoca_has_img = ! empty( $mandoca_game['image_id'] ) || ! empty( $mandoca_game['image_url'] );
-			$mandoca_art     = 'game-art art-' . sanitize_html_class( $mandoca_game['slug'] );
-			$mandoca_art    .= $mandoca_has_img ? ' has-image fit-' . $mandoca_game['fit'] : ' is-placeholder';
-			$mandoca_meta    = implode( ' · ', array_filter( array( $mandoca_game['genre'], $mandoca_game['year'] ) ) );
-			?>
-			<article class="game<?php echo $mandoca_reverse ? ' game-reverse' : ''; ?>">
-				<div class="<?php echo esc_attr( $mandoca_art ); ?>" role="img" aria-label="<?php echo esc_attr( 'Arte de ' . $mandoca_game['title'] ); ?>">
-					<?php
-					if ( ! empty( $mandoca_game['image_id'] ) ) {
-						echo wp_get_attachment_image(
-							$mandoca_game['image_id'],
-							'contain' === $mandoca_game['fit'] ? 'large' : 'mandoca-game',
-							false,
-							array(
-								'class'   => 'game-img',
-								'alt'     => '',
-								'loading' => 'lazy',
-							)
-						);
-					} elseif ( ! empty( $mandoca_game['image_url'] ) ) {
-						printf( '<img class="game-img" src="%s" alt="" loading="lazy">', esc_url( $mandoca_game['image_url'] ) );
-					} else {
-						echo '<span class="mask" aria-hidden="true"></span>';
-					}
-					?>
-					<span class="art-title"><?php echo esc_html( $mandoca_game['title'] ); ?></span>
-				</div>
+	<?php if ( 'showcase' === $mandoca_layout ) : ?>
 
-				<div class="game-info">
-					<?php if ( $mandoca_game['status'] || $mandoca_meta ) : ?>
+		<div class="showcase" data-showcase>
+			<?php foreach ( $mandoca_games as $mandoca_i => $mandoca_game ) : ?>
+				<?php $mandoca_has_img = ! empty( $mandoca_game['image_id'] ) || ! empty( $mandoca_game['image_url'] ); ?>
+				<article class="showcase-item<?php echo 0 === $mandoca_i ? ' is-active' : ''; ?>" tabindex="0" data-game="<?php echo esc_attr( $mandoca_game['slug'] ); ?>" aria-label="<?php echo esc_attr( $mandoca_game['title'] ); ?>">
+					<div class="showcase-art<?php echo $mandoca_has_img ? ' fit-' . esc_attr( $mandoca_game['fit'] ) : ' is-placeholder'; ?>" aria-hidden="true">
+						<?php mandoca_game_image( $mandoca_game, 'showcase-img' ); ?>
+					</div>
+					<span class="showcase-tint" aria-hidden="true"></span>
+
+					<div class="showcase-info">
+						<?php if ( $mandoca_game['status'] ) : ?>
+							<span class="badge" data-badge><?php echo esc_html( $mandoca_game['status'] ); ?></span>
+						<?php endif; ?>
+						<h3 class="showcase-title"><?php echo esc_html( $mandoca_game['title'] ); ?></h3>
+						<p class="showcase-meta"><?php echo esc_html( mandoca_game_meta( $mandoca_game, ' / ' ) ); ?></p>
+					</div>
+
+					<div class="showcase-more">
+						<?php echo wp_kses_post( wpautop( $mandoca_game['content'] ) ); ?>
+						<?php if ( ! empty( $mandoca_game['credits'] ) ) : ?>
+							<ul class="game-roles">
+								<?php foreach ( $mandoca_game['credits'] as $mandoca_credit ) : ?>
+									<li><?php echo esc_html( $mandoca_credit ); ?></li>
+								<?php endforeach; ?>
+							</ul>
+						<?php endif; ?>
+					</div>
+				</article>
+			<?php endforeach; ?>
+		</div>
+
+	<?php else : ?>
+
+		<div class="container">
+			<?php foreach ( $mandoca_games as $mandoca_i => $mandoca_game ) : ?>
+				<?php
+				$mandoca_reverse = $args['zigzag'] && 1 === $mandoca_i % 2;
+				$mandoca_has_img = ! empty( $mandoca_game['image_id'] ) || ! empty( $mandoca_game['image_url'] );
+				$mandoca_art     = 'game-art art-' . sanitize_html_class( $mandoca_game['slug'] );
+				$mandoca_art    .= $mandoca_has_img ? ' has-image fit-' . $mandoca_game['fit'] : ' is-placeholder';
+				?>
+				<article class="game<?php echo $mandoca_reverse ? ' game-reverse' : ''; ?>" data-game="<?php echo esc_attr( $mandoca_game['slug'] ); ?>">
+					<div class="<?php echo esc_attr( $mandoca_art ); ?>" role="img" aria-label="<?php echo esc_attr( 'Arte de ' . $mandoca_game['title'] ); ?>">
+						<?php
+						if ( $mandoca_has_img ) {
+							mandoca_game_image( $mandoca_game, 'game-img' );
+						} else {
+							echo '<span class="mask" aria-hidden="true"></span>';
+						}
+						?>
+						<span class="art-title"><?php echo esc_html( $mandoca_game['title'] ); ?></span>
+					</div>
+
+					<div class="game-info">
 						<p class="game-meta">
 							<?php if ( $mandoca_game['status'] ) : ?>
 								<span class="tag"><?php echo esc_html( $mandoca_game['status'] ); ?></span>
 							<?php endif; ?>
-							<?php echo esc_html( $mandoca_meta ); ?>
+							<?php echo esc_html( mandoca_game_meta( $mandoca_game, ' · ' ) ); ?>
 						</p>
-					<?php endif; ?>
-					<h3><?php echo esc_html( $mandoca_game['title'] ); ?></h3>
-					<?php echo wp_kses_post( wpautop( $mandoca_game['content'] ) ); ?>
-					<?php if ( ! empty( $mandoca_game['credits'] ) ) : ?>
-						<ul class="game-roles">
-							<?php foreach ( $mandoca_game['credits'] as $mandoca_credit ) : ?>
-								<li><?php echo esc_html( $mandoca_credit ); ?></li>
-							<?php endforeach; ?>
-						</ul>
-					<?php endif; ?>
-				</div>
-			</article>
-		<?php endforeach; ?>
-	</div>
+						<h3><?php echo esc_html( $mandoca_game['title'] ); ?></h3>
+						<?php echo wp_kses_post( wpautop( $mandoca_game['content'] ) ); ?>
+						<?php if ( ! empty( $mandoca_game['credits'] ) ) : ?>
+							<ul class="game-roles">
+								<?php foreach ( $mandoca_game['credits'] as $mandoca_credit ) : ?>
+									<li><?php echo esc_html( $mandoca_credit ); ?></li>
+								<?php endforeach; ?>
+							</ul>
+						<?php endif; ?>
+					</div>
+				</article>
+			<?php endforeach; ?>
+		</div>
+
+	<?php endif; ?>
 </section>

@@ -360,7 +360,105 @@ body.menu-open { overflow: hidden; }
 }
 .section-lead { color: var(--muted); font-size: 1.125rem; }
 
-/* ---------- Juegos ---------- */
+/* ---------- Etiqueta de estado tipo sticker (GSAP la hace balancearse) ---------- */
+.badge {
+  display: inline-block; padding: .45rem .8rem .4rem;
+  background: var(--ember); color: var(--bone);
+  font-family: var(--font-display); font-weight: 800; font-style: italic; text-transform: uppercase;
+  font-size: .72rem; letter-spacing: .05em; line-height: 1;
+  clip-path: polygon(3% 8%, 100% 0, 96% 100%, 0 90%);
+  transform: rotate(-4deg); transform-origin: left center;
+}
+
+/* ---------- Juegos: vitrina a todo el ancho (como el hero de Thunderful) ---------- */
+.section-games--showcase .section-head { margin-bottom: 2.5rem; }
+/* Celular, tablet o sin JavaScript: tarjetas apiladas */
+.showcase { display: grid; gap: 1rem; width: min(100% - 2.5rem, var(--container)); margin-inline: auto; }
+.showcase-item {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--ink-3); color: var(--bone); outline-offset: -4px;
+}
+/* En tarjeta: el arte arriba (16:10) y el texto debajo */
+.showcase-art { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
+.showcase .showcase-img {
+  position: absolute; left: 0; top: -6%; width: 100%; height: 112%;
+  max-width: none; object-fit: cover; border-radius: 0; user-select: none;
+}
+.showcase-art.fit-contain {
+  background: radial-gradient(circle at 70% 40%, rgba(173, 173, 173, .25), transparent 60%), var(--ink-2);
+}
+.showcase .showcase-art.fit-contain .showcase-img { object-fit: contain; padding: 6%; }
+/* Juego sin arte: degradado con el logo de Mandoca de marca de agua */
+.showcase-art.is-placeholder {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(229, 89, 1, .25), transparent 55%),
+    linear-gradient(160deg, var(--ink-3), var(--ink-2) 55%, #24140a);
+}
+.showcase-art.is-placeholder::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("../img/logo-mark.png") var(--mark-x, 50%) 38% / min(55%, 220px) no-repeat;
+  opacity: .16;
+}
+/* Duotono naranja: se quita al activar el panel */
+.showcase-tint {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: var(--ember); mix-blend-mode: color; opacity: .25;
+  transition: opacity .6s var(--ease);
+}
+.showcase-info, .showcase-more { position: relative; padding: clamp(1.25rem, 2.5vw, 1.75rem); }
+.showcase-info { margin-top: -2.25rem; } /* la etiqueta se monta un poco sobre el arte */
+.showcase-more { padding-top: 0; color: #d4d4d4; font-size: .98rem; }
+.showcase-more p { max-width: 46ch; margin-bottom: .75rem; }
+.showcase-more .game-roles { margin-top: 1rem; }
+.showcase-title {
+  font-style: italic; text-transform: uppercase; letter-spacing: -.01em; overflow-wrap: anywhere;
+  font-size: clamp(2rem, 7vw, 3rem); line-height: .95; margin: .9rem 0 .5rem;
+}
+.showcase-meta {
+  margin: 0; color: var(--gold);
+  font-family: var(--font-display); font-weight: 800; font-style: italic; text-transform: uppercase;
+  font-size: .78rem; letter-spacing: .04em;
+}
+
+/* Escritorio: paneles superpuestos que se deslizan como puertas (solo transform) */
+@media (min-width: 1100px) {
+  .showcase.is-ready {
+    display: block; position: relative; width: 100%; height: clamp(500px, 80vh, 780px);
+    overflow: hidden; border-block: 1px solid var(--line);
+  }
+  .showcase.is-ready .showcase-item {
+    position: absolute; top: 0; left: 0; bottom: 0; width: var(--expanded, 50%); min-height: 0;
+    border: 0; border-left: 1px solid var(--line); border-radius: 0;
+    box-shadow: -24px 0 48px rgba(0, 0, 0, .5); cursor: pointer;
+  }
+  .showcase.is-ready .showcase-art { position: absolute; inset: 0; z-index: -2; aspect-ratio: auto; }
+  .showcase.is-ready .showcase-item::after {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: linear-gradient(180deg, transparent 30%, rgba(10, 10, 10, .92));
+  }
+  .showcase.is-ready .showcase-info { margin-top: 0; }
+  .showcase.is-ready .showcase-art.is-placeholder::before { --mark-x: calc(var(--slice, 25%) / 2 - 110px); }
+  .showcase.is-ready .showcase-tint { opacity: .85; }
+  .showcase.is-ready .showcase-item.is-active .showcase-tint { opacity: 0; }
+  .showcase.is-ready .showcase-info { position: absolute; left: 0; bottom: 0; width: var(--slice, 25%); padding: 1.5rem; }
+  .showcase.is-ready .showcase-title { font-size: clamp(1.5rem, calc(var(--slice, 260px) * .13), 2.75rem); }
+  .showcase.is-ready .showcase-more {
+    position: absolute; left: var(--slice, 25%); bottom: 0;
+    width: calc(var(--expanded, 50%) - var(--slice, 25%));
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .4s var(--ease), transform .5s var(--ease);
+  }
+  .showcase.is-ready .showcase-item.is-active .showcase-more { opacity: 1; transform: none; transition-delay: .25s; }
+  /* Arte completo (fondo transparente): arriba, para dejar espacio al texto */
+  .showcase.is-ready .showcase-art.fit-contain .showcase-img { top: 0; height: 66%; padding: 5% 6% 0; }
+  .showcase.is-ready .showcase-art.fit-cover .showcase-img { top: -6%; height: 112%; }
+  .showcase.is-ready .showcase-more { text-shadow: 0 2px 12px rgba(0, 0, 0, .6); }
+}
+
+/* ---------- Juegos: bloques (arte y texto alternados) ---------- */
 .game {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
@@ -383,8 +481,9 @@ body.menu-open { overflow: hidden; }
   transition: transform .5s var(--ease);
 }
 .game-art:hover { transform: scale(1.015); }
+/* La imagen es un poco más alta que el marco para el parallax */
 .game .game-art .game-img {
-  position: absolute; inset: 0; width: 100%; height: 100%;
+  position: absolute; left: 0; top: -8%; width: 100%; height: 116%;
   object-fit: cover; border-radius: 0; max-width: none;
 }
 /* Imagen completa (por ejemplo, un personaje con fondo transparente) */
