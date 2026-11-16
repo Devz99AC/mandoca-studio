@@ -558,6 +558,30 @@
     team.style.minHeight = `${Math.max(before, after)}px`;
   };
 
+  /* ---------- 8. Botones magnéticos (solo escritorio) ----------
+     El botón sigue un poco al cursor mientras está encima y vuelve a su
+     lugar con un pequeño rebote al salir. */
+  add('.btn', (btn) => {
+    btn.classList.add('is-magnetic');
+    const xTo = gsap.quickTo(btn, 'x', { duration: 0.5, ease: 'power3' });
+    const yTo = gsap.quickTo(btn, 'y', { duration: 0.5, ease: 'power3' });
+    const strength = 0.35;
+    const move = (e) => {
+      const r = btn.getBoundingClientRect();
+      xTo((e.clientX - (r.left + r.width / 2)) * strength);
+      yTo((e.clientY - (r.top + r.height / 2)) * strength);
+    };
+    const leave = () => gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.4)', overwrite: true });
+    btn.addEventListener('pointermove', move);
+    btn.addEventListener('pointerleave', leave);
+    return () => {
+      btn.removeEventListener('pointermove', move);
+      btn.removeEventListener('pointerleave', leave);
+      btn.classList.remove('is-magnetic');
+      gsap.set(btn, { clearProps: 'x,y' });
+    };
+  }, { desktop: true });
+
   /* ---------- Entradas al hacer scroll ----------
      Reemplaza al IntersectionObserver de antes: cada bloque sube y aparece
      cuando entra en pantalla (una sola vez). */
