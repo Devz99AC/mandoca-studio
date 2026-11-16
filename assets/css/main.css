@@ -614,7 +614,7 @@ body.menu-open { overflow: hidden; }
 .studio-text p { font-size: 1.2rem; color: #d4d4d4; }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2.5rem 0 0; }
 .stats div { border-top: 1px solid var(--line); padding-top: 1rem; }
-.stats dt { font-family: var(--font-display); font-weight: 800; font-size: 2.5rem; color: var(--ember); line-height: 1; }
+.stats dt { font-family: var(--font-display); font-weight: 800; font-size: 2.5rem; color: var(--ember); line-height: 1; font-variant-numeric: tabular-nums; }
 .stats dd { margin: .4rem 0 0; color: var(--muted); font-size: .9rem; }
 
 /* ---------- Equipo ---------- */
