@@ -27,6 +27,18 @@ function mandoca_elementor_missing_notice() {
 add_action( 'admin_notices', 'mandoca_elementor_missing_notice' );
 
 /**
+ * Carga los colores y fuentes globales de Elementor (Site Settings) en todas
+ * las páginas. Elementor solo lo hace en las páginas armadas con él, y el CSS
+ * del tema los necesita en todas (ver assets/css/main.css).
+ */
+function mandoca_elementor_global_styles() {
+	if ( did_action( 'elementor/loaded' ) ) {
+		\Elementor\Plugin::$instance->kits_manager->frontend_before_enqueue_styles();
+	}
+}
+add_action( 'wp_enqueue_scripts', 'mandoca_elementor_global_styles', 5 );
+
+/**
  * Categoría "Mandoca Studio" en el panel de widgets de Elementor.
  *
  * @param \Elementor\Elements_Manager $elements_manager Administrador de elementos.

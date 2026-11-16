@@ -28,6 +28,25 @@
   --ease: cubic-bezier(.2, .7, .2, 1);
 }
 
+/* ---------- Colores y fuentes globales de Elementor ----------
+   Elementor guarda sus colores y fuentes globales (Site Settings) como
+   variables --e-global-* en el <body>. Aquí las conectamos con las del tema:
+   si el diseñador cambia el naranja en Elementor, cambia en todo el sitio.
+   Sin Elementor (vista previa con Live Server) se usan los mismos valores
+   de :root, por eso se repiten como respaldo. */
+body {
+  --ink: var(--e-global-color-primary, #0a0a0a);
+  --bone: var(--e-global-color-secondary, #ffffff);
+  --muted: var(--e-global-color-text, #adadad);
+  --ember: var(--e-global-color-accent, #e55901);
+  --gray: var(--e-global-color-gris, #585858);
+  --gold: var(--e-global-color-crema, #fef1e4);
+
+  --font-display: var(--e-global-typography-primary-font-family, "Montserrat"), system-ui, sans-serif;
+  --font-body: var(--e-global-typography-text-font-family, "Inter"), system-ui, sans-serif;
+  --font-mono: var(--e-global-typography-accent-font-family, "JetBrains Mono"), ui-monospace, monospace;
+}
+
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 

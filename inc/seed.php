@@ -248,6 +248,139 @@ function mandoca_seed_image( $relative, $title, $parent = 0 ) {
 }
 
 /**
+ * Configuración de Elementor (una sola vez, cuando Elementor está activo).
+ *
+ * Se ejecuta al activar el tema y también al entrar al panel, por si
+ * Elementor se instala después del tema.
+ *
+ * @param bool $force true para ignorar la marca de "ya configurado".
+ */
+function mandoca_seed_elementor( $force = false ) {
+	if ( ! did_action( 'elementor/loaded' ) ) {
+		return;
+	}
+	if ( get_option( 'mandoca_seed_elementor' ) && ! $force ) {
+		return;
+	}
+
+	if ( ! mandoca_seed_kit() ) {
+		return; // Elementor todavía no creó su kit; se intenta en la próxima carga.
+	}
+
+	update_option( 'mandoca_seed_elementor', MANDOCA_VERSION, false );
+	\Elementor\Plugin::$instance->files_manager->clear_cache();
+}
+add_action( 'after_switch_theme', 'mandoca_seed_elementor', 20 );
+add_action( 'admin_init', 'mandoca_seed_elementor' );
+
+/**
+ * Colores y fuentes globales de Elementor (Site Settings) con la marca.
+ *
+ * Los colores del sistema se reemplazan; los colores propios que haya creado
+ * el diseñador se conservan.
+ *
+ * @return bool true si se pudo guardar.
+ */
+function mandoca_seed_kit() {
+	$kit_id = (int) \Elementor\Plugin::$instance->kits_manager->get_active_id();
+	if ( ! $kit_id || ! get_post( $kit_id ) ) {
+		return false;
+	}
+
+	$settings = get_post_meta( $kit_id, '_elementor_page_settings', true );
+	$settings = is_array( $settings ) ? $settings : array();
+
+	$settings['system_colors'] = array(
+		array(
+			'_id'   => 'primary',
+			'title' => 'Black (background)',
+			'color' => '#0A0A0A',
+		),
+		array(
+			'_id'   => 'secondary',
+			'title' => 'White (text)',
+			'color' => '#FFFFFF',
+		),
+		array(
+			'_id'   => 'text',
+			'title' => 'Light gray (secondary text)',
+			'color' => '#ADADAD',
+		),
+		array(
+			'_id'   => 'accent',
+			'title' => 'Orange (accent)',
+			'color' => '#E55901',
+		),
+	);
+
+	$brand_colors = array(
+		'gris'  => array(
+			'_id'   => 'gris',
+			'title' => 'Dark gray (details)',
+			'color' => '#585858',
+		),
+		'crema' => array(
+			'_id'   => 'crema',
+			'title' => 'Cream (details)',
+			'color' => '#FEF1E4',
+		),
+	);
+	$custom = isset( $settings['custom_colors'] ) && is_array( $settings['custom_colors'] ) ? $settings['custom_colors'] : array();
+	foreach ( $custom as $color ) {
+		if ( isset( $color['_id'] ) && ! isset( $brand_colors[ $color['_id'] ] ) ) {
+			$brand_colors[ $color['_id'] ] = $color;
+		}
+	}
+	$settings['custom_colors'] = array_values( $brand_colors );
+
+	$settings['system_typography'] = array(
+		array(
+			'_id'                    => 'primary',
+			'title'                  => 'Headings (Montserrat)',
+			'typography_typography'  => 'custom',
+			'typography_font_family' => 'Montserrat',
+			'typography_font_weight' => '800',
+		),
+		array(
+			'_id'                    => 'secondary',
+			'title'                  => 'Subheadings (Montserrat)',
+			'typography_typography'  => 'custom',
+			'typography_font_family' => 'Montserrat',
+			'typography_font_weight' => '600',
+		),
+		array(
+			'_id'                    => 'text',
+			'title'                  => 'Body (Inter)',
+			'typography_typography'  => 'custom',
+			'typography_font_family' => 'Inter',
+			'typography_font_weight' => '400',
+		),
+		array(
+			'_id'                    => 'accent',
+			'title'                  => 'Labels (JetBrains Mono)',
+			'typography_typography'  => 'custom',
+			'typography_font_family' => 'JetBrains Mono',
+			'typography_font_weight' => '400',
+		),
+	);
+
+	// Ancho de los contenedores de Elementor igual al del tema (1160 px).
+	$settings['container_width'] = array(
+		'unit'  => 'px',
+		'size'  => 1160,
+		'sizes' => array(),
+	);
+
+	update_post_meta( $kit_id, '_elementor_page_settings', $settings );
+
+	// Que Elementor no imponga sus colores y fuentes por defecto: manda el tema.
+	update_option( 'elementor_disable_color_schemes', 'yes' );
+	update_option( 'elementor_disable_typography_schemes', 'yes' );
+
+	return true;
+}
+
+/**
  * Comando de terminal para volver a sembrar los datos (sin duplicar):
  *   wp mandoca seed
  */
