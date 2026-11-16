@@ -496,6 +496,23 @@
     }
   });
 
+  /* ---------- 5. Cifras del estudio ----------
+     Cada número cuenta desde 0 hasta su valor cuando aparece en pantalla. */
+  add('.stats dt[data-count]', (dt, env) => {
+    const target = parseFloat(dt.dataset.count);
+    if (!env.motion || !Number.isFinite(target)) return;
+    const counter = { value: 0 };
+    dt.setAttribute('aria-label', dt.textContent.trim()); // los lectores de pantalla leen el valor final
+    dt.textContent = '0';
+    gsap.to(counter, {
+      value: target,
+      duration: target > 100 ? 2 : 1.4,
+      ease: 'power2.out',
+      onUpdate: () => { dt.textContent = String(Math.round(counter.value)); },
+      scrollTrigger: { trigger: dt, start: 'top 90%', once: true },
+    });
+  });
+
   /* ---------- Entradas al hacer scroll ----------
      Reemplaza al IntersectionObserver de antes: cada bloque sube y aparece
      cuando entra en pantalla (una sola vez). */
