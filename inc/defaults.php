@@ -59,6 +59,7 @@ function mandoca_defaults( $section ) {
 			'scroll_url'   => '#juegos',
 			'scroll_label' => 'Bajar a Juegos',
 			'show_orbs'    => true,
+			'show_socials' => true,
 		),
 
 		'juegos'   => array(
@@ -125,22 +126,9 @@ function mandoca_defaults( $section ) {
 		),
 
 		'pie'      => array(
-			'brand'   => 'Mandoca.Studio',
-			'socials' => array(
-				array(
-					'text' => 'Instagram',
-					'url'  => 'https://www.instagram.com/',
-				),
-				array(
-					'text' => 'X',
-					'url'  => 'https://x.com/',
-				),
-				array(
-					'text' => 'YouTube',
-					'url'  => 'https://www.youtube.com/',
-				),
-			),
-			'copy'    => '© {year} Mandoca Studio · Proyecto académico',
+			'brand'        => 'Mandoca.Studio',
+			'show_socials' => true, // Las redes se editan en Apariencia > Personalizar.
+			'copy'         => '© {year} Mandoca Studio · Proyecto académico',
 		),
 	);
 

@@ -58,7 +58,7 @@
      El título entra palabra por palabra desde abajo con máscara, luego la
      cita y los botones. Duración total: 1.4 s. */
   add('.hero', (el, env) => {
-    const hidden = el.querySelectorAll('.hero-inner > *, .scroll-hint');
+    const hidden = el.querySelectorAll('.hero-inner > *, .scroll-hint, .hero-socials');
     if (!env.motion || env.editor) {
       gsap.set(hidden, { opacity: 1 }); // sin movimiento (o en el editor): todo visible al instante
       return undefined;

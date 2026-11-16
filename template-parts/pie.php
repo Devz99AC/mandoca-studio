@@ -15,15 +15,11 @@ defined( 'ABSPATH' ) || exit;
 			<p class="footer-brand"><?php echo mandoca_brand_html( $args['brand'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escapado en mandoca_brand_html(). ?></p>
 		<?php endif; ?>
 
-		<?php if ( ! empty( $args['socials'] ) ) : ?>
-			<ul class="socials" aria-label="Redes sociales">
-				<?php foreach ( $args['socials'] as $mandoca_social ) : ?>
-					<?php if ( ! empty( $mandoca_social['text'] ) ) : ?>
-						<li><a href="<?php echo esc_url( $mandoca_social['url'] ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $mandoca_social['text'] ); ?></a></li>
-					<?php endif; ?>
-				<?php endforeach; ?>
-			</ul>
-		<?php endif; ?>
+		<?php
+		if ( ! empty( $args['show_socials'] ) ) {
+			mandoca_render_socials( 'footer-socials', true );
+		}
+		?>
 
 		<?php if ( $args['copy'] ) : ?>
 			<p class="copy"><?php echo mandoca_with_year( $args['copy'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escapado en mandoca_with_year(). ?></p>
