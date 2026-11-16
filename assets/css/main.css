@@ -227,6 +227,12 @@ body.elementor-template-canvas, body.single-elementor_library { padding-top: 0; 
 .section { padding: clamp(5rem, 10vw, 8rem) 0; }
 .section-alt { background: var(--ink-2); border-block: 1px solid var(--line); }
 .section-head { margin-bottom: 3.5rem; max-width: 44rem; }
+/* Línea naranja antes del eyebrow (GSAP la hace crecer con --line) */
+.section-head .eyebrow { display: flex; align-items: center; gap: .85rem; }
+.section-head .eyebrow::before {
+  content: ""; flex: none; width: 2.5rem; height: 2px; background: var(--ember);
+  transform: scaleX(var(--line, 1)); transform-origin: left center;
+}
 .section-lead { color: var(--muted); font-size: 1.125rem; }
 
 /* ---------- Juegos ---------- */

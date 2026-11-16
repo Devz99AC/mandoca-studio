@@ -67,6 +67,39 @@
     });
   });
 
+  /* ---------- 9. Encabezados de sección ----------
+     Primero crece la línea naranja del eyebrow, luego aparece su texto
+     palabra por palabra y el título sube línea por línea con máscara. */
+  add('.section-head', (el, env) => {
+    if (!env.motion) return;
+    const eyebrow = el.querySelector('.eyebrow');
+    const title = el.querySelector('h2');
+    const rest = el.querySelectorAll(':scope > :not(.eyebrow):not(h2)');
+    const splits = [];
+    // Divide un texto en palabras o líneas (y guarda la división para deshacerla al final).
+    const split = (target, vars, key) => {
+      if (!SplitText) return [target];
+      const result = SplitText.create(target, vars);
+      splits.push(result);
+      return result[key];
+    };
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+      onComplete: () => splits.forEach((s) => s.revert()), // devuelve el HTML original
+    });
+
+    if (eyebrow) {
+      const words = split(eyebrow, { type: 'words' }, 'words');
+      tl.fromTo(eyebrow, { '--line': 0 }, { '--line': 1, duration: 0.55, ease: 'power2.inOut' });
+      tl.from(words, { opacity: 0, x: -12, stagger: 0.05, duration: 0.45 }, '-=0.1');
+    }
+    if (title) {
+      const lines = split(title, { type: 'lines', mask: 'lines' }, 'lines');
+      tl.from(lines, { yPercent: 110, duration: 0.85, stagger: 0.08, ease: 'power4.out' }, eyebrow ? '-=0.3' : 0);
+    }
+    if (rest.length) tl.from(rest, { y: 20, opacity: 0, duration: 0.6 }, '-=0.5');
+  });
+
   /* @modules */
 
   /* =========================================================
