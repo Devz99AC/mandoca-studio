@@ -18,8 +18,13 @@ define( 'MANDOCA_URI', get_template_directory_uri() );
 // aunque el panel de WordPress esté en inglés).
 define( 'MANDOCA_CONTENT_LANG', 'es' );
 
+// Versiones fijas de las librerías de animación (las mismas en preview/index.html).
+define( 'MANDOCA_GSAP_VERSION', '3.13.0' );
+define( 'MANDOCA_MATTER_VERSION', '0.20.0' );
+
 require_once MANDOCA_DIR . '/inc/helpers.php';
 require_once MANDOCA_DIR . '/inc/defaults.php';
+require_once MANDOCA_DIR . '/inc/socials.php';
 require_once MANDOCA_DIR . '/inc/cpt.php';
 require_once MANDOCA_DIR . '/inc/meta-boxes.php';
 require_once MANDOCA_DIR . '/inc/seed.php';
@@ -65,7 +70,7 @@ add_action( 'after_setup_theme', 'mandoca_setup' );
 function mandoca_enqueue_assets() {
 	wp_enqueue_style(
 		'mandoca-fonts',
-		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Montserrat:wght@600;800&display=swap',
+		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Montserrat:ital,wght@0,600;0,800;1,800&display=swap',
 		array(),
 		null // Google Fonts no necesita número de versión.
 	);
@@ -77,18 +82,49 @@ function mandoca_enqueue_assets() {
 		mandoca_asset_version( 'assets/css/main.css' )
 	);
 
+	$defer = array(
+		'in_footer' => true,
+		'strategy'  => 'defer',
+	);
+
+	wp_enqueue_script( 'mandoca-main', MANDOCA_URI . '/assets/js/main.js', array(), mandoca_asset_version( 'assets/js/main.js' ), $defer );
+
+	// GSAP y sus plugins desde jsDelivr, con versión fija.
+	$gsap = 'https://cdn.jsdelivr.net/npm/gsap@' . MANDOCA_GSAP_VERSION . '/dist/';
+	wp_register_script( 'gsap', $gsap . 'gsap.min.js', array(), null, true );
+	wp_register_script( 'gsap-scrolltrigger', $gsap . 'ScrollTrigger.min.js', array( 'gsap' ), null, true );
+	wp_register_script( 'gsap-flip', $gsap . 'Flip.min.js', array( 'gsap' ), null, true );
+	wp_register_script( 'gsap-splittext', $gsap . 'SplitText.min.js', array( 'gsap' ), null, true );
+
+	// Los archivos de GSAP dejan window.default apuntando a GSAP; el reproductor
+	// de medios de WordPress (que Elementor usa en el editor) espera que sea la
+	// ventana. Después de cada archivo lo devolvemos a su lugar.
+	foreach ( array( 'gsap', 'gsap-scrolltrigger', 'gsap-flip', 'gsap-splittext' ) as $mandoca_handle ) {
+		wp_add_inline_script( $mandoca_handle, 'window.default = window;' );
+	}
+
+	// Matter.js (física). Solo se carga en las páginas que tienen el círculo con física.
+	wp_register_script( 'matter-js', 'https://cdn.jsdelivr.net/npm/matter-js@' . MANDOCA_MATTER_VERSION . '/build/matter.min.js', array(), null, true );
+
 	wp_enqueue_script(
-		'mandoca-main',
-		MANDOCA_URI . '/assets/js/main.js',
-		array(),
-		mandoca_asset_version( 'assets/js/main.js' ),
-		array(
-			'in_footer' => true,
-			'strategy'  => 'defer',
-		)
+		'mandoca-animations',
+		MANDOCA_URI . '/assets/js/animations.js',
+		array( 'gsap', 'gsap-scrolltrigger', 'gsap-flip', 'gsap-splittext', 'mandoca-main' ),
+		mandoca_asset_version( 'assets/js/animations.js' ),
+		$defer
 	);
 }
 add_action( 'wp_enqueue_scripts', 'mandoca_enqueue_assets' );
+
+/**
+ * Cambia la clase "no-js" por "js" en <html> antes de pintar la página.
+ * Así el CSS puede esconder el título del hero hasta que empiece su
+ * animación, sin parpadeos. Sin JavaScript todo se ve normal.
+ */
+function mandoca_js_class() {
+	wp_print_inline_script_tag( "document.documentElement.classList.replace('no-js','js');" );
+}
+add_action( 'wp_head', 'mandoca_js_class', 0 );
 
 /**
  * Conecta con Google Fonts antes de pedir las tipografías (carga más rápida).

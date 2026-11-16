@@ -16,7 +16,7 @@ $mandoca_input_id = wp_unique_id( 'email-' );
 ?>
 <section class="section<?php echo $args['alt'] ? ' section-alt' : ''; ?>"<?php echo $args['section_id'] ? ' id="' . esc_attr( $args['section_id'] ) . '"' : ''; ?>>
 	<div class="container cta-grid">
-		<div class="cta-card reveal">
+		<div class="cta-card">
 			<?php if ( $args['eyebrow'] ) : ?>
 				<p class="eyebrow"><?php echo esc_html( $args['eyebrow'] ); ?></p>
 			<?php endif; ?>
@@ -41,7 +41,7 @@ $mandoca_input_id = wp_unique_id( 'email-' );
 		</div>
 
 		<?php if ( $args['contact_title'] || $args['email'] ) : ?>
-			<div class="cta-card cta-contact reveal">
+			<div class="cta-card cta-contact">
 				<?php if ( $args['contact_eyebrow'] ) : ?>
 					<p class="eyebrow"><?php echo esc_html( $args['contact_eyebrow'] ); ?></p>
 				<?php endif; ?>

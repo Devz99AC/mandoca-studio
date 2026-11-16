@@ -32,25 +32,39 @@
     return true;
   };
 
-  /* 1. Menú móvil ----------------------------------------- */
+  /* 1. Menú a pantalla completa ----------------------------- */
   function initMenu(header) {
     const toggle = header.querySelector('.nav-toggle');
-    const menu = header.querySelector('.nav');
-    if (!toggle || !menu) return;
+    const next = header.nextElementSibling;
+    const panel = next && next.matches('.menu-panel') ? next : document.getElementById('menu-panel');
+    if (!toggle || !panel) return;
 
     const labelOpen = toggle.dataset.labelOpen || 'Abrir menú';
     const labelClose = toggle.dataset.labelClose || 'Cerrar menú';
+    const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
 
     const setOpen = (open) => {
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open ? labelClose : labelOpen);
-      menu.classList.toggle('is-open', open);
+      panel.classList.toggle('is-open', open);
+      document.body.classList.toggle('menu-open', open); // la página no se mueve detrás del menú
+      // animations.js escucha este aviso para animar los enlaces
+      document.dispatchEvent(new CustomEvent('mandoca:menu', { detail: { open, panel } }));
+      if (open) {
+        const first = panel.querySelector('a');
+        if (first) first.focus({ preventScroll: true });
+      }
     };
 
-    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    toggle.addEventListener('click', () => setOpen(!isOpen()));
     // Cierra el menú al elegir una opción o al pulsar Escape
-    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+    panel.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen()) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
   }
 
   /* 2. Borde de la cabecera al hacer scroll ---------------- */
@@ -60,28 +74,8 @@
     onScroll();
   }
 
-  /* 3. Animación de entrada de los bloques ----------------- */
-  let revealObserver = null;
-
-  function initReveal(el) {
-    if (!('IntersectionObserver' in window) || inEditor()) {
-      el.classList.add('is-visible');
-      return;
-    }
-    if (!revealObserver) {
-      revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.15 });
-    }
-    revealObserver.observe(el);
-  }
-
-  /* 4. Fotos del equipo: iniciales si falta la imagen ------- */
+  /* 3. Fotos del equipo: iniciales si falta la imagen ------- */
+  /*    (Las animaciones de entrada ahora viven en animations.js con ScrollTrigger.) */
   const initialsFrom = (name) => name.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase();
 
   function initPhoto(img) {
@@ -106,7 +100,7 @@
     if (img.complete && img.naturalWidth === 0) hide();
   }
 
-  /* 5. Filtro del equipo por área -------------------------- */
+  /* 4. Filtro del equipo por área -------------------------- */
   function initTeam(section) {
     const buttons = section.querySelectorAll('.filter');
     const members = section.querySelectorAll('.member');
@@ -121,16 +115,20 @@
           b.setAttribute('aria-pressed', String(active));
         });
 
-        members.forEach((m) => {
+        const apply = () => members.forEach((m) => {
           const show = area === 'todos' || m.dataset.area === area;
           m.classList.toggle('is-hidden', !show);
-          if (show) m.classList.add('is-visible');
         });
+
+        // Si animations.js está cargado, reacomoda las tarjetas con GSAP Flip.
+        const motion = window.MandocaMotion;
+        if (motion && motion.filterTeam) motion.filterTeam(section, apply);
+        else apply();
       });
     });
   }
 
-  /* 6. Validación del formulario de newsletter ------------- */
+  /* 5. Validación del formulario de newsletter ------------- */
   function initNewsletter(form) {
     const input = form.querySelector('input[type="email"]');
     const msg = form.querySelector('.form-msg');
@@ -176,7 +174,7 @@
     });
   }
 
-  /* 7. Arranque -------------------------------------------- */
+  /* 6. Arranque -------------------------------------------- */
   function boot(root = document) {
     $$(root, '.site-header').forEach((header) => {
       if (!firstTime(header, 'Header')) return;
@@ -187,10 +185,16 @@
     $$(root, '.member-photo').forEach((img) => firstTime(img, 'Photo') && initPhoto(img));
     $$(root, '[data-team]').forEach((section) => firstTime(section, 'Team') && initTeam(section));
     $$(root, '.newsletter').forEach((form) => firstTime(form, 'Form') && initNewsletter(form));
-    $$(root, '.reveal').forEach((el) => firstTime(el, 'Reveal') && initReveal(el));
     // Año automático en el pie de página
     $$(root, '[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
   }
+
+  // Tarjetas del carrusel: al hacer clic, la vitrina abre ese juego.
+  // (Se escucha en el documento para que también funcione en las copias del carrusel.)
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('.card[data-game]');
+    if (card) document.dispatchEvent(new CustomEvent('mandoca:open-game', { detail: { game: card.dataset.game } }));
+  });
 
   // En el editor de Elementor, cada widget editado se vuelve a pintar: lo iniciamos otra vez.
   // Estas variables solo existen dentro de WordPress; en la vista previa estática no pasa nada.
