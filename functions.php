@@ -24,6 +24,7 @@ define( 'MANDOCA_MATTER_VERSION', '0.20.0' );
 
 require_once MANDOCA_DIR . '/inc/helpers.php';
 require_once MANDOCA_DIR . '/inc/defaults.php';
+require_once MANDOCA_DIR . '/inc/socials.php';
 require_once MANDOCA_DIR . '/inc/cpt.php';
 require_once MANDOCA_DIR . '/inc/meta-boxes.php';
 require_once MANDOCA_DIR . '/inc/seed.php';

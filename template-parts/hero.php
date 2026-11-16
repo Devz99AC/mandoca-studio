@@ -18,6 +18,12 @@ defined( 'ABSPATH' ) || exit;
 		</div>
 	<?php endif; ?>
 
+	<?php if ( ! empty( $args['show_socials'] ) ) : ?>
+		<div class="container hero-top">
+			<?php mandoca_render_socials( 'hero-socials' ); ?>
+		</div>
+	<?php endif; ?>
+
 	<div class="container hero-inner">
 		<?php if ( $args['eyebrow'] ) : ?>
 			<p class="eyebrow"><?php echo esc_html( $args['eyebrow'] ); ?></p>
