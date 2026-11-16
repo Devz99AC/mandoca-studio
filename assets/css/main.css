@@ -391,12 +391,12 @@ body.menu-open { overflow: hidden; }
 }
 .showcase .showcase-art.fit-contain .showcase-img { object-fit: contain; padding: 6%; }
 /* Juego sin arte: degradado con el logo de Mandoca de marca de agua */
-.showcase-art.is-placeholder {
+.showcase-art.is-placeholder, .card-art.is-placeholder {
   background:
     radial-gradient(circle at 30% 30%, rgba(229, 89, 1, .25), transparent 55%),
     linear-gradient(160deg, var(--ink-3), var(--ink-2) 55%, #24140a);
 }
-.showcase-art.is-placeholder::before {
+.showcase-art.is-placeholder::before, .card-art.is-placeholder::before {
   content: ""; position: absolute; inset: 0;
   background: url("../img/logo-mark.png") var(--mark-x, 50%) 38% / min(55%, 220px) no-repeat;
   opacity: .16;
@@ -457,6 +457,56 @@ body.menu-open { overflow: hidden; }
   .showcase.is-ready .showcase-art.fit-cover .showcase-img { top: -6%; height: 112%; }
   .showcase.is-ready .showcase-more { text-shadow: 0 2px 12px rgba(0, 0, 0, .6); }
 }
+
+/* ---------- Carrusel de destacados (como "Featured" de Thunderful) ---------- */
+.featured-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; margin-bottom: 2.5rem; }
+.featured-title-wrap { display: flex; align-items: center; gap: .9rem; }
+.featured-icon { flex: none; color: var(--ember); }
+.featured-title { margin: 0; font-style: italic; text-transform: uppercase; font-size: clamp(2rem, 4vw, 3rem); }
+/* Sin JavaScript (o con reducir movimiento) se desliza a mano */
+.carousel { overflow-x: auto; scrollbar-width: none; padding-block: .5rem; touch-action: pan-y; }
+.carousel::-webkit-scrollbar { display: none; }
+.carousel.is-looping { overflow: hidden; cursor: grab; user-select: none; }
+.carousel.is-dragging { cursor: grabbing; }
+.carousel .loop-set { gap: 1.25rem; padding-right: 1.25rem; align-items: stretch; }
+.card {
+  position: relative; isolation: isolate; overflow: hidden; flex: none;
+  width: clamp(280px, 34vw, 520px); aspect-ratio: 16 / 11;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding-right: 3rem; /* espacio para la pestaña lateral */
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--ink-3); color: var(--bone); text-decoration: none;
+  transition: transform .4s var(--ease);
+}
+.card:hover { transform: translateY(-6px); }
+.card-art { position: absolute; inset: 0 3rem 0 0; z-index: -2; overflow: hidden; }
+.carousel .card-img {
+  width: 100%; height: 100%; max-width: none; object-fit: cover; border-radius: 0;
+  pointer-events: none; transition: transform .7s var(--ease);
+}
+.card:hover .card-img { transform: scale(1.07); }
+.card-art.fit-contain { background: radial-gradient(circle at 60% 40%, rgba(173, 173, 173, .25), transparent 60%), var(--ink-2); }
+.carousel .card-art.fit-contain .card-img { object-fit: contain; padding: 6% 8% 26%; }
+.card::after {
+  content: ""; position: absolute; inset: 0 3rem 0 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, transparent 35%, rgba(10, 10, 10, .9));
+}
+.card-info { padding: 1.25rem 1.5rem; }
+.card-title { font-style: italic; text-transform: uppercase; line-height: .95; margin: .7rem 0 .35rem; font-size: clamp(1.5rem, 2.4vw, 2.25rem); }
+.card-meta {
+  margin: 0; color: var(--gold);
+  font-family: var(--font-display); font-weight: 800; font-style: italic; text-transform: uppercase;
+  font-size: .75rem; letter-spacing: .04em;
+}
+.card-tab {
+  position: absolute; top: 0; right: 0; bottom: 0; width: 3rem;
+  display: grid; place-items: center; background: var(--ember); color: var(--bone);
+  writing-mode: vertical-rl;
+  font-family: var(--font-display); font-weight: 800; font-style: italic; text-transform: uppercase;
+  font-size: .75rem; letter-spacing: .12em;
+  transition: background .2s;
+}
+.card:hover .card-tab { background: var(--ember-2); }
 
 /* ---------- Juegos: bloques (arte y texto alternados) ---------- */
 .game {

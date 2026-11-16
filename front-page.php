@@ -23,7 +23,7 @@ if ( $mandoca_use_content ) {
 		the_content();
 	}
 } else {
-	foreach ( array( 'hero', 'marquee', 'juegos', 'estudio', 'equipo', 'contacto' ) as $mandoca_section ) {
+	foreach ( array( 'hero', 'marquee', 'juegos', 'destacados', 'estudio', 'equipo', 'contacto' ) as $mandoca_section ) {
 		mandoca_render_part( $mandoca_section );
 	}
 }

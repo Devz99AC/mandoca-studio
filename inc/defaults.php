@@ -80,9 +80,22 @@ function mandoca_defaults( $section ) {
 			'games'      => null, // null = leer los juegos del panel.
 		),
 
+		'destacados' => array(
+			'section_id'  => 'destacados',
+			'alt'         => true,
+			'title'       => 'Destacados',
+			'button_text' => 'Ver todos los juegos',
+			'button_url'  => '#juegos',
+			'card_url'    => '#juegos',
+			'tab_text'    => 'Ver juego',
+			'speed'       => 45, // Píxeles por segundo.
+			'limit'       => -1,
+			'games'       => null, // null = leer los juegos del panel.
+		),
+
 		'estudio'  => array(
 			'section_id' => 'estudio',
-			'alt'        => true,
+			'alt'        => false,
 			'eyebrow'    => '02 — Estudio',
 			'title'      => 'Un grupo de amigos haciendo los juegos que nos gustaría jugar',
 			'text'       => 'Mandoca Studio nació como un grupo de amigos cercanos. Queremos hacer juegos divertidos que nos representen como personas y que lleven dentro mucho de lo que amamos, para que otros también lo disfruten.',
