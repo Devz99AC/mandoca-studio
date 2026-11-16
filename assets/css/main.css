@@ -134,6 +134,12 @@ p { margin: 0 0 1em; }
   transition: border-color .3s;
 }
 .site-header.is-scrolled { border-bottom-color: var(--line); }
+/* Fondo sólido al pasar la primera pantalla (se anima la opacidad de esta capa) */
+.site-header::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--ink); opacity: 0; transition: opacity .3s var(--ease);
+}
+.site-header.is-solid::before { opacity: 1; }
 
 /* Con la barra de administración de WordPress (sesión iniciada) */
 .admin-bar .site-header { top: 32px; }
