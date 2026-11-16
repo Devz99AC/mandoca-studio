@@ -25,7 +25,7 @@ function mandoca_defaults( $section ) {
 		),
 
 		'cabecera' => array(
-			'layout'   => 'sidebar', // "sidebar" (barra lateral, como Thunderful) o "top" (barra arriba).
+			'layout'   => 'top', // "top" (barra arriba) o "sidebar" (barra lateral, como Thunderful).
 			'logo_url' => '',
 			'brand'    => 'Mandoca.Studio',
 			'links'    => array(
