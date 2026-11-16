@@ -1,0 +1,9 @@
+{
+  // Live Server: abre preview/index.html en http://127.0.0.1:5500/preview/index.html
+  // No se usa "liveServer.settings.root": si la raíz fuera preview/, Live Server
+  // no podría servir ../assets/ (los CSS, JS e imágenes del tema).
+  "liveServer.settings.port": 5500,
+
+  // Cambios en estos archivos no recargan la página (Live Server no ejecuta PHP).
+  "liveServer.settings.ignoreFiles": ["**/*.php", "node_modules/**", ".git/**"]
+}
