@@ -44,6 +44,7 @@ $mandoca_areas   = is_array( $args['areas'] ) ? $args['areas'] : mandoca_get_are
 			<?php foreach ( $mandoca_members as $mandoca_member ) : ?>
 				<?php $mandoca_alt = 'Foto de ' . $mandoca_member['name']; ?>
 				<li class="member" data-area="<?php echo esc_attr( $mandoca_member['area'] ); ?>">
+					<div class="member-media">
 					<?php
 					if ( ! empty( $mandoca_member['photo_id'] ) ) {
 						echo wp_get_attachment_image(
@@ -70,6 +71,7 @@ $mandoca_areas   = is_array( $args['areas'] ) ? $args['areas'] : mandoca_get_are
 						);
 					}
 					?>
+					</div>
 					<h3><?php echo esc_html( $mandoca_member['name'] ); ?></h3>
 					<?php if ( $mandoca_member['role'] ) : ?>
 						<p class="member-role"><?php echo esc_html( $mandoca_member['role'] ); ?></p>

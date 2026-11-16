@@ -115,10 +115,15 @@
           b.setAttribute('aria-pressed', String(active));
         });
 
-        members.forEach((m) => {
+        const apply = () => members.forEach((m) => {
           const show = area === 'todos' || m.dataset.area === area;
           m.classList.toggle('is-hidden', !show);
         });
+
+        // Si animations.js está cargado, reacomoda las tarjetas con GSAP Flip.
+        const motion = window.MandocaMotion;
+        if (motion && motion.filterTeam) motion.filterTeam(section, apply);
+        else apply();
       });
     });
   }
