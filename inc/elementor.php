@@ -61,6 +61,8 @@ add_action( 'elementor/elements/categories_registered', 'mandoca_elementor_categ
  */
 function mandoca_elementor_widget_list() {
 	return array(
+		'header'    => 'Mandoca_Header_Widget',
+		'footer'    => 'Mandoca_Footer_Widget',
 		'hero'      => 'Mandoca_Hero_Widget',
 		'games'     => 'Mandoca_Games_Widget',
 		'studio'    => 'Mandoca_Studio_Widget',
@@ -83,3 +85,63 @@ function mandoca_elementor_widgets( $widgets_manager ) {
 	}
 }
 add_action( 'elementor/widgets/register', 'mandoca_elementor_widgets' );
+
+/**
+ * ID de la plantilla de Elementor de la cabecera o del pie.
+ *
+ * Las plantillas se crean al activar el tema (inc/seed.php) y se editan en
+ * Templates → Saved Templates → "Header" / "Footer".
+ *
+ * @param string $location "header" o "footer".
+ * @return int 0 si no existe o no está publicada.
+ */
+function mandoca_elementor_template_id( $location ) {
+	if ( ! did_action( 'elementor/loaded' ) ) {
+		return 0;
+	}
+	$id = (int) get_option( 'mandoca_' . $location . '_template' );
+	return ( $id && 'publish' === get_post_status( $id ) ) ? $id : 0;
+}
+
+/**
+ * Imprime la plantilla de Elementor de la cabecera o del pie.
+ *
+ * @param string $location "header" o "footer".
+ * @return bool true si se imprimió; false para usar la versión PHP de respaldo.
+ */
+function mandoca_render_elementor_template( $location ) {
+	$id = mandoca_elementor_template_id( $location );
+	if ( ! $id ) {
+		return false;
+	}
+	$html = \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $id );
+	if ( '' === trim( $html ) ) {
+		return false;
+	}
+	echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML generado y escapado por Elementor.
+	return true;
+}
+
+/**
+ * Carga en el <head> los estilos de la cabecera y el pie de Elementor
+ * (si no, llegarían tarde y la página parpadearía).
+ */
+function mandoca_elementor_template_styles() {
+	foreach ( array( 'header', 'footer' ) as $location ) {
+		$id = mandoca_elementor_template_id( $location );
+		if ( $id ) {
+			\Elementor\Core\Files\CSS\Post::create( $id )->enqueue();
+		}
+	}
+}
+add_action( 'wp_enqueue_scripts', 'mandoca_elementor_template_styles', 20 );
+
+/**
+ * ¿Se está viendo o editando una plantilla de Elementor?
+ * En ese caso el tema no agrega su propia cabecera ni su pie.
+ *
+ * @return bool
+ */
+function mandoca_is_elementor_template_view() {
+	return is_singular( 'elementor_library' );
+}

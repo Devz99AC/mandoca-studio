@@ -9,7 +9,12 @@ defined( 'ABSPATH' ) || exit;
 ?>
 </main>
 
-<?php mandoca_render_part( 'pie' ); ?>
+<?php
+// Pie: primero la plantilla "Footer" de Elementor; si no existe, el del tema.
+if ( ! mandoca_is_elementor_template_view() && ! mandoca_render_elementor_template( 'footer' ) ) {
+	mandoca_render_part( 'pie' );
+}
+?>
 
 <?php wp_footer(); ?>
 </body>
