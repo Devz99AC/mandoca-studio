@@ -582,6 +582,213 @@
     };
   }, { desktop: true });
 
+  /* ---------- Círculo con física (Matter.js) ----------
+     Como "We are Thunderful": el anillo de texto gira y, dentro, las piezas
+     caen y ruedan como en un tambor de lavadora. Matter.js calcula la
+     gravedad y los choques; aquí solo se giran las paredes del tambor.
+     - Gira más rápido con la velocidad del scroll.
+     - En escritorio las piezas se pueden agarrar y lanzar con el mouse.
+     - Se pausa cuando no está en pantalla (ahorra batería). */
+  const whenMatter = (callback) => {
+    if (window.Matter) {
+      callback();
+      return () => {};
+    }
+    const timer = setInterval(() => {
+      if (window.Matter) {
+        clearInterval(timer);
+        callback();
+      }
+    }, 100);
+    const giveUp = setTimeout(() => clearInterval(timer), 10000);
+    return () => {
+      clearInterval(timer);
+      clearTimeout(giveUp);
+    };
+  };
+
+  function buildTumbler(el, env) {
+    const { Engine, Render, Runner, Bodies, Body, Composite, Mouse, MouseConstraint, Events } = window.Matter;
+    const stage = el.querySelector('.tumbler-stage');
+    const holder = el.querySelector('.tumbler-canvas');
+    const ring = el.querySelector('.tumbler-ring');
+    const size = stage ? stage.clientWidth : 0;
+    if (!holder || !size) return () => {};
+
+    // Colores de la marca (siguen a los colores globales de Elementor).
+    const css = getComputedStyle(el);
+    const color = (name, fallback) => css.getPropertyValue(name).trim() || fallback;
+    const ember = color('--ember', '#e55901');
+    const gold = color('--gold', '#fef1e4');
+
+    const engine = Engine.create();
+    const render = Render.create({
+      element: holder,
+      engine,
+      options: {
+        width: size,
+        height: size,
+        wireframes: false,
+        background: 'transparent',
+        pixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+      },
+    });
+
+    // 1. El tambor: paredes en círculo y 4 topes por dentro, todo estático.
+    const c = size / 2;
+    const radius = size * 0.36;
+    const wall = size * 0.06;
+    const segments = 28;
+    const parts = [];
+    for (let i = 0; i < segments; i += 1) {
+      const a = (i / segments) * Math.PI * 2;
+      const length = (2 * Math.PI * (radius + wall / 2)) / segments + 2;
+      parts.push(Bodies.rectangle(
+        c + Math.cos(a) * (radius + wall / 2),
+        c + Math.sin(a) * (radius + wall / 2),
+        wall,
+        length,
+        { angle: a, render: { visible: false } }
+      ));
+    }
+    for (let i = 0; i < 4; i += 1) {
+      const a = (i / 4) * Math.PI * 2 + Math.PI / 4;
+      parts.push(Bodies.circle(c + Math.cos(a) * radius * 0.86, c + Math.sin(a) * radius * 0.86, size * 0.03, { render: { visible: false } }));
+    }
+    const drum = Body.create({ parts, isStatic: true });
+    Composite.add(engine.world, drum);
+
+    // 2. Las piezas: logos de Mandoca, círculos naranjas y fichas crema.
+    const pieceUrl = el.dataset.piece;
+    const pieces = [];
+    const count = Math.round(num(el, 'pieces', 16));
+    for (let i = 0; i < count; i += 1) {
+      const x = c + (Math.random() - 0.5) * radius;
+      const y = c - radius * 0.2 + (Math.random() - 0.5) * radius * 0.6;
+      const kind = i % 3;
+      if (kind === 0 && pieceUrl) {
+        pieces.push(Bodies.circle(x, y, size * 0.05, {
+          restitution: 0.5,
+          friction: 0.05,
+          render: { sprite: { texture: pieceUrl, xScale: 0.0001, yScale: 0.0001 } },
+        }));
+      } else if (kind === 1) {
+        pieces.push(Bodies.circle(x, y, size * 0.03, { restitution: 0.7, friction: 0.02, render: { fillStyle: ember } }));
+      } else {
+        pieces.push(Bodies.rectangle(x, y, size * 0.085, size * 0.04, {
+          chamfer: { radius: size * 0.02 },
+          restitution: 0.4,
+          render: { fillStyle: gold },
+        }));
+      }
+    }
+    Composite.add(engine.world, pieces);
+
+    // El logo se escala según el tamaño real de la imagen.
+    if (pieceUrl) {
+      const img = new Image();
+      img.onload = () => {
+        pieces.forEach((body) => {
+          if (!body.render.sprite || !body.render.sprite.texture || !body.circleRadius) return;
+          const scale = (body.circleRadius * 2.3) / img.naturalWidth;
+          body.render.sprite.xScale = scale;
+          body.render.sprite.yScale = scale;
+        });
+      };
+      img.src = pieceUrl;
+    }
+
+    // 3. Agarrar piezas con el mouse (solo escritorio y fuera del editor).
+    let mouse = null;
+    if (!env.editor && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      mouse = Mouse.create(render.canvas);
+      Composite.add(engine.world, MouseConstraint.create(engine, { mouse, constraint: { stiffness: 0.2, render: { visible: false } } }));
+      render.mouse = mouse;
+      // La rueda del mouse sigue moviendo la página.
+      ['mousewheel', 'DOMMouseScroll', 'wheel'].forEach((type) => mouse.element.removeEventListener(type, mouse.mousewheel));
+    }
+
+    // 4. Girar el tambor (y el anillo de texto) en cada paso; más rápido con el scroll.
+    let angle = 0;
+    let boost = 0;
+    let last = performance.now();
+    const spin = ScrollTrigger.create({
+      trigger: el,
+      start: 'top bottom',
+      end: 'bottom top',
+      onUpdate: (self) => { boost = Math.min(Math.abs(self.getVelocity()) / 400, 6); },
+    });
+    Events.on(engine, 'beforeUpdate', () => {
+      if (!el.isConnected) { // Elementor volvió a pintar el widget: se detiene
+        stop();
+        return;
+      }
+      const now = performance.now();
+      const dt = Math.min(now - last, 50) / 1000;
+      last = now;
+      boost *= 0.95;
+      angle += (0.35 + boost * 0.6) * dt;
+      Body.setAngle(drum, angle);
+      if (ring) gsap.set(ring, { rotation: (angle * 180) / Math.PI });
+    });
+
+    // 5. Correr solo mientras se ve en pantalla.
+    const runner = Runner.create();
+    let running = false;
+    const start = () => {
+      if (running) return;
+      running = true;
+      last = performance.now();
+      Runner.run(runner, engine);
+      Render.run(render);
+    };
+    const stop = () => {
+      if (!running) return;
+      running = false;
+      Runner.stop(runner);
+      Render.stop(render);
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!el.isConnected) stop(); // Elementor volvió a pintar el widget
+      else if (entry.isIntersecting) start();
+      else stop();
+    }, { rootMargin: '120px' });
+    observer.observe(el);
+    el.classList.add('is-physics');
+
+    // 6. Si cambia el tamaño, el lienzo se escala con CSS y el mouse se ajusta.
+    const onResize = () => {
+      if (mouse) Mouse.setScale(mouse, { x: size / stage.clientWidth, y: size / stage.clientWidth });
+    };
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      observer.disconnect();
+      spin.kill();
+      stop();
+      window.removeEventListener('resize', onResize);
+      Events.off(engine);
+      Composite.clear(engine.world, false);
+      Engine.clear(engine);
+      render.canvas.remove();
+      render.textures = {};
+      el.classList.remove('is-physics');
+      if (ring) gsap.set(ring, { clearProps: 'transform' });
+    };
+  }
+
+  add('[data-tumbler]', (el, env) => {
+    if (!env.motion) return undefined; // con reducir movimiento: anillo quieto con el logo
+    let destroy = () => {};
+    const cancelWait = whenMatter(() => {
+      if (el.isConnected) destroy = buildTumbler(el, env);
+    });
+    return () => {
+      cancelWait();
+      destroy();
+    };
+  }, { editor: true });
+
   /* ---------- Entradas al hacer scroll ----------
      Reemplaza al IntersectionObserver de antes: cada bloque sube y aparece
      cuando entra en pantalla (una sola vez). */
