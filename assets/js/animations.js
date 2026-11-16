@@ -54,6 +54,71 @@
   const modules = [];
   const add = (selector, init, opts = {}) => modules.push({ selector, init, ...opts });
 
+  /* ---------- 1. Intro del hero ----------
+     El título entra palabra por palabra desde abajo con máscara, luego la
+     cita y los botones. Duración total: 1.4 s. */
+  add('.hero', (el, env) => {
+    const hidden = el.querySelectorAll('.hero-inner > *, .scroll-hint');
+    if (!env.motion || env.editor) {
+      gsap.set(hidden, { opacity: 1 }); // sin movimiento (o en el editor): todo visible al instante
+      return undefined;
+    }
+
+    const title = el.querySelector('.hero-title');
+    const eyebrow = el.querySelector('.hero-inner > .eyebrow');
+    const quote = el.querySelector('.hero-quote');
+    const buttons = el.querySelectorAll('.hero-actions .btn');
+    const socials = el.querySelectorAll('.hero-socials a');
+    const hint = el.querySelector('.scroll-hint');
+    const split = title && SplitText ? SplitText.create(title, { type: 'words', mask: 'words' }) : null;
+
+    gsap.set([title, el.querySelector('.hero-actions'), el.querySelector('.hero-socials')].filter(Boolean), { opacity: 1 });
+
+    const tl = gsap.timeline({ defaults: { ease: 'power4.out' }, onComplete: () => split && split.revert() });
+    if (eyebrow) tl.fromTo(eyebrow, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 }, 0);
+    if (split) tl.from(split.words, { yPercent: 110, duration: 0.75, stagger: 0.06 }, 0.1);
+    else if (title) tl.fromTo(title, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.75 }, 0.1);
+    if (quote) tl.fromTo(quote, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55 }, 0.6);
+    if (buttons.length) tl.fromTo(buttons, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 }, 0.75);
+    if (socials.length) tl.fromTo(socials, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05 }, 0.8);
+    if (hint) tl.fromTo(hint, { opacity: 0 }, { opacity: 1, duration: 0.4 }, 1.0);
+
+    return () => split && split.revert();
+  }, { editor: true });
+
+  /* ---------- 2a. Orbes del hero con el scroll ----------
+     Cada orbe se desplaza a una velocidad distinta al bajar. */
+  add('.hero', (el, env) => {
+    if (!env.motion) return;
+    el.querySelectorAll('.orb-layer').forEach((layer, i) => {
+      gsap.to(layer, {
+        yPercent: i % 2 ? -18 : 32,
+        ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top top', end: 'bottom top', scrub: true },
+      });
+    });
+  });
+
+  /* ---------- 2b. Orbes del hero siguen al mouse (solo escritorio) ---------- */
+  add('.hero', (el) => {
+    const movers = Array.from(el.querySelectorAll('.orb-layer')).map((layer) => ({
+      x: gsap.quickTo(layer, 'x', { duration: 1.4, ease: 'power3' }),
+      y: gsap.quickTo(layer, 'y', { duration: 1.4, ease: 'power3' }),
+      depth: num(layer, 'depth', 40),
+    }));
+    const onMove = (e) => {
+      const r = el.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width - 0.5;
+      const ny = (e.clientY - r.top) / r.height - 0.5;
+      movers.forEach((m) => {
+        m.x(nx * m.depth);
+        m.y(ny * m.depth);
+      });
+    };
+    el.addEventListener('pointermove', onMove);
+    return () => el.removeEventListener('pointermove', onMove);
+  }, { desktop: true });
+
   /* ---------- Entradas al hacer scroll ----------
      Reemplaza al IntersectionObserver de antes: cada bloque sube y aparece
      cuando entra en pantalla (una sola vez). */
