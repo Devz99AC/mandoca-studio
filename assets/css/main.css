@@ -461,6 +461,10 @@ body.menu-open { overflow: hidden; }
 }
 
 /* ---------- Carrusel de destacados (como "Featured" de Thunderful) ---------- */
+/* El carrusel entra desde la derecha: mientras espera, queda fuera de la
+   pantalla. Se recorta aquí para que no ensanche la página (en celular
+   empujaba el botón del menú fuera de la pantalla). */
+.featured { overflow-x: clip; }
 .featured-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; margin-bottom: 2.5rem; }
 .featured-title-wrap { display: flex; align-items: center; gap: .9rem; }
 .featured-icon { flex: none; color: var(--ember); }
