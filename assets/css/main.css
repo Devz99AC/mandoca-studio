@@ -405,6 +405,12 @@ body.elementor-template-canvas { padding-top: 0; }
 .socials a:hover { color: var(--bone); }
 .copy { margin: 0; color: var(--muted); font-size: .85rem; }
 
+/* Aviso que solo se ve dentro del editor de Elementor */
+.mandoca-editor-notice {
+  margin-block: 1rem; padding: 1rem 1.25rem; border-radius: var(--radius);
+  border: 1px dashed var(--ember); color: var(--gold); font-size: .95rem;
+}
+
 /* ---------- Páginas y entradas sin Elementor ---------- */
 .page-content { padding: clamp(3rem, 8vw, 6rem) 0; max-width: 46rem; }
 .page-content h1 { font-size: clamp(2.25rem, 5vw, 3.5rem); }
