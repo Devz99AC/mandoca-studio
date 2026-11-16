@@ -118,6 +118,8 @@ p { margin: 0 0 1em; }
 .btn-primary:hover { background: var(--ember-2); transform: translateY(-2px); }
 .btn-ghost { border-color: var(--line); color: var(--bone); }
 .btn-ghost:hover { border-color: var(--bone); }
+/* Botón magnético: GSAP mueve el transform, así que el CSS no lo transiciona */
+.btn.is-magnetic { transition: background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease); }
 
 /* ---------- Cabecera ---------- */
 /* Fija (no sticky) para que funcione aunque Elementor la envuelva en sus contenedores */
