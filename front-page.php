@@ -23,8 +23,7 @@ if ( $mandoca_use_content ) {
 		the_content();
 	}
 } else {
-	wp_enqueue_script( 'matter-js' ); // Física del círculo (tumbler); se imprime en el pie.
-	foreach ( array( 'hero', 'marquee', 'juegos', 'destacados', 'estudio', 'tumbler', 'equipo', 'contacto' ) as $mandoca_section ) {
+	foreach ( array( 'hero', 'marquee', 'juegos', 'destacados', 'estudio', 'equipo', 'contacto' ) as $mandoca_section ) {
 		mandoca_render_part( $mandoca_section );
 	}
 }

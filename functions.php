@@ -18,9 +18,8 @@ define( 'MANDOCA_URI', get_template_directory_uri() );
 // aunque el panel de WordPress esté en inglés).
 define( 'MANDOCA_CONTENT_LANG', 'es' );
 
-// Versiones fijas de las librerías de animación (las mismas en preview/index.html).
+// Versión fija de GSAP, la librería de animación (la misma en preview/index.html).
 define( 'MANDOCA_GSAP_VERSION', '3.13.0' );
-define( 'MANDOCA_MATTER_VERSION', '0.20.0' );
 
 require_once MANDOCA_DIR . '/inc/helpers.php';
 require_once MANDOCA_DIR . '/inc/defaults.php';
@@ -102,9 +101,6 @@ function mandoca_enqueue_assets() {
 	foreach ( array( 'gsap', 'gsap-scrolltrigger', 'gsap-flip', 'gsap-splittext' ) as $mandoca_handle ) {
 		wp_add_inline_script( $mandoca_handle, 'window.default = window;' );
 	}
-
-	// Matter.js (física). Solo se carga en las páginas que tienen el círculo con física.
-	wp_register_script( 'matter-js', 'https://cdn.jsdelivr.net/npm/matter-js@' . MANDOCA_MATTER_VERSION . '/build/matter.min.js', array(), null, true );
 
 	wp_enqueue_script(
 		'mandoca-animations',
