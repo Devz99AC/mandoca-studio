@@ -428,19 +428,18 @@
     };
     document.addEventListener('mandoca:open-game', onOpen);
 
-    let timer;
-    const onResize = () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => layout(false), 150);
-    };
-    window.addEventListener('resize', onResize);
+    // Cada vez que ScrollTrigger va a medir la página (al cargar y al cambiar
+    // el tamaño de la ventana), primero se acomodan los paneles. Así las
+    // posiciones de scroll de las secciones de abajo salen bien.
+    const onRefreshInit = () => layout(false);
+    ScrollTrigger.addEventListener('refreshInit', onRefreshInit);
     const cancelSize = whenSized(el, () => layout(false));
 
     return () => {
       cancelSize();
       offs.forEach((off) => off());
       document.removeEventListener('mandoca:open-game', onOpen);
-      window.removeEventListener('resize', onResize);
+      ScrollTrigger.removeEventListener('refreshInit', onRefreshInit);
       el.classList.remove('is-ready');
       gsap.set(items, { clearProps: 'x,zIndex' });
     };
@@ -567,7 +566,13 @@
       ease: 'power2.inOut',
       absolute: true,
       scale: true,
-      onComplete: () => { team.style.minHeight = ''; },
+      onComplete: () => {
+        team.style.minHeight = '';
+        // La sección cambió de altura y las tarjetas de lugar: se recalculan
+        // las posiciones de scroll. Así aparecen las tarjetas que todavía
+        // esperaban su entrada en cascada y que ahora quedaron a la vista.
+        ScrollTrigger.refresh();
+      },
       onEnter: (els) => gsap.fromTo(els, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.5, delay: 0.1 }),
       onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.8, duration: 0.4 }),
     });
@@ -637,7 +642,7 @@
 
     if (eyebrow) {
       const words = split(eyebrow, { type: 'words' }, 'words');
-      tl.fromTo(eyebrow, { '--line': 0 }, { '--line': 1, duration: 0.55, ease: 'power2.inOut' });
+      tl.fromTo(eyebrow, { '--line-scale': 0 }, { '--line-scale': 1, duration: 0.55, ease: 'power2.inOut' });
       tl.from(words, { opacity: 0, x: -12, stagger: 0.05, duration: 0.45 }, '-=0.1');
     }
     if (title) {
@@ -718,6 +723,11 @@
       '(prefers-reduced-motion: no-preference) and (min-width: 1024px) and (hover: hover) and (pointer: fine)',
       (m) => Boolean(m.desktop)
     );
+    // Algunos módulos cambian la altura de la página al iniciar (la vitrina de
+    // juegos pasa de tarjetas apiladas a paneles). Se recalculan las posiciones
+    // de todos los ScrollTrigger para que, por ejemplo, el menú marque la
+    // sección correcta.
+    if (ScrollTrigger) ScrollTrigger.refresh();
   }
 
   // Espera a que carguen las fuentes para que SplitText mida bien las palabras.
