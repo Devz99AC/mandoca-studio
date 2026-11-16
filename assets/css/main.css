@@ -28,6 +28,25 @@
   --ease: cubic-bezier(.2, .7, .2, 1);
 }
 
+/* ---------- Colores y fuentes globales de Elementor ----------
+   Elementor guarda sus colores y fuentes globales (Site Settings) como
+   variables --e-global-* en el <body>. Aquí las conectamos con las del tema:
+   si el diseñador cambia el naranja en Elementor, cambia en todo el sitio.
+   Sin Elementor (vista previa con Live Server) se usan los mismos valores
+   de :root, por eso se repiten como respaldo. */
+body {
+  --ink: var(--e-global-color-primary, #0a0a0a);
+  --bone: var(--e-global-color-secondary, #ffffff);
+  --muted: var(--e-global-color-text, #adadad);
+  --ember: var(--e-global-color-accent, #e55901);
+  --gray: var(--e-global-color-gris, #585858);
+  --gold: var(--e-global-color-crema, #fef1e4);
+
+  --font-display: var(--e-global-typography-primary-font-family, "Montserrat"), system-ui, sans-serif;
+  --font-body: var(--e-global-typography-text-font-family, "Inter"), system-ui, sans-serif;
+  --font-mono: var(--e-global-typography-accent-font-family, "JetBrains Mono"), ui-monospace, monospace;
+}
+
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -120,9 +139,11 @@ p { margin: 0 0 1em; }
 @media (max-width: 782px) { .admin-bar .site-header { top: 46px; } }
 @media (max-width: 600px) { .admin-bar .site-header { top: 0; } }
 
-/* Páginas sin cabecera del tema (Elementor Canvas y edición de plantillas) */
-body.elementor-template-canvas { padding-top: 0; }
-.elementor-template-canvas .site-header { position: relative; top: auto; }
+/* Páginas sin cabecera del tema (Elementor Canvas y edición de plantillas):
+   la cabecera que se está editando queda en su lugar, sin flotar */
+body.elementor-template-canvas, body.single-elementor_library { padding-top: 0; }
+.elementor-template-canvas .site-header,
+.single-elementor_library .site-header { position: relative; top: auto; }
 
 .header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; }
 
@@ -404,6 +425,12 @@ body.elementor-template-canvas { padding-top: 0; }
 .socials a { text-decoration: none; color: var(--muted); font-size: .95rem; }
 .socials a:hover { color: var(--bone); }
 .copy { margin: 0; color: var(--muted); font-size: .85rem; }
+
+/* Aviso que solo se ve dentro del editor de Elementor */
+.mandoca-editor-notice {
+  margin-block: 1rem; padding: 1rem 1.25rem; border-radius: var(--radius);
+  border: 1px dashed var(--ember); color: var(--gold); font-size: .95rem;
+}
 
 /* ---------- Páginas y entradas sin Elementor ---------- */
 .page-content { padding: clamp(3rem, 8vw, 6rem) 0; max-width: 46rem; }

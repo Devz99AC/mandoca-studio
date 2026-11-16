@@ -23,6 +23,7 @@ require_once MANDOCA_DIR . '/inc/defaults.php';
 require_once MANDOCA_DIR . '/inc/cpt.php';
 require_once MANDOCA_DIR . '/inc/meta-boxes.php';
 require_once MANDOCA_DIR . '/inc/seed.php';
+require_once MANDOCA_DIR . '/inc/elementor.php';
 
 /**
  * Soportes del tema: título automático, imágenes destacadas, logo, etc.

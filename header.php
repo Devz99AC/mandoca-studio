@@ -19,6 +19,11 @@ defined( 'ABSPATH' ) || exit;
 
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
-<?php mandoca_render_part( 'cabecera' ); ?>
+<?php
+// Cabecera: primero la plantilla "Header" de Elementor; si no existe, la del tema.
+if ( ! mandoca_is_elementor_template_view() && ! mandoca_render_elementor_template( 'header' ) ) {
+	mandoca_render_part( 'cabecera' );
+}
+?>
 
 <main id="contenido" class="site-main">
