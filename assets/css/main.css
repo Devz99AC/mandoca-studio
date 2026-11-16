@@ -354,11 +354,11 @@ body.menu-open { overflow: hidden; }
 .section { padding: clamp(5rem, 10vw, 8rem) 0; }
 .section-alt { background: var(--ink-2); border-block: 1px solid var(--line); }
 .section-head { margin-bottom: 3.5rem; max-width: 44rem; }
-/* Línea naranja antes del eyebrow (GSAP la hace crecer con --line) */
+/* Línea naranja antes del eyebrow (GSAP la hace crecer con --line-scale, de 0 a 1) */
 .section-head .eyebrow { display: flex; align-items: center; gap: .85rem; }
 .section-head .eyebrow::before {
   content: ""; flex: none; width: 2.5rem; height: 2px; background: var(--ember);
-  transform: scaleX(var(--line, 1)); transform-origin: left center;
+  transform: scaleX(var(--line-scale, 1)); transform-origin: left center;
 }
 .section-lead { color: var(--muted); font-size: 1.125rem; }
 
@@ -461,6 +461,10 @@ body.menu-open { overflow: hidden; }
 }
 
 /* ---------- Carrusel de destacados (como "Featured" de Thunderful) ---------- */
+/* El carrusel entra desde la derecha: mientras espera, queda fuera de la
+   pantalla. Se recorta aquí para que no ensanche la página (en celular
+   empujaba el botón del menú fuera de la pantalla). */
+.featured { overflow-x: clip; }
 .featured-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; margin-bottom: 2.5rem; }
 .featured-title-wrap { display: flex; align-items: center; gap: .9rem; }
 .featured-icon { flex: none; color: var(--ember); }
