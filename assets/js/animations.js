@@ -195,6 +195,158 @@
     return () => document.removeEventListener('mandoca:menu', onMenu);
   }, { editor: true });
 
+  /* ---------- Motor de bucle infinito (cinta y carrusel) ----------
+     Clona el grupo de elementos (.loop-set) las veces necesarias para llenar
+     la pantalla y lo desplaza sin fin con transform. Se configura con data-*:
+       data-speed="90"        píxeles por segundo
+       data-direction="left"  o "right"
+       data-scroll-boost      se acelera (e inclina) con la velocidad del scroll
+       data-pause-hover       se detiene suavemente con el mouse encima
+       data-draggable         se puede arrastrar y lanzar con el mouse o el dedo */
+  function createLoop(el) {
+    const track = el.querySelector('.loop-track');
+    const set = track && track.querySelector('.loop-set');
+    if (!track || !set) return () => {};
+
+    const speed = num(el, 'speed', 80);
+    const baseDir = el.dataset.direction === 'right' ? 1 : -1;
+    let dir = baseDir;
+    let setWidth = 0;
+
+    // 1. Clonar el grupo hasta cubrir dos pantallas de ancho.
+    const build = () => {
+      track.querySelectorAll('.loop-set.is-clone').forEach((c) => c.remove());
+      setWidth = set.getBoundingClientRect().width;
+      if (!setWidth) return;
+      const copies = Math.ceil((el.offsetWidth * 2) / setWidth) + 1;
+      for (let i = 0; i < copies; i += 1) {
+        const clone = set.cloneNode(true);
+        clone.classList.add('is-clone');
+        clone.setAttribute('aria-hidden', 'true');
+        clone.querySelectorAll('a, button').forEach((n) => n.setAttribute('tabindex', '-1'));
+        track.appendChild(clone);
+      }
+    };
+    build();
+    el.classList.add('is-looping');
+
+    // 2. Mover la fila en cada cuadro (60 fps) con el reloj de GSAP.
+    const setX = gsap.quickSetter(track, 'x', 'px');
+    const setSkew = el.hasAttribute('data-scroll-boost') ? gsap.quickSetter(track, 'skewX', 'deg') : null;
+    let x = 0;
+    let boost = 0;
+    let boostTarget = 0;
+    let pause = 1;
+    let pauseTarget = 1;
+    let throwSpeed = 0;
+    let dragging = false;
+    let lastX = 0;
+    let lastTime = 0;
+    let moved = 0;
+
+    const tick = (time, deltaTime) => {
+      if (!el.isConnected) { // Elementor volvió a pintar el widget
+        gsap.ticker.remove(tick);
+        return;
+      }
+      const dt = Math.min(deltaTime, 50) / 1000;
+      boostTarget *= 0.92;
+      boost += (boostTarget - boost) * 0.1;
+      pause += (pauseTarget - pause) * 0.08;
+      if (!dragging) {
+        x += (dir * speed * (1 + boost) * pause + throwSpeed) * dt;
+        throwSpeed *= 0.94; // inercia después de soltar
+      }
+      if (setWidth) setX(gsap.utils.wrap(-setWidth, 0, x));
+      if (setSkew) setSkew(gsap.utils.clamp(-10, 10, -dir * boost * 2.5));
+    };
+    gsap.ticker.add(tick);
+
+    // 3. Acelerar con la velocidad del scroll (y cambiar de sentido al subir).
+    const triggers = [];
+    if (el.hasAttribute('data-scroll-boost') && ScrollTrigger) {
+      triggers.push(ScrollTrigger.create({
+        trigger: el,
+        start: 'top bottom',
+        end: 'bottom top',
+        onUpdate: (self) => {
+          const velocity = self.getVelocity();
+          boostTarget = Math.min(Math.abs(velocity) / 300, 6);
+          dir = velocity < 0 ? -baseDir : baseDir;
+        },
+      }));
+    }
+
+    // 4. Pausa con el mouse encima.
+    const listeners = [];
+    const on = (target, type, fn, opts) => {
+      target.addEventListener(type, fn, opts);
+      listeners.push(() => target.removeEventListener(type, fn, opts));
+    };
+    if (el.hasAttribute('data-pause-hover')) {
+      on(el, 'pointerenter', (e) => { if (e.pointerType === 'mouse') pauseTarget = 0; });
+      on(el, 'pointerleave', () => { pauseTarget = 1; });
+    }
+
+    // 5. Arrastrar y lanzar.
+    if (el.hasAttribute('data-draggable')) {
+      on(el, 'pointerdown', (e) => {
+        if (e.button !== 0) return;
+        dragging = true;
+        moved = 0;
+        throwSpeed = 0;
+        lastX = e.clientX;
+        lastTime = performance.now();
+        el.classList.add('is-dragging');
+      });
+      on(window, 'pointermove', (e) => {
+        if (!dragging) return;
+        const now = performance.now();
+        const dx = e.clientX - lastX;
+        x += dx;
+        moved += Math.abs(dx);
+        throwSpeed = (dx / Math.max(1, now - lastTime)) * 1000;
+        lastX = e.clientX;
+        lastTime = now;
+      });
+      const release = () => {
+        if (!dragging) return;
+        dragging = false;
+        el.classList.remove('is-dragging');
+      };
+      on(window, 'pointerup', release);
+      on(window, 'pointercancel', release);
+      // Si se arrastró, el clic no abre la tarjeta.
+      on(el, 'click', (e) => {
+        if (moved > 6) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+      on(el, 'dragstart', (e) => e.preventDefault());
+    }
+
+    // 6. Recalcular al cambiar el tamaño de la ventana.
+    let timer;
+    on(window, 'resize', () => {
+      clearTimeout(timer);
+      timer = setTimeout(build, 200);
+    });
+
+    return () => {
+      gsap.ticker.remove(tick);
+      triggers.forEach((t) => t.kill());
+      listeners.forEach((off) => off());
+      track.querySelectorAll('.loop-set.is-clone').forEach((c) => c.remove());
+      el.classList.remove('is-looping', 'is-dragging');
+      gsap.set(track, { clearProps: 'transform' });
+    };
+  }
+
+  /* ---------- 3. Cinta y carrusel infinitos ----------
+     Sin movimiento: la cinta queda quieta y el carrusel se desliza a mano. */
+  add('[data-loop]', (el, env) => (env.motion ? createLoop(el) : undefined), { editor: true });
+
   /* ---------- Entradas al hacer scroll ----------
      Reemplaza al IntersectionObserver de antes: cada bloque sube y aparece
      cuando entra en pantalla (una sola vez). */

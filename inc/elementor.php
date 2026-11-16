@@ -64,6 +64,7 @@ function mandoca_elementor_widget_list() {
 		'header'    => 'Mandoca_Header_Widget',
 		'footer'    => 'Mandoca_Footer_Widget',
 		'hero'      => 'Mandoca_Hero_Widget',
+		'marquee'   => 'Mandoca_Marquee_Widget',
 		'games'     => 'Mandoca_Games_Widget',
 		'studio'    => 'Mandoca_Studio_Widget',
 		'team'      => 'Mandoca_Team_Widget',

@@ -63,6 +63,12 @@ function mandoca_defaults( $section ) {
 			'show_socials' => true,
 		),
 
+		'marquee'  => array(
+			'text'      => 'CREATIVE · IMAGINATIVE · GAMES',
+			'speed'     => 90, // Píxeles por segundo.
+			'direction' => 'left',
+		),
+
 		'juegos'   => array(
 			'section_id' => 'juegos',
 			'alt'        => false,
