@@ -38,6 +38,23 @@
     return Number.isFinite(value) ? value : fallback;
   };
 
+  // Ejecuta "callback" cuando el elemento ya tenga ancho. En el editor de
+  // Elementor los widgets a veces se crean antes de estar en pantalla.
+  const whenSized = (el, callback) => {
+    if (el.clientWidth > 0) {
+      callback();
+      return () => {};
+    }
+    const observer = new ResizeObserver(() => {
+      if (el.clientWidth > 0) {
+        observer.disconnect();
+        callback();
+      }
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  };
+
   // API que usan main.js y physics: se completa en cada módulo.
   const api = (window.MandocaMotion = window.MandocaMotion || {});
 
@@ -227,7 +244,7 @@
         track.appendChild(clone);
       }
     };
-    build();
+    const cancelSize = whenSized(el, build);
     el.classList.add('is-looping');
 
     // 2. Mover la fila en cada cuadro (60 fps) con el reloj de GSAP.
@@ -335,6 +352,7 @@
     });
 
     return () => {
+      cancelSize();
       gsap.ticker.remove(tick);
       triggers.forEach((t) => t.kill());
       listeners.forEach((off) => off());
@@ -416,9 +434,10 @@
       timer = setTimeout(() => layout(false), 150);
     };
     window.addEventListener('resize', onResize);
-    layout(false);
+    const cancelSize = whenSized(el, () => layout(false));
 
     return () => {
+      cancelSize();
       offs.forEach((off) => off());
       document.removeEventListener('mandoca:open-game', onOpen);
       window.removeEventListener('resize', onResize);
@@ -779,15 +798,24 @@
 
   add('[data-tumbler]', (el, env) => {
     if (!env.motion) return undefined; // con reducir movimiento: anillo quieto con el logo
+    // Por si Elementor copió el widget con un lienzo anterior.
+    el.classList.remove('is-physics');
+    const holder = el.querySelector('.tumbler-canvas');
+    if (holder) holder.textContent = '';
+
     let destroy = () => {};
+    let cancelSize = () => {};
     const cancelWait = whenMatter(() => {
-      if (el.isConnected) destroy = buildTumbler(el, env);
+      cancelSize = whenSized(el.querySelector('.tumbler-stage') || el, () => {
+        if (el.isConnected) destroy = buildTumbler(el, env);
+      });
     });
     return () => {
       cancelWait();
+      cancelSize();
       destroy();
     };
-  }, { editor: true });
+  }); // En el editor de Elementor se ve quieto (anillo y logo); la física corre en el sitio.
 
   /* ---------- Entradas al hacer scroll ----------
      Reemplaza al IntersectionObserver de antes: cada bloque sube y aparece
@@ -880,6 +908,18 @@
     });
   }
 
+  // En el editor de Elementor cada widget editado se vuelve a pintar: lo animamos otra vez.
+  // (Se registra apenas carga el script, para no perder el aviso de Elementor.)
+  const hookElementor = () => {
+    const ef = window.elementorFrontend;
+    if (!ef || !ef.hooks || !ef.isEditMode()) return;
+    ef.hooks.addAction('frontend/element_ready/widget', ($scope) => {
+      Object.values(scopes).forEach((scope) => run(scope, $scope[0]));
+    });
+  };
+  if (window.elementorFrontend && window.elementorFrontend.hooks) hookElementor();
+  else if (window.jQuery) window.jQuery(window).on('elementor/frontend/init', hookElementor);
+
   function start() {
     html.classList.add('motion-ready');
     // Todo lo general (con o sin movimiento).
@@ -894,17 +934,6 @@
       '(prefers-reduced-motion: no-preference) and (min-width: 1024px) and (hover: hover) and (pointer: fine)',
       (m) => Boolean(m.desktop)
     );
-
-    // En el editor de Elementor cada widget editado se vuelve a pintar: lo animamos otra vez.
-    if (window.jQuery) {
-      window.jQuery(window).on('elementor/frontend/init', () => {
-        const ef = window.elementorFrontend;
-        if (!ef || !ef.hooks || !ef.isEditMode()) return;
-        ef.hooks.addAction('frontend/element_ready/widget', ($scope) => {
-          Object.values(scopes).forEach((scope) => run(scope, $scope[0]));
-        });
-      });
-    }
   }
 
   // Espera a que carguen las fuentes para que SplitText mida bien las palabras.
