@@ -566,7 +566,13 @@
       ease: 'power2.inOut',
       absolute: true,
       scale: true,
-      onComplete: () => { team.style.minHeight = ''; },
+      onComplete: () => {
+        team.style.minHeight = '';
+        // La sección cambió de altura y las tarjetas de lugar: se recalculan
+        // las posiciones de scroll. Así aparecen las tarjetas que todavía
+        // esperaban su entrada en cascada y que ahora quedaron a la vista.
+        ScrollTrigger.refresh();
+      },
       onEnter: (els) => gsap.fromTo(els, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.5, delay: 0.1 }),
       onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.8, duration: 0.4 }),
     });
