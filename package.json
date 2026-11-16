@@ -1,0 +1,16 @@
+{
+  "name": "mandoca-studio-web",
+  "version": "1.0.0",
+  "description": "Sitio web de Mandoca Studio, estudio independiente de videojuegos.",
+  "private": true,
+  "scripts": {
+    "dev": "live-server --port=5500 --open=index.html",
+    "format": "prettier --write \"**/*.{html,css,js,md}\""
+  },
+  "keywords": ["videojuegos", "estudio", "html", "css", "javascript"],
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "prettier": "^3.3.3"
+  }
+}

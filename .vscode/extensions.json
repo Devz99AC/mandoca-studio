@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "ritwickdey.LiveServer",
+    "anthropic.claude-code",
+    "esbenp.prettier-vscode",
+    "editorconfig.editorconfig"
+  ]
+}
