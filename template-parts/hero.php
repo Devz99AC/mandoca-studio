@@ -12,8 +12,8 @@ defined( 'ABSPATH' ) || exit;
 <section class="hero"<?php echo $args['section_id'] ? ' id="' . esc_attr( $args['section_id'] ) . '"' : ''; ?>>
 	<?php if ( $args['show_orbs'] ) : ?>
 		<div class="hero-bg" aria-hidden="true">
-			<span class="orb orb-1"></span>
-			<span class="orb orb-2"></span>
+			<span class="orb-layer" data-depth="60"><span class="orb orb-1"></span></span>
+			<span class="orb-layer" data-depth="-35"><span class="orb orb-2"></span></span>
 			<span class="grain"></span>
 		</div>
 	<?php endif; ?>
