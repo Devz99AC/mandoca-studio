@@ -119,6 +119,64 @@
     return () => el.removeEventListener('pointermove', onMove);
   }, { desktop: true });
 
+  /* ---------- 7. Cabecera ----------
+     - Al pasar la primera pantalla se pone fondo sólido.
+     - Cuando es barra superior (celular, o el diseño "Top bar"), se oculta al
+       bajar y aparece al subir. La barra lateral de escritorio siempre se ve. */
+  add('.site-header', (header, env) => {
+    const hero = document.querySelector('.hero');
+    const isBar = () => header.classList.contains('site-header--top') || window.innerWidth < 1024;
+
+    const solid = ScrollTrigger.create({
+      start: () => Math.max(1, (hero ? hero.offsetHeight : window.innerHeight) - header.offsetHeight),
+      end: 'max',
+      onToggle: (self) => header.classList.toggle('is-solid', self.isActive),
+    });
+    if (!env.motion) return () => solid.kill();
+
+    let hidden = false;
+    const setHidden = (value) => {
+      if (value === hidden) return;
+      hidden = value;
+      gsap.to(header, { yPercent: value ? -100 : 0, duration: 0.4, ease: 'power2.out', overwrite: true });
+    };
+    const watch = ScrollTrigger.create({
+      start: 0,
+      end: 'max',
+      onUpdate: (self) => {
+        const menuOpen = document.body.classList.contains('menu-open');
+        setHidden(isBar() && !menuOpen && self.direction === 1 && self.scroll() > header.offsetHeight * 2);
+      },
+    });
+    const onResize = () => { if (!isBar()) setHidden(false); };
+    window.addEventListener('resize', onResize);
+    return () => {
+      solid.kill();
+      watch.kill();
+      window.removeEventListener('resize', onResize);
+    };
+  });
+
+  /* ---------- 10. Menú: sección activa ----------
+     El scroll suave lo hace el CSS (scroll-behavior: smooth). Aquí se marca
+     en naranja el enlace de la sección que se está viendo. */
+  add('.nav', (nav) => {
+    const triggers = Array.from(nav.querySelectorAll('a[href*="#"]'))
+      .map((link) => ({ link, section: link.hash ? document.getElementById(link.hash.slice(1)) : null }))
+      .filter(({ section }) => section)
+      .map(({ link, section }) => ScrollTrigger.create({
+        trigger: section,
+        start: 'top 45%',
+        end: 'bottom 45%',
+        onToggle: (self) => {
+          link.classList.toggle('is-current', self.isActive);
+          if (self.isActive) link.setAttribute('aria-current', 'true');
+          else link.removeAttribute('aria-current');
+        },
+      }));
+    return () => triggers.forEach((t) => t.kill());
+  });
+
   /* ---------- Menú a pantalla completa ----------
      Al abrirlo, los enlaces grandes suben con máscara uno tras otro y
      después aparecen las redes. */
