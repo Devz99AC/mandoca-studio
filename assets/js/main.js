@@ -32,25 +32,39 @@
     return true;
   };
 
-  /* 1. Menú móvil ----------------------------------------- */
+  /* 1. Menú a pantalla completa ----------------------------- */
   function initMenu(header) {
     const toggle = header.querySelector('.nav-toggle');
-    const menu = header.querySelector('.nav');
-    if (!toggle || !menu) return;
+    const next = header.nextElementSibling;
+    const panel = next && next.matches('.menu-panel') ? next : document.getElementById('menu-panel');
+    if (!toggle || !panel) return;
 
     const labelOpen = toggle.dataset.labelOpen || 'Abrir menú';
     const labelClose = toggle.dataset.labelClose || 'Cerrar menú';
+    const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
 
     const setOpen = (open) => {
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open ? labelClose : labelOpen);
-      menu.classList.toggle('is-open', open);
+      panel.classList.toggle('is-open', open);
+      document.body.classList.toggle('menu-open', open); // la página no se mueve detrás del menú
+      // animations.js escucha este aviso para animar los enlaces
+      document.dispatchEvent(new CustomEvent('mandoca:menu', { detail: { open, panel } }));
+      if (open) {
+        const first = panel.querySelector('a');
+        if (first) first.focus({ preventScroll: true });
+      }
     };
 
-    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    toggle.addEventListener('click', () => setOpen(!isOpen()));
     // Cierra el menú al elegir una opción o al pulsar Escape
-    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+    panel.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen()) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
   }
 
   /* 2. Borde de la cabecera al hacer scroll ---------------- */

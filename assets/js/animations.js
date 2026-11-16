@@ -119,6 +119,24 @@
     return () => el.removeEventListener('pointermove', onMove);
   }, { desktop: true });
 
+  /* ---------- Menú a pantalla completa ----------
+     Al abrirlo, los enlaces grandes suben con máscara uno tras otro y
+     después aparecen las redes. */
+  add('.menu-panel', (panel, env) => {
+    const texts = panel.querySelectorAll('.menu-panel-text');
+    const nums = panel.querySelectorAll('.menu-panel-num');
+    const foot = panel.querySelector('.menu-panel-foot');
+    const onMenu = (e) => {
+      if (e.detail.panel !== panel || !e.detail.open || !env.motion) return;
+      gsap.timeline()
+        .fromTo(texts, { yPercent: 110 }, { yPercent: 0, duration: 0.75, stagger: 0.06, ease: 'power4.out' }, 0.05)
+        .fromTo(nums, { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.06 }, 0.2)
+        .fromTo(foot, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, 0.35);
+    };
+    document.addEventListener('mandoca:menu', onMenu);
+    return () => document.removeEventListener('mandoca:menu', onMenu);
+  }, { editor: true });
+
   /* ---------- Entradas al hacer scroll ----------
      Reemplaza al IntersectionObserver de antes: cada bloque sube y aparece
      cuando entra en pantalla (una sola vez). */

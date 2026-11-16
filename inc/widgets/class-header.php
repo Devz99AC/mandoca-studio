@@ -59,6 +59,19 @@ class Mandoca_Header_Widget extends Mandoca_Widget_Base {
 	protected function register_controls() {
 		$this->start_controls_section( 'brand_section', array( 'label' => esc_html__( 'Brand', 'mandoca-studio' ) ) );
 		$this->add_control(
+			'layout',
+			array(
+				'label'       => esc_html__( 'Layout on desktop', 'mandoca-studio' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => $this->default_value( 'layout' ),
+				'options'     => array(
+					'sidebar' => esc_html__( 'Sidebar (vertical, left)', 'mandoca-studio' ),
+					'top'     => esc_html__( 'Top bar', 'mandoca-studio' ),
+				),
+				'description' => esc_html__( 'On phones both look like a top bar with a menu button.', 'mandoca-studio' ),
+			)
+		);
+		$this->add_control(
 			'logo',
 			array(
 				'label'       => esc_html__( 'Logo', 'mandoca-studio' ),
@@ -186,6 +199,7 @@ class Mandoca_Header_Widget extends Mandoca_Widget_Base {
 
 		$this->render_part(
 			array(
+				'layout'   => $s['layout'],
 				'logo_url' => $this->url( $s['logo'] ),
 				'brand'    => $s['brand'],
 				'links'    => $this->links( $s['links'] ),
