@@ -69,7 +69,39 @@ class Mandoca_Games_Widget extends Mandoca_Widget_Base {
 		$this->add_section_fields();
 		$this->add_text( 'eyebrow', esc_html__( 'Eyebrow', 'mandoca-studio' ) );
 		$this->add_text( 'title', esc_html__( 'Title', 'mandoca-studio' ) );
-		$this->add_switch( 'zigzag', esc_html__( 'Alternate image side', 'mandoca-studio' ) );
+		$this->add_control(
+			'layout',
+			array(
+				'label'   => esc_html__( 'Layout', 'mandoca-studio' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => $this->default_value( 'layout' ),
+				'options' => array(
+					'showcase' => esc_html__( 'Showcase (full-width panels)', 'mandoca-studio' ),
+					'blocks'   => esc_html__( 'Blocks (art and text alternated)', 'mandoca-studio' ),
+				),
+			)
+		);
+		$this->add_responsive_control(
+			'showcase_height',
+			array(
+				'label'      => esc_html__( 'Showcase height', 'mandoca-studio' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'vh', 'px' ),
+				'range'      => array(
+					'vh' => array(
+						'min' => 40,
+						'max' => 100,
+					),
+					'px' => array(
+						'min' => 360,
+						'max' => 1000,
+					),
+				),
+				'selectors'  => array( '{{WRAPPER}} .showcase.is-ready' => 'height: {{SIZE}}{{UNIT}};' ),
+				'condition'  => array( 'layout' => 'showcase' ),
+			)
+		);
+		$this->add_switch( 'zigzag', esc_html__( 'Alternate image side', 'mandoca-studio' ), array( 'condition' => array( 'layout' => 'blocks' ) ) );
 		$this->add_control(
 			'limit',
 			array(
@@ -140,6 +172,7 @@ class Mandoca_Games_Widget extends Mandoca_Widget_Base {
 		$this->render_part(
 			array(
 				'section_id' => $s['section_id'],
+				'layout'     => $s['layout'],
 				'alt'        => 'yes' === $s['alt'],
 				'eyebrow'    => $s['eyebrow'],
 				'title'      => $s['title'],

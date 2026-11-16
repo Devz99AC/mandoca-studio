@@ -212,6 +212,41 @@ function mandoca_get_games( $limit = -1 ) {
 }
 
 /**
+ * Imprime la imagen de un juego (de la Biblioteca de medios o por URL).
+ *
+ * @param array  $game  Datos del juego (de mandoca_get_games()).
+ * @param string $class Clase CSS de la imagen.
+ */
+function mandoca_game_image( $game, $class ) {
+	if ( ! empty( $game['image_id'] ) ) {
+		echo wp_get_attachment_image(
+			$game['image_id'],
+			'contain' === $game['fit'] ? 'large' : 'mandoca-game',
+			false,
+			array(
+				'class'     => $class,
+				'alt'       => '',
+				'loading'   => 'lazy',
+				'draggable' => 'false',
+			)
+		);
+	} elseif ( ! empty( $game['image_url'] ) ) {
+		printf( '<img class="%s" src="%s" alt="" loading="lazy" draggable="false">', esc_attr( $class ), esc_url( $game['image_url'] ) );
+	}
+}
+
+/**
+ * Línea de datos de un juego: "Acción · Aventura / 2026".
+ *
+ * @param array  $game      Datos del juego.
+ * @param string $separator Separador entre género y año.
+ * @return string
+ */
+function mandoca_game_meta( $game, $separator ) {
+	return implode( $separator, array_filter( array( $game['genre'], $game['year'] ) ) );
+}
+
+/**
  * ¿La página actual se armó con Elementor?
  *
  * @param int $post_id ID de la página.

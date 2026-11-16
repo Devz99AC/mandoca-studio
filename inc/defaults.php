@@ -25,6 +25,7 @@ function mandoca_defaults( $section ) {
 		),
 
 		'cabecera' => array(
+			'layout'   => 'sidebar', // "sidebar" (barra lateral, como Thunderful) o "top" (barra arriba).
 			'logo_url' => '',
 			'brand'    => 'Mandoca.Studio',
 			'links'    => array(
@@ -59,10 +60,18 @@ function mandoca_defaults( $section ) {
 			'scroll_url'   => '#juegos',
 			'scroll_label' => 'Bajar a Juegos',
 			'show_orbs'    => true,
+			'show_socials' => true,
+		),
+
+		'marquee'  => array(
+			'text'      => 'CREATIVE · IMAGINATIVE · GAMES',
+			'speed'     => 90, // Píxeles por segundo.
+			'direction' => 'left',
 		),
 
 		'juegos'   => array(
 			'section_id' => 'juegos',
+			'layout'     => 'showcase', // "showcase" (vitrina tipo Thunderful) o "blocks" (zig-zag).
 			'alt'        => false,
 			'eyebrow'    => '01 — Juegos',
 			'title'      => 'En qué estamos trabajando',
@@ -71,9 +80,22 @@ function mandoca_defaults( $section ) {
 			'games'      => null, // null = leer los juegos del panel.
 		),
 
+		'destacados' => array(
+			'section_id'  => 'destacados',
+			'alt'         => true,
+			'title'       => 'Destacados',
+			'button_text' => 'Ver todos los juegos',
+			'button_url'  => '#juegos',
+			'card_url'    => '#juegos',
+			'tab_text'    => 'Ver juego',
+			'speed'       => 45, // Píxeles por segundo.
+			'limit'       => -1,
+			'games'       => null, // null = leer los juegos del panel.
+		),
+
 		'estudio'  => array(
 			'section_id' => 'estudio',
-			'alt'        => true,
+			'alt'        => false,
 			'eyebrow'    => '02 — Estudio',
 			'title'      => 'Un grupo de amigos haciendo los juegos que nos gustaría jugar',
 			'text'       => 'Mandoca Studio nació como un grupo de amigos cercanos. Queremos hacer juegos divertidos que nos representen como personas y que lleven dentro mucho de lo que amamos, para que otros también lo disfruten.',
@@ -91,6 +113,14 @@ function mandoca_defaults( $section ) {
 					'label'  => 'año de fundación',
 				),
 			),
+		),
+
+		'tumbler'  => array(
+			'section_id' => '',
+			'alt'        => false,
+			'ring_text'  => 'MANDOCA STUDIO · CREATIVE · IMAGINATIVE · GAMES · ',
+			'pieces'     => 16, // Cuántas piezas ruedan dentro del círculo.
+			'piece_url'  => '', // Vacío = el logo del tema.
 		),
 
 		'equipo'   => array(
@@ -125,22 +155,9 @@ function mandoca_defaults( $section ) {
 		),
 
 		'pie'      => array(
-			'brand'   => 'Mandoca.Studio',
-			'socials' => array(
-				array(
-					'text' => 'Instagram',
-					'url'  => 'https://www.instagram.com/',
-				),
-				array(
-					'text' => 'X',
-					'url'  => 'https://x.com/',
-				),
-				array(
-					'text' => 'YouTube',
-					'url'  => 'https://www.youtube.com/',
-				),
-			),
-			'copy'    => '© {year} Mandoca Studio · Proyecto académico',
+			'brand'        => 'Mandoca.Studio',
+			'show_socials' => true, // Las redes se editan en Apariencia > Personalizar.
+			'copy'         => '© {year} Mandoca Studio · Proyecto académico',
 		),
 	);
 

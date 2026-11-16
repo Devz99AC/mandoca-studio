@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <section class="section<?php echo $args['alt'] ? ' section-alt' : ''; ?>"<?php echo $args['section_id'] ? ' id="' . esc_attr( $args['section_id'] ) . '"' : ''; ?>>
 	<div class="container studio">
-		<div class="section-head reveal">
+		<div class="section-head">
 			<?php if ( $args['eyebrow'] ) : ?>
 				<p class="eyebrow"><?php echo esc_html( $args['eyebrow'] ); ?></p>
 			<?php endif; ?>
@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 			<?php endif; ?>
 		</div>
 
-		<div class="studio-text reveal">
+		<div class="studio-text">
 			<?php echo wp_kses_post( wpautop( $args['text'] ) ); ?>
 
 			<?php if ( ! empty( $args['stats'] ) ) : ?>

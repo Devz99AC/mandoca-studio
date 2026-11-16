@@ -11,7 +11,6 @@
 defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
-use Elementor\Repeater;
 
 /**
  * Pie del sitio.
@@ -63,36 +62,18 @@ class Mandoca_Footer_Widget extends Mandoca_Widget_Base {
 			array( 'description' => esc_html__( 'The first dot is shown in orange.', 'mandoca-studio' ) )
 		);
 
-		$social = new Repeater();
-		$social->add_control(
-			'text',
-			array(
-				'label' => esc_html__( 'Network', 'mandoca-studio' ),
-				'type'  => Controls_Manager::TEXT,
-			)
-		);
-		$social->add_control(
-			'link',
-			array(
-				'label' => esc_html__( 'Link', 'mandoca-studio' ),
-				'type'  => Controls_Manager::URL,
-			)
-		);
-		$default_socials = array();
-		foreach ( $this->default_value( 'socials' ) as $item ) {
-			$default_socials[] = array(
-				'text' => $item['text'],
-				'link' => array( 'url' => $item['url'] ),
-			);
-		}
+		$this->add_switch( 'show_socials', esc_html__( 'Show social networks', 'mandoca-studio' ) );
 		$this->add_control(
-			'socials',
+			'socials_note',
 			array(
-				'label'       => esc_html__( 'Social networks', 'mandoca-studio' ),
-				'type'        => Controls_Manager::REPEATER,
-				'fields'      => $social->get_controls(),
-				'default'     => $default_socials,
-				'title_field' => '{{{ text }}}',
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => sprintf(
+					'%s <a href="%s" target="_blank">%s</a>',
+					esc_html__( 'The networks are edited in one place for the whole site.', 'mandoca-studio' ),
+					esc_url( admin_url( 'customize.php?autofocus[section]=mandoca_socials' ) ),
+					esc_html__( 'Open Customize → Social networks', 'mandoca-studio' )
+				),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			)
 		);
 		$this->add_text(
@@ -106,7 +87,7 @@ class Mandoca_Footer_Widget extends Mandoca_Widget_Base {
 
 		$this->start_text_styles();
 		$this->add_text_style( 'brand', esc_html__( 'Brand name', 'mandoca-studio' ), '{{WRAPPER}} .footer-brand' );
-		$this->add_text_style( 'social', esc_html__( 'Social links', 'mandoca-studio' ), '{{WRAPPER}} .socials a' );
+		$this->add_text_style( 'social', esc_html__( 'Social links', 'mandoca-studio' ), '{{WRAPPER}} .footer-socials a', false );
 		$this->add_text_style( 'copy', esc_html__( 'Copyright', 'mandoca-studio' ), '{{WRAPPER}} .copy' );
 		$this->end_controls_section();
 	}
@@ -119,9 +100,9 @@ class Mandoca_Footer_Widget extends Mandoca_Widget_Base {
 
 		$this->render_part(
 			array(
-				'brand'   => $s['brand'],
-				'socials' => $this->links( $s['socials'] ),
-				'copy'    => $s['copy'],
+				'brand'        => $s['brand'],
+				'show_socials' => 'yes' === $s['show_socials'],
+				'copy'         => $s['copy'],
 			)
 		);
 	}
