@@ -20,6 +20,8 @@ define( 'MANDOCA_CONTENT_LANG', 'es' );
 
 require_once MANDOCA_DIR . '/inc/helpers.php';
 require_once MANDOCA_DIR . '/inc/defaults.php';
+require_once MANDOCA_DIR . '/inc/cpt.php';
+require_once MANDOCA_DIR . '/inc/meta-boxes.php';
 
 /**
  * Soportes del tema: título automático, imágenes destacadas, logo, etc.
