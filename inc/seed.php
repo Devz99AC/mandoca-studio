@@ -103,6 +103,29 @@ function mandoca_seed_games() {
 			'ajuste'  => 'contain',
 			'image'   => 'assets/img/juegos/void-mask.webp',
 		),
+		// Juegos 3 y 4: placeholder hasta que el equipo los anuncie (se editan en Games).
+		array(
+			'title'   => 'Proyecto 03',
+			'slug'    => 'proyecto-03',
+			'content' => 'Muy pronto compartiremos más sobre este proyecto.',
+			'estado'  => 'Próximamente',
+			'genero'  => 'Por anunciar',
+			'anio'    => '',
+			'equipo'  => '',
+			'ajuste'  => 'cover',
+			'image'   => '',
+		),
+		array(
+			'title'   => 'Proyecto 04',
+			'slug'    => 'proyecto-04',
+			'content' => 'Muy pronto compartiremos más sobre este proyecto.',
+			'estado'  => 'Próximamente',
+			'genero'  => 'Por anunciar',
+			'anio'    => '',
+			'equipo'  => '',
+			'ajuste'  => 'cover',
+			'image'   => '',
+		),
 	);
 }
 
@@ -172,7 +195,7 @@ function mandoca_seed_content( $force = false ) {
 		foreach ( array( 'estado', 'genero', 'anio', 'equipo', 'ajuste' ) as $key ) {
 			update_post_meta( $id, '_mandoca_' . $key, $game[ $key ] );
 		}
-		$image_id = mandoca_seed_image( $game['image'], $game['title'], $id );
+		$image_id = $game['image'] ? mandoca_seed_image( $game['image'], $game['title'], $id ) : 0;
 		if ( $image_id ) {
 			set_post_thumbnail( $id, $image_id );
 		}
@@ -200,7 +223,7 @@ add_action( 'after_switch_theme', 'mandoca_seed_content' );
  */
 function mandoca_seed_image( $relative, $title, $parent = 0 ) {
 	$path = MANDOCA_DIR . '/' . $relative;
-	if ( ! file_exists( $path ) ) {
+	if ( ! $relative || ! is_file( $path ) ) {
 		return 0;
 	}
 

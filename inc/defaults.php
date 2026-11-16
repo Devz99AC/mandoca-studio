@@ -71,6 +71,7 @@ function mandoca_defaults( $section ) {
 
 		'juegos'   => array(
 			'section_id' => 'juegos',
+			'layout'     => 'showcase', // "showcase" (vitrina tipo Thunderful) o "blocks" (zig-zag).
 			'alt'        => false,
 			'eyebrow'    => '01 — Juegos',
 			'title'      => 'En qué estamos trabajando',
