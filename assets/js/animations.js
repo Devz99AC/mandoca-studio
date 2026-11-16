@@ -428,19 +428,18 @@
     };
     document.addEventListener('mandoca:open-game', onOpen);
 
-    let timer;
-    const onResize = () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => layout(false), 150);
-    };
-    window.addEventListener('resize', onResize);
+    // Cada vez que ScrollTrigger va a medir la página (al cargar y al cambiar
+    // el tamaño de la ventana), primero se acomodan los paneles. Así las
+    // posiciones de scroll de las secciones de abajo salen bien.
+    const onRefreshInit = () => layout(false);
+    ScrollTrigger.addEventListener('refreshInit', onRefreshInit);
     const cancelSize = whenSized(el, () => layout(false));
 
     return () => {
       cancelSize();
       offs.forEach((off) => off());
       document.removeEventListener('mandoca:open-game', onOpen);
-      window.removeEventListener('resize', onResize);
+      ScrollTrigger.removeEventListener('refreshInit', onRefreshInit);
       el.classList.remove('is-ready');
       gsap.set(items, { clearProps: 'x,zIndex' });
     };
@@ -718,6 +717,11 @@
       '(prefers-reduced-motion: no-preference) and (min-width: 1024px) and (hover: hover) and (pointer: fine)',
       (m) => Boolean(m.desktop)
     );
+    // Algunos módulos cambian la altura de la página al iniciar (la vitrina de
+    // juegos pasa de tarjetas apiladas a paneles). Se recalculan las posiciones
+    // de todos los ScrollTrigger para que, por ejemplo, el menú marque la
+    // sección correcta.
+    if (ScrollTrigger) ScrollTrigger.refresh();
   }
 
   // Espera a que carguen las fuentes para que SplitText mida bien las palabras.
