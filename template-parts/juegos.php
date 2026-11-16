@@ -17,7 +17,7 @@ $mandoca_games = is_array( $args['games'] ) ? $args['games'] : mandoca_get_games
 <section class="section<?php echo $args['alt'] ? ' section-alt' : ''; ?>"<?php echo $args['section_id'] ? ' id="' . esc_attr( $args['section_id'] ) . '"' : ''; ?>>
 	<div class="container">
 		<?php if ( $args['eyebrow'] || $args['title'] ) : ?>
-			<header class="section-head reveal">
+			<header class="section-head">
 				<?php if ( $args['eyebrow'] ) : ?>
 					<p class="eyebrow"><?php echo esc_html( $args['eyebrow'] ); ?></p>
 				<?php endif; ?>
@@ -35,7 +35,7 @@ $mandoca_games = is_array( $args['games'] ) ? $args['games'] : mandoca_get_games
 			$mandoca_art    .= $mandoca_has_img ? ' has-image fit-' . $mandoca_game['fit'] : ' is-placeholder';
 			$mandoca_meta    = implode( ' · ', array_filter( array( $mandoca_game['genre'], $mandoca_game['year'] ) ) );
 			?>
-			<article class="game<?php echo $mandoca_reverse ? ' game-reverse' : ''; ?> reveal">
+			<article class="game<?php echo $mandoca_reverse ? ' game-reverse' : ''; ?>">
 				<div class="<?php echo esc_attr( $mandoca_art ); ?>" role="img" aria-label="<?php echo esc_attr( 'Arte de ' . $mandoca_game['title'] ); ?>">
 					<?php
 					if ( ! empty( $mandoca_game['image_id'] ) ) {
