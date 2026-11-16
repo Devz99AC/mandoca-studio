@@ -42,6 +42,7 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
+  padding-top: var(--header-h); /* espacio para la cabecera fija */
 }
 
 img { max-width: 100%; display: block; }
@@ -61,6 +62,14 @@ p { margin: 0 0 1em; }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
 
 .container { width: min(100% - 2.5rem, var(--container)); margin-inline: auto; }
+
+/* Enlace "Saltar al contenido": invisible hasta que se navega con teclado */
+.skip-link {
+  position: absolute; left: 1rem; top: -100px; z-index: 100;
+  padding: .6rem 1rem; border-radius: 8px;
+  background: var(--bone); color: var(--ink); font-weight: 700; text-decoration: none;
+}
+.skip-link:focus { top: 1rem; }
 
 .eyebrow {
   font-family: var(--font-mono);
@@ -91,9 +100,12 @@ p { margin: 0 0 1em; }
 .btn-ghost:hover { border-color: var(--bone); }
 
 /* ---------- Cabecera ---------- */
+/* Fija (no sticky) para que funcione aunque Elementor la envuelva en sus contenedores */
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 50;
   height: var(--header-h);
   background: rgba(10, 10, 10, .8);
@@ -103,11 +115,20 @@ p { margin: 0 0 1em; }
 }
 .site-header.is-scrolled { border-bottom-color: var(--line); }
 
+/* Con la barra de administración de WordPress (sesión iniciada) */
+.admin-bar .site-header { top: 32px; }
+@media (max-width: 782px) { .admin-bar .site-header { top: 46px; } }
+@media (max-width: 600px) { .admin-bar .site-header { top: 0; } }
+
+/* Páginas sin cabecera del tema (Elementor Canvas y edición de plantillas) */
+body.elementor-template-canvas { padding-top: 0; }
+.elementor-template-canvas .site-header { position: relative; top: auto; }
+
 .header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; }
 
 .brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
-.brand-logo { width: 40px; height: 40px; object-fit: contain; }
-.brand-logo.is-missing { display: none; }
+.brand .brand-logo { width: 40px; height: 40px; object-fit: contain; }
+.brand .brand-logo.is-missing { display: none; }
 .brand-name { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; letter-spacing: -0.01em; }
 .brand-dot { color: var(--ember); }
 
@@ -210,18 +231,32 @@ p { margin: 0 0 1em; }
   transition: transform .5s var(--ease);
 }
 .game-art:hover { transform: scale(1.015); }
-.game-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.game .game-art .game-img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; border-radius: 0; max-width: none;
+}
+/* Imagen completa (por ejemplo, un personaje con fondo transparente) */
+.game .game-art.fit-contain .game-img { object-fit: contain; object-position: 85% 50%; padding: 6% 8%; }
+/* Degradado para que el título se lea sobre la imagen */
+.game-art.has-image::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(10, 10, 10, .85));
+}
 .art-title {
   position: relative;
+  z-index: 1;
   font-family: var(--font-display);
   font-weight: 800;
   font-size: clamp(2rem, 5vw, 3.5rem);
   letter-spacing: .04em;
+  text-transform: uppercase;
   color: var(--bone);
   text-shadow: 0 6px 30px rgba(0, 0, 0, .5);
 }
 
-/* Arte provisional hecho con CSS (se reemplaza con una captura real) */
+/* Arte provisional hecho con CSS (se usa mientras el juego no tenga imagen) */
+.game-art.is-placeholder { background: linear-gradient(160deg, var(--ink-3), var(--ink-2) 60%, var(--gray)); }
+.game-art .mask { display: none; }
 .art-skathos {
   background:
     linear-gradient(180deg, transparent 40%, rgba(14, 12, 16, .9)),
@@ -234,25 +269,26 @@ p { margin: 0 0 1em; }
   clip-path: polygon(0 100%, 0 60%, 12% 40%, 22% 55%, 35% 20%, 48% 45%, 58% 10%, 70% 50%, 82% 30%, 100% 55%, 100% 100%);
   opacity: .85;
 }
-.art-void {
+.art-void-mask {
   background:
     radial-gradient(circle at 70% 40%, rgba(173, 173, 173, .35), transparent 55%),
     radial-gradient(circle at 20% 80%, rgba(229, 89, 1, .3), transparent 50%),
     #0a0a0a;
 }
-.art-void .mask {
+.art-void-mask .mask {
+  display: block;
   position: absolute; width: 38%; aspect-ratio: 3 / 4; right: 14%; top: 14%;
   border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%;
   background: linear-gradient(180deg, var(--bone), var(--muted));
   box-shadow: 0 0 80px rgba(255, 255, 255, .2);
   animation: float 6s ease-in-out infinite;
 }
-.art-void .mask::before, .art-void .mask::after {
+.art-void-mask .mask::before, .art-void-mask .mask::after {
   content: ""; position: absolute; top: 38%; width: 22%; height: 12%;
   background: #0a0a0a; border-radius: 50%;
 }
-.art-void .mask::before { left: 20%; }
-.art-void .mask::after { right: 20%; }
+.art-void-mask .mask::before { left: 20%; }
+.art-void-mask .mask::after { right: 20%; }
 @keyframes float { 50% { transform: translateY(-10px) rotate(-2deg); } }
 
 .game-meta { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); letter-spacing: .04em; }
@@ -273,6 +309,7 @@ p { margin: 0 0 1em; }
 
 /* ---------- Estudio ---------- */
 .studio { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+.studio .section-head { margin-bottom: 0; }
 .studio-text p { font-size: 1.2rem; color: #d4d4d4; }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2.5rem 0 0; }
 .stats div { border-top: 1px solid var(--line); padding-top: 1rem; }
@@ -303,14 +340,14 @@ p { margin: 0 0 1em; }
 }
 .member:hover { transform: translateY(-4px); border-color: var(--gray); }
 .member.is-hidden { display: none; }
-.member-photo, .member-initials {
-  width: 100%; aspect-ratio: 1; object-fit: cover;
+.member .member-photo, .member .member-initials {
+  width: 100%; height: auto; aspect-ratio: 1; object-fit: cover;
   border-radius: calc(var(--radius) - 4px);
   margin-bottom: 1.25rem;
   background: var(--ink-2);
 }
-/* Si la foto no existe, JS la cambia por las iniciales */
-.member-initials {
+/* Si no hay foto se muestran las iniciales */
+.member .member-initials {
   display: grid; place-items: center;
   font-family: var(--font-display); font-weight: 800; font-size: 3.5rem;
   color: var(--bone);
@@ -321,7 +358,9 @@ p { margin: 0 0 1em; }
   font-family: var(--font-mono); font-size: .78rem; letter-spacing: .04em;
   color: var(--ember); margin-bottom: .75rem; padding-inline: .25rem;
 }
-.member p:last-child { color: var(--muted); font-size: .95rem; margin: 0; padding-inline: .25rem; }
+.member-bio { padding-inline: .25rem; }
+.member-bio p { color: var(--muted); font-size: .95rem; margin: 0 0 .6em; }
+.member-bio p:last-child { margin-bottom: 0; }
 
 /* ---------- Comunidad / contacto ---------- */
 .cta-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 1.5rem; }
@@ -365,6 +404,16 @@ p { margin: 0 0 1em; }
 .socials a { text-decoration: none; color: var(--muted); font-size: .95rem; }
 .socials a:hover { color: var(--bone); }
 .copy { margin: 0; color: var(--muted); font-size: .85rem; }
+
+/* ---------- Páginas y entradas sin Elementor ---------- */
+.page-content { padding: clamp(3rem, 8vw, 6rem) 0; max-width: 46rem; }
+.page-content h1 { font-size: clamp(2.25rem, 5vw, 3.5rem); }
+.page-content h2 a { text-decoration: none; }
+.entry-content { color: #d4d4d4; }
+.entry-content a { color: var(--ember); }
+.entry-content img { height: auto; border-radius: var(--radius); }
+.pagination { padding-bottom: 4rem; }
+.pagination .nav-links { display: flex; gap: .75rem; }
 
 /* ---------- Animación de entrada al hacer scroll ---------- */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease); }

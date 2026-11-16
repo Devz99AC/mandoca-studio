@@ -1,6 +1,12 @@
-# Capturas de los juegos
+# Arte de los juegos
 
-Opcional. Mientras no haya capturas, el sitio muestra un arte provisional hecho con CSS.
+Imágenes tomadas de [mandocastudio.com](https://www.mandocastudio.com/). Se usan con fines académicos.
 
-1. Guarda la imagen aquí (`skathos.webp` o `void-mask.webp`, horizontal 16:10).
-2. En `index.html`, busca el comentario `<!-- <img src="assets/img/juegos/... -->` y quítale los `<!--` y `-->`.
+| Juego     | Archivo          | Ajuste en el panel |
+|-----------|------------------|--------------------|
+| Skathos   | `skathos.webp`   | Cover (llena el marco) |
+| Void Mask | `void-mask.webp` | Contain (imagen completa, fondo transparente) |
+
+- **En WordPress:** al activar el tema se suben solas a la Biblioteca de medios y quedan como imagen destacada de cada juego. Para cambiarlas: *Games → editar el juego → Featured image*.
+- **En la vista previa (Live Server):** `preview/index.html` usa estos mismos archivos. Si cambias una imagen en el panel, copia también el archivo aquí con el mismo nombre.
+- Si un juego no tiene imagen, se muestra un arte provisional hecho con CSS.
