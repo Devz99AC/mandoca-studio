@@ -619,6 +619,23 @@ body.menu-open { overflow: hidden; }
 .stats dt { font-family: var(--font-display); font-weight: 800; font-size: 2.5rem; color: var(--ember); line-height: 1; font-variant-numeric: tabular-nums; }
 .stats dd { margin: .4rem 0 0; color: var(--muted); font-size: .9rem; }
 
+/* ---------- Círculo con física (como "We are Thunderful") ---------- */
+.tumbler { overflow: hidden; }
+.tumbler-stage { position: relative; width: min(88vw, 72vh, 640px); aspect-ratio: 1; margin-inline: auto; }
+.tumbler-ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; transform-origin: 50% 50%; }
+.tumbler-ring text {
+  fill: var(--bone); font-family: var(--font-display); font-weight: 800; font-style: italic;
+  text-transform: uppercase; font-size: 40px; letter-spacing: .02em;
+}
+.tumbler-mark {
+  position: absolute; left: 50%; top: 50%; width: 22%; height: auto;
+  transform: translate(-50%, -50%); pointer-events: none;
+}
+.tumbler-canvas { position: absolute; inset: 0; }
+.tumbler-canvas canvas { display: block; width: 100% !important; height: 100% !important; }
+.tumbler.is-physics .tumbler-canvas { cursor: grab; }
+.tumbler.is-physics .tumbler-canvas:active { cursor: grabbing; }
+
 /* ---------- Equipo ---------- */
 .filters { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 2.5rem; }
 .filter {

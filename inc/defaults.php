@@ -115,6 +115,14 @@ function mandoca_defaults( $section ) {
 			),
 		),
 
+		'tumbler'  => array(
+			'section_id' => '',
+			'alt'        => false,
+			'ring_text'  => 'MANDOCA STUDIO · CREATIVE · IMAGINATIVE · GAMES · ',
+			'pieces'     => 16, // Cuántas piezas ruedan dentro del círculo.
+			'piece_url'  => '', // Vacío = el logo del tema.
+		),
+
 		'equipo'   => array(
 			'section_id'   => 'equipo',
 			'alt'          => false,

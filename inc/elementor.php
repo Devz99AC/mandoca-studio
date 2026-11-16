@@ -68,6 +68,7 @@ function mandoca_elementor_widget_list() {
 		'games'     => 'Mandoca_Games_Widget',
 		'carousel'  => 'Mandoca_Carousel_Widget',
 		'studio'    => 'Mandoca_Studio_Widget',
+		'tumbler'   => 'Mandoca_Tumbler_Widget',
 		'team'      => 'Mandoca_Team_Widget',
 		'community' => 'Mandoca_Community_Widget',
 	);
