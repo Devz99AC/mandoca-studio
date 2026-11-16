@@ -32,6 +32,42 @@ function mandoca_meta_fields() {
 				),
 			),
 		),
+		'juego'   => array(
+			'title'  => __( 'Game details', 'mandoca-studio' ),
+			'fields' => array(
+				'estado'  => array(
+					'label'       => __( 'Status', 'mandoca-studio' ),
+					'type'        => 'text',
+					'placeholder' => 'En desarrollo',
+					'description' => __( 'Shown as a tag, e.g. "En desarrollo" or "Prototipo".', 'mandoca-studio' ),
+				),
+				'genero'  => array(
+					'label'       => __( 'Genre', 'mandoca-studio' ),
+					'type'        => 'text',
+					'placeholder' => 'Acción · Aventura',
+				),
+				'anio'    => array(
+					'label'       => __( 'Year', 'mandoca-studio' ),
+					'type'        => 'number',
+					'placeholder' => '2026',
+				),
+				'equipo'  => array(
+					'label'       => __( 'Team credits', 'mandoca-studio' ),
+					'type'        => 'textarea',
+					'placeholder' => "Arte: CrimReaper\nMúsica: JackRevon",
+					'description' => __( 'One credit per line. Each line becomes a pill under the description.', 'mandoca-studio' ),
+				),
+				'ajuste'  => array(
+					'label'       => __( 'Image fit', 'mandoca-studio' ),
+					'type'        => 'select',
+					'options'     => array(
+						'cover'   => __( 'Cover — fill the frame (screenshots)', 'mandoca-studio' ),
+						'contain' => __( 'Contain — show the whole image (transparent art)', 'mandoca-studio' ),
+					),
+					'description' => __( 'How the game art fits inside its 16:10 frame.', 'mandoca-studio' ),
+				),
+			),
+		),
 	);
 }
 

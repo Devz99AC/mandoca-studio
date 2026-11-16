@@ -81,6 +81,82 @@ function mandoca_register_member_type() {
 add_action( 'init', 'mandoca_register_member_type' );
 
 /**
+ * "Games" en el panel: tipo de contenido "juego".
+ *
+ * - Título y contenido = nombre y descripción del juego.
+ * - Imagen destacada = captura o arte.
+ * - Estado, género, año, equipo y ajuste de imagen = meta box (inc/meta-boxes.php).
+ */
+function mandoca_register_game_type() {
+	register_post_type(
+		'juego',
+		array(
+			'labels'        => array(
+				'name'                  => __( 'Games', 'mandoca-studio' ),
+				'singular_name'         => __( 'Game', 'mandoca-studio' ),
+				'menu_name'             => __( 'Games', 'mandoca-studio' ),
+				'all_items'             => __( 'All Games', 'mandoca-studio' ),
+				'add_new'               => __( 'Add Game', 'mandoca-studio' ),
+				'add_new_item'          => __( 'Add New Game', 'mandoca-studio' ),
+				'edit_item'             => __( 'Edit Game', 'mandoca-studio' ),
+				'new_item'              => __( 'New Game', 'mandoca-studio' ),
+				'search_items'          => __( 'Search Games', 'mandoca-studio' ),
+				'not_found'             => __( 'No games found.', 'mandoca-studio' ),
+				'not_found_in_trash'    => __( 'No games found in Trash.', 'mandoca-studio' ),
+				'featured_image'        => __( 'Game art', 'mandoca-studio' ),
+				'set_featured_image'    => __( 'Set game art', 'mandoca-studio' ),
+				'remove_featured_image' => __( 'Remove game art', 'mandoca-studio' ),
+				'use_featured_image'    => __( 'Use as game art', 'mandoca-studio' ),
+			),
+			'description'   => __( 'Games in development at Mandoca Studio.', 'mandoca-studio' ),
+			'public'        => false,
+			'show_ui'       => true,
+			'show_in_menu'  => true,
+			'show_in_rest'  => true,
+			'menu_position' => 21,
+			'menu_icon'     => 'dashicons-games',
+			'supports'      => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
+			'has_archive'   => false,
+			'rewrite'       => false,
+			'query_var'     => false,
+		)
+	);
+}
+add_action( 'init', 'mandoca_register_game_type' );
+
+/**
+ * Columnas de la lista de juegos: estado y año.
+ *
+ * @param array $columns Columnas por defecto.
+ * @return array
+ */
+function mandoca_game_columns( $columns ) {
+	$date = $columns['date'];
+	unset( $columns['date'] );
+	$columns['mandoca_status'] = __( 'Status', 'mandoca-studio' );
+	$columns['mandoca_year']   = __( 'Year', 'mandoca-studio' );
+	$columns['date']           = $date;
+	return $columns;
+}
+add_filter( 'manage_juego_posts_columns', 'mandoca_game_columns' );
+
+/**
+ * Contenido de las columnas de estado y año.
+ *
+ * @param string $column  Columna.
+ * @param int    $post_id ID del juego.
+ */
+function mandoca_game_column_content( $column, $post_id ) {
+	if ( 'mandoca_status' === $column ) {
+		echo esc_html( get_post_meta( $post_id, '_mandoca_estado', true ) );
+	}
+	if ( 'mandoca_year' === $column ) {
+		echo esc_html( get_post_meta( $post_id, '_mandoca_anio', true ) );
+	}
+}
+add_action( 'manage_juego_posts_custom_column', 'mandoca_game_column_content', 10, 2 );
+
+/**
  * Nuestros tipos de contenido usan el editor clásico: es más simple para un
  * texto corto y los meta boxes se ven debajo del texto.
  *
@@ -99,7 +175,7 @@ add_filter( 'use_block_editor_for_post_type', 'mandoca_classic_editor_for_cpt', 
  * @return string[]
  */
 function mandoca_cpt_slugs() {
-	return array( 'miembro' );
+	return array( 'miembro', 'juego' );
 }
 
 /**
@@ -112,6 +188,9 @@ function mandoca_cpt_slugs() {
 function mandoca_title_placeholder( $text, $post ) {
 	if ( 'miembro' === $post->post_type ) {
 		return __( 'Alias (e.g. JackRevon)', 'mandoca-studio' );
+	}
+	if ( 'juego' === $post->post_type ) {
+		return __( 'Game title', 'mandoca-studio' );
 	}
 	return $text;
 }
