@@ -398,14 +398,16 @@ function mandoca_el_id() {
  * Es la "fila" que el diseñador ve en el editor.
  *
  * @param string $widget Nombre interno del widget (por ejemplo, "mandoca-hero").
+ * @param string $title  Nombre de la fila en el panel "Structure" de Elementor.
  * @return array
  */
-function mandoca_el_section( $widget ) {
+function mandoca_el_section( $widget, $title = '' ) {
 	return array(
 		'id'       => mandoca_el_id(),
 		'elType'   => 'container',
 		'isInner'  => false,
 		'settings' => array(
+			'_title'        => $title,
 			'content_width' => 'full',
 			'padding'       => array(
 				'unit'     => 'px',
@@ -466,7 +468,7 @@ function mandoca_seed_elementor_template( $location, $title, $widget ) {
 		return;
 	}
 
-	mandoca_el_save( $id, array( mandoca_el_section( $widget ) ), 'section' );
+	mandoca_el_save( $id, array( mandoca_el_section( $widget, $title ) ), 'section' );
 	wp_set_object_terms( $id, 'section', 'elementor_library_type' );
 	update_option( 'mandoca_' . $location . '_template', $id );
 }
@@ -500,8 +502,14 @@ function mandoca_seed_front_page() {
 		return;
 	}
 
-	$widgets = array( 'mandoca-hero', 'mandoca-games', 'mandoca-studio-intro', 'mandoca-team', 'mandoca-community' );
-	mandoca_el_save( $page_id, array_map( 'mandoca_el_section', $widgets ), 'wp-page' );
+	$sections = array(
+		'mandoca-hero'         => 'Hero',
+		'mandoca-games'        => 'Juegos',
+		'mandoca-studio-intro' => 'Estudio',
+		'mandoca-team'         => 'Equipo',
+		'mandoca-community'    => 'Comunidad y contacto',
+	);
+	mandoca_el_save( $page_id, array_map( 'mandoca_el_section', array_keys( $sections ), $sections ), 'wp-page' );
 }
 
 /**
