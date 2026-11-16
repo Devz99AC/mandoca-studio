@@ -313,6 +313,7 @@
         if (!dragging) return;
         dragging = false;
         el.classList.remove('is-dragging');
+        setTimeout(() => { moved = 0; }, 0); // después del clic que sigue al soltar
       };
       on(window, 'pointerup', release);
       on(window, 'pointercancel', release);
@@ -476,6 +477,24 @@
       host.removeEventListener('pointerenter', pop);
     };
   }, { editor: true });
+
+  /* ---------- Carrusel de destacados: entrada e ícono ----------
+     El carrusel entra deslizándose desde la derecha y el control de juego
+     del título se mueve como el joystick animado de Thunderful. */
+  add('.featured', (el, env) => {
+    if (!env.motion) return;
+    const carousel = el.querySelector('.carousel');
+    const icon = el.querySelector('.featured-icon');
+    if (carousel) {
+      gsap.from(carousel, { x: 160, opacity: 0, duration: 1.2, scrollTrigger: { trigger: el, start: 'top 80%', once: true } });
+    }
+    if (icon) {
+      gsap.timeline({ repeat: -1, repeatDelay: 1.6 })
+        .to(icon, { rotation: -14, duration: 0.12, ease: 'power1.inOut' })
+        .to(icon, { rotation: 12, duration: 0.18, ease: 'power1.inOut', yoyo: true, repeat: 3 })
+        .to(icon, { rotation: 0, duration: 0.2, ease: 'back.out(3)' });
+    }
+  });
 
   /* ---------- Entradas al hacer scroll ----------
      Reemplaza al IntersectionObserver de antes: cada bloque sube y aparece

@@ -184,6 +184,13 @@
     $$(root, '[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
   }
 
+  // Tarjetas del carrusel: al hacer clic, la vitrina abre ese juego.
+  // (Se escucha en el documento para que también funcione en las copias del carrusel.)
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('.card[data-game]');
+    if (card) document.dispatchEvent(new CustomEvent('mandoca:open-game', { detail: { game: card.dataset.game } }));
+  });
+
   // En el editor de Elementor, cada widget editado se vuelve a pintar: lo iniciamos otra vez.
   // Estas variables solo existen dentro de WordPress; en la vista previa estática no pasa nada.
   if (window.jQuery) {
