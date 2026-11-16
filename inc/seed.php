@@ -531,7 +531,6 @@ function mandoca_seed_front_page() {
 		'mandoca-games'        => 'Juegos',
 		'mandoca-carousel'     => 'Destacados',
 		'mandoca-studio-intro' => 'Estudio',
-		'mandoca-tumbler'      => 'Círculo con física',
 		'mandoca-team'         => 'Equipo',
 		'mandoca-community'    => 'Comunidad y contacto',
 	);
