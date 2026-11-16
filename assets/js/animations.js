@@ -54,6 +54,19 @@
   const modules = [];
   const add = (selector, init, opts = {}) => modules.push({ selector, init, ...opts });
 
+  /* ---------- Entradas al hacer scroll ----------
+     Reemplaza al IntersectionObserver de antes: cada bloque sube y aparece
+     cuando entra en pantalla (una sola vez). */
+  add('.studio-text, .filters, .cta-card', (el, env) => {
+    if (!env.motion) return;
+    gsap.from(el, {
+      y: 48,
+      opacity: 0,
+      duration: 0.9,
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+    });
+  });
+
   /* @modules */
 
   /* =========================================================
