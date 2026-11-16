@@ -96,6 +96,13 @@ function mandoca_enqueue_assets() {
 	wp_register_script( 'gsap-flip', $gsap . 'Flip.min.js', array( 'gsap' ), null, true );
 	wp_register_script( 'gsap-splittext', $gsap . 'SplitText.min.js', array( 'gsap' ), null, true );
 
+	// Los archivos de GSAP dejan window.default apuntando a GSAP; el reproductor
+	// de medios de WordPress (que Elementor usa en el editor) espera que sea la
+	// ventana. Después de cada archivo lo devolvemos a su lugar.
+	foreach ( array( 'gsap', 'gsap-scrolltrigger', 'gsap-flip', 'gsap-splittext' ) as $mandoca_handle ) {
+		wp_add_inline_script( $mandoca_handle, 'window.default = window;' );
+	}
+
 	// Matter.js (física). Solo se carga en las páginas que tienen el círculo con física.
 	wp_register_script( 'matter-js', 'https://cdn.jsdelivr.net/npm/matter-js@' . MANDOCA_MATTER_VERSION . '/build/matter.min.js', array(), null, true );
 
