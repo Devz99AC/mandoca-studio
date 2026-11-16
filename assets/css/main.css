@@ -633,20 +633,30 @@ body.menu-open { overflow: hidden; }
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
 }
 .member {
+  position: relative;
   background: var(--ink-3);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 1rem 1rem 1.5rem;
-  transition: transform .3s var(--ease), border-color .3s, opacity .3s;
 }
-.member:hover { transform: translateY(-4px); border-color: var(--gray); }
+/* Borde naranja que aparece en hover (se anima su opacidad) */
+.member::after {
+  content: ""; position: absolute; inset: -1px; pointer-events: none;
+  border: 2px solid var(--ember); border-radius: inherit;
+  opacity: 0; transition: opacity .3s var(--ease);
+}
+.member:hover::after { opacity: 1; }
 .member.is-hidden { display: none; }
-.member .member-photo, .member .member-initials {
-  width: 100%; height: auto; aspect-ratio: 1; object-fit: cover;
-  border-radius: calc(var(--radius) - 4px);
-  margin-bottom: 1.25rem;
-  background: var(--ink-2);
+/* Marco de la foto: la foto hace un zoom leve en hover sin salirse */
+.member-media {
+  overflow: hidden; border-radius: calc(var(--radius) - 4px);
+  margin-bottom: 1.25rem; background: var(--ink-2);
 }
+.member .member-photo, .member .member-initials {
+  width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 0;
+  transition: transform .6s var(--ease);
+}
+.member:hover .member-photo, .member:hover .member-initials { transform: scale(1.06); }
 /* Si no hay foto se muestran las iniciales */
 .member .member-initials {
   display: grid; place-items: center;

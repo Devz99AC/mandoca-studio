@@ -513,6 +513,51 @@
     });
   });
 
+  /* ---------- 6a. Equipo: tarjetas en cascada ---------- */
+  add('[data-team]', (section, env) => {
+    if (!env.motion) return undefined;
+    const members = section.querySelectorAll('.member');
+    gsap.set(members, { opacity: 0, y: 60 });
+    const batch = ScrollTrigger.batch(members, {
+      start: 'top 90%',
+      once: true,
+      onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 0.8, stagger: 0.12, overwrite: true }),
+    });
+    return () => batch.forEach((t) => t.kill());
+  });
+
+  /* ---------- 6b. Equipo: filtro con GSAP Flip ----------
+     Flip guarda dónde está cada tarjeta, el filtro cambia cuáles se ven y
+     Flip anima la diferencia: las que salen se desvanecen y se achican, las
+     que quedan se deslizan a su nuevo lugar y las que entran aparecen.
+     main.js llama a esta función cuando se pulsa un botón del filtro. */
+  api.filterTeam = (section, apply) => {
+    const main = scopes.main;
+    if (!Flip || !main || !main.motion || main.editor) {
+      apply(); // sin movimiento: el cambio es instantáneo
+      return;
+    }
+    const members = section.querySelectorAll('.member');
+    const team = section.querySelector('.team');
+    const state = Flip.getState(members);
+    const before = team.offsetHeight;
+    apply();
+    const after = team.offsetHeight;
+    Flip.from(state, {
+      duration: 0.6,
+      ease: 'power2.inOut',
+      absolute: true,
+      scale: true,
+      onComplete: () => { team.style.minHeight = ''; },
+      onEnter: (els) => gsap.fromTo(els, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.5, delay: 0.1 }),
+      onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.8, duration: 0.4 }),
+    });
+    // Durante la animación las tarjetas flotan (absolute): la cuadrícula guarda
+    // su altura para que la sección de abajo no se suba encima. (Se fija
+    // después de que Flip mide, para no estirar las tarjetas.)
+    team.style.minHeight = `${Math.max(before, after)}px`;
+  };
+
   /* ---------- Entradas al hacer scroll ----------
      Reemplaza al IntersectionObserver de antes: cada bloque sube y aparece
      cuando entra en pantalla (una sola vez). */
