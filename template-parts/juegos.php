@@ -50,7 +50,9 @@ $mandoca_layout = 'blocks' === $args['layout'] ? 'blocks' : 'showcase';
 							<span class="badge" data-badge><?php echo esc_html( $mandoca_game['status'] ); ?></span>
 						<?php endif; ?>
 						<h3 class="showcase-title"><?php echo esc_html( $mandoca_game['title'] ); ?></h3>
-						<p class="showcase-meta"><?php echo esc_html( mandoca_game_meta( $mandoca_game, ' / ' ) ); ?></p>
+						<?php if ( mandoca_game_meta( $mandoca_game, ' / ' ) ) : ?>
+							<p class="showcase-meta"><?php echo esc_html( mandoca_game_meta( $mandoca_game, ' / ' ) ); ?></p>
+						<?php endif; ?>
 					</div>
 
 					<div class="showcase-more">

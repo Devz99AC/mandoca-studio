@@ -48,7 +48,9 @@ if ( ! $mandoca_games ) {
 								<span class="badge" data-badge><?php echo esc_html( $mandoca_game['status'] ); ?></span>
 							<?php endif; ?>
 							<h3 class="card-title"><?php echo esc_html( $mandoca_game['title'] ); ?></h3>
-							<p class="card-meta"><?php echo esc_html( mandoca_game_meta( $mandoca_game, ' / ' ) ); ?></p>
+							<?php if ( mandoca_game_meta( $mandoca_game, ' / ' ) ) : ?>
+								<p class="card-meta"><?php echo esc_html( mandoca_game_meta( $mandoca_game, ' / ' ) ); ?></p>
+							<?php endif; ?>
 						</div>
 						<span class="card-tab"><?php echo esc_html( $args['tab_text'] ); ?></span>
 					</a>
