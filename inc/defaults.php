@@ -5,7 +5,6 @@
  * Son los textos actuales del sitio. Los usan:
  * - los widgets de Elementor como valor inicial de cada campo;
  * - la portada cuando Elementor no está activo (respaldo).
- * Si cambias un texto aquí, cámbialo también en preview/index.html.
  *
  * @package Mandoca_Studio
  */
