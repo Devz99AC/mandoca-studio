@@ -123,7 +123,7 @@ function mandoca_seed_games() {
 			'image'        => 'assets/img/juegos/echoes.webp',
 		),
 		array(
-			'title'        => 'Tadventure Road: Neverpond',
+			'title'        => 'Tadventure: Road to Neverpond',
 			'slug'         => 'tadventure-road-neverpond',
 			'content'      => 'Hecho para la Global Game Jam 2025.',
 			'estado'       => 'Game jam',
