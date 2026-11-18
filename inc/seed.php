@@ -102,7 +102,7 @@ function mandoca_seed_games() {
 			'genero'       => '',
 			'anio'         => '2026',
 			'equipo'       => '',
-			'ajuste'       => 'contain', // Portada completa (pixel art con su propio fondo).
+			'ajuste'       => 'cover', // El fondo del pixel art está extendido para llenar la vitrina.
 			'enlace'       => 'https://mandocastudio.itch.io/meteor-strike',
 			'enlace_texto' => 'Ver en itch.io',
 			'image'        => 'assets/img/juegos/meteor-strike.webp',
