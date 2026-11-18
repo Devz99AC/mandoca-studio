@@ -1,13 +1,13 @@
 {
-  "name": "mandoca-studio-web",
+  "name": "mandoca-studio",
   "version": "1.0.0",
-  "description": "Sitio web de Mandoca Studio, estudio independiente de videojuegos.",
+  "description": "Tema de WordPress de Mandoca Studio, estudio independiente de videojuegos. Editable con Elementor y animado con GSAP.",
   "private": true,
   "scripts": {
     "preview": "live-server --open=preview/index.html",
     "format": "prettier --write \"**/*.{html,css,js,md}\""
   },
-  "keywords": ["videojuegos", "estudio", "html", "css", "javascript"],
+  "keywords": ["videojuegos", "estudio", "wordpress", "elementor", "gsap"],
   "license": "MIT",
   "devDependencies": {
     "live-server": "^1.2.2",
