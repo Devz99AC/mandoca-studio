@@ -105,8 +105,8 @@ function mandoca_seed_games() {
 			'anio'         => '2026',
 			'equipo'       => '',
 			'ajuste'       => 'contain', // Portada completa (pixel art con su propio fondo).
-			'enlace'       => '',
-			'enlace_texto' => '',
+			'enlace'       => 'https://mandocastudio.itch.io/meteor-strike',
+			'enlace_texto' => 'Ver en itch.io',
 			'image'        => 'assets/img/juegos/meteor-strike.webp',
 		),
 		array(
@@ -131,8 +131,8 @@ function mandoca_seed_games() {
 			'anio'         => '2025',
 			'equipo'       => '',
 			'ajuste'       => 'cover',
-			'enlace'       => '',
-			'enlace_texto' => '',
+			'enlace'       => 'https://globalgamejam.org/games/2025/tadventure-road-neverpond-1',
+			'enlace_texto' => 'Ver en la Global Game Jam',
 			'image'        => 'assets/img/juegos/tadventure-road-neverpond.webp',
 		),
 		array(
