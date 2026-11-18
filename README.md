@@ -128,13 +128,63 @@ mandoca-studio/
 
 ---
 
-## Cómo verlo en tu computadora
+## Cómo verlo
 
-1. Clona el repositorio con **GitHub Desktop** (`File → Clone repository`).
-2. Ábrelo en **VS Code** (`Repository → Open in Visual Studio Code`).
-3. Clic derecho sobre `index.html` → **Open with Live Server**. Se abre en `http://127.0.0.1:5500`.
+Hay dos formas, y las dos usan los mismos archivos de `assets/` (CSS, JavaScript e imágenes):
 
-No hace falta instalar nada más: el sitio es HTML, CSS y JavaScript puro.
+| Para qué | Herramienta | Qué se abre |
+|----------|-------------|-------------|
+| Ajustar colores, espacios y animaciones al instante | **Live Server** | `preview/index.html`, una copia estática de la portada |
+| Ver el sitio real y editarlo desde el panel | **LocalWP** | WordPress completo, con Elementor |
+
+### 1. Diseño y animaciones al instante: Live Server
+
+1. Clona el repositorio con **GitHub Desktop** (`File → Clone repository`) y abre en **VS Code** la carpeta del tema, la que tiene `style.css`.
+2. Clic derecho sobre `preview/index.html` → **Open with Live Server**. Se abre en `http://127.0.0.1:5500/preview/index.html`.
+3. Cada vez que guardas `main.css`, `main.js` o `animations.js`, la página se recarga sola.
+
+Por terminal también se puede: `npm install` y después `npm run preview`.
+
+> Live Server no ejecuta PHP. Por eso existe `preview/index.html`, con el mismo HTML que genera WordPress. **Regla del equipo:** si cambias una plantilla PHP (`template-parts/`) o los datos de `inc/seed.php`, actualiza también `preview/index.html` en el mismo commit.
+
+### 2. Sitio real con WordPress: LocalWP
+
+1. **Crear el sitio.** En LocalWP: **+** → *Create a new site* → nombre `mandoca-studio` → *Preferred* → crea tu usuario y contraseña de administrador. Pulsa **Start site**.
+2. **Poner el tema.** Clona (o copia) este repositorio dentro de la carpeta del sitio, en `app/public/wp-content/themes/mandoca-studio`. En Windows la carpeta del sitio suele ser `C:\Users\<tu usuario>\Local Sites\mandoca-studio\`; en Mac, `~/Local Sites/mandoca-studio/`. Con GitHub Desktop: `File → Clone repository` y en *Local path* eliges esa carpeta.
+3. **Instalar Elementor.** Botón **WP Admin** → *Plugins → Add New Plugin* → busca **Elementor** (*Elementor Website Builder*) → *Install Now* → *Activate*. Conviene hacerlo antes de activar el tema; si lo instalas después, la portada se arma sola la próxima vez que entres al panel.
+4. **Activar el tema.** *Appearance → Themes → Mandoca Studio → Activate*. Se crean solos:
+   - las áreas, los 5 integrantes con su foto y los 4 juegos con su arte;
+   - el logo;
+   - con Elementor, además: la página *Inicio* como portada, las plantillas *Header* y *Footer*, y los colores y fuentes globales.
+
+   Si el tema se activa otra vez, no se duplica nada.
+5. **Título del sitio.** *Settings → General* → *Site Title*: `Mandoca Studio` y *Tagline*: `Juegos creativos e imaginativos` → *Save Changes*. Es el texto de la pestaña del navegador.
+6. **Fotos y logo.** Ya vienen cargados (salen de `assets/img/`). Para cambiarlos, mira la tabla de abajo.
+7. **Ver el sitio:** botón **Open site**.
+8. **Exportar el sitio completo.** En LocalWP: clic derecho sobre el sitio → **Export**. Se genera un `.zip` con los archivos y la base de datos. Para abrirlo en otra computadora, se arrastra ese `.zip` a LocalWP.
+
+Para volver a cargar los datos iniciales sin duplicar nada (por ejemplo, si se borró un integrante): en LocalWP, clic derecho sobre el sitio → *Open site shell* → `wp mandoca seed`.
+
+#### Qué se edita dónde
+
+El panel está en inglés; el contenido del sitio, en español.
+
+| Quiero cambiar… | Dónde |
+|-----------------|-------|
+| Textos, botones y orden de las secciones de la portada | *Pages → Inicio → Edit with Elementor* |
+| La cabecera o el pie | *Templates → Saved Templates → Header / Footer → Edit with Elementor* |
+| Colores y fuentes de todo el sitio | En el editor de Elementor: *Site Settings → Global Colors / Global Fonts* |
+| Integrantes: alias, rol, área, qué hace y foto | *Team* |
+| Las áreas del filtro | *Team → Areas* |
+| Juegos: texto, estado, género, año, créditos y arte | *Games* |
+| Redes sociales (íconos del hero, el menú y el pie) | *Appearance → Customize → Social networks* (un campo vacío oculta esa red) |
+| Logo | *Appearance → Customize → Site Identity → Logo* |
+
+#### ¿Por qué Elementor, si la regla es "sin plugins"?
+
+El tema no usa plugins: los tipos de contenido, las meta boxes, las redes y los datos iniciales están hechos con código propio de WordPress. **Elementor (versión gratis) es la única excepción**, porque un diseñador del equipo tiene que poder editar todo el sitio sin tocar código.
+
+El tema también funciona sin Elementor. En ese caso la portada muestra las mismas secciones con sus textos por defecto, la cabecera y el pie salen de `template-parts/`, y el panel muestra un aviso para instalar Elementor.
 
 ---
 
