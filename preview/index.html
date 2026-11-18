@@ -463,40 +463,19 @@
       </div>
     </section>
 
-    <!-- ============ COMUNIDAD Y CONTACTO (template-parts/contacto.php) ============ -->
-    <section class="section section-alt" id="contacto">
-      <div class="container cta-grid">
-        <div class="cta-card">
-          <p class="eyebrow">04 — Comunidad</p>
-          <h2>Únete a nuestra comunidad</h2>
-          <p>Recibe avances, devlogs y fechas de prueba antes que nadie.</p>
-
-          <form class="newsletter" novalidate
-            data-msg-empty="Escribe tu correo para suscribirte."
-            data-msg-invalid="Ese correo no parece válido. Revisa que tenga @ y un dominio."
-            data-msg-ok="¡Listo! Te avisaremos en {email}.">
-            <label for="email-1">Correo electrónico</label>
-            <div class="field-row">
-              <input type="email" id="email-1" name="email" placeholder="tu@correo.com" autocomplete="email" required>
-              <button type="submit" class="btn btn-primary">Suscribirme</button>
-            </div>
-            <p class="form-msg" role="status" aria-live="polite"></p>
-          </form>
-        </div>
-
-        <div class="cta-card cta-contact">
-          <p class="eyebrow">Contacto</p>
-          <h2>¿Quieres hablar con el equipo?</h2>
-          <p>Para consultas generales, prensa o colaboraciones, escríbenos.</p>
-          <a class="mail-link" href="mailto:Contact@MandocaStudio.com">Contact@MandocaStudio.com</a>
-        </div>
-      </div>
-    </section>
-
   </main>
 
-  <!-- ============ PIE (template-parts/pie.php) ============ -->
-  <footer class="site-footer">
+  <!-- ============ PIE CON CONTACTO (template-parts/pie.php) ============ -->
+  <footer class="site-footer" id="contacto">
+    <div class="container footer-contact">
+      <div class="footer-contact-text">
+        <p class="eyebrow">Contacto</p>
+        <h2 class="footer-contact-title">¿Quieres hablar con el equipo?</h2>
+        <p class="footer-contact-desc">Para consultas generales, prensa o colaboraciones, escríbenos.</p>
+      </div>
+      <a class="mail-link" href="mailto:Contact@MandocaStudio.com">Contact@MandocaStudio.com</a>
+    </div>
+
     <div class="container footer-inner">
       <p class="footer-brand">Mandoca<span class="brand-dot">.</span>Studio</p>
 

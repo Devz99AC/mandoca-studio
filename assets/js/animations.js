@@ -609,7 +609,7 @@
   /* ---------- Entradas al hacer scroll ----------
      Reemplaza al IntersectionObserver de antes: cada bloque sube y aparece
      cuando entra en pantalla (una sola vez). */
-  add('.studio-text, .filters, .cta-card', (el, env) => {
+  add('.studio-text, .filters', (el, env) => {
     if (!env.motion) return;
     gsap.from(el, {
       y: 48,
