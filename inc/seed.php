@@ -104,7 +104,7 @@ function mandoca_seed_games() {
 			'genero'       => '',
 			'anio'         => '2026',
 			'equipo'       => '',
-			'ajuste'       => 'cover',
+			'ajuste'       => 'contain', // Portada completa (pixel art con su propio fondo).
 			'enlace'       => '',
 			'enlace_texto' => '',
 			'image'        => 'assets/img/juegos/meteor-strike.webp',
