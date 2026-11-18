@@ -101,7 +101,7 @@ function mandoca_defaults( $section ) {
 			'text'       => 'Mandoca Studio nació como un grupo de amigos cercanos. Queremos hacer juegos divertidos que nos representen como personas y que lleven dentro mucho de lo que amamos, para que otros también lo disfruten.',
 			'stats'      => array(
 				array(
-					'number' => '6',
+					'number' => '5',
 					'label'  => 'integrantes',
 				),
 				array(
@@ -120,7 +120,7 @@ function mandoca_defaults( $section ) {
 			'alt'          => false,
 			'eyebrow'      => '03 — Equipo',
 			'title'        => 'Quiénes somos',
-			'lead'         => 'Seis personas, seis oficios. Filtra por área para ver quién hace qué.',
+			'lead'         => 'Cinco personas, cinco oficios. Filtra por área para ver quién hace qué.',
 			'show_filters' => true,
 			'all_label'    => 'Todos',
 			'filter_label' => 'Filtrar equipo por área',
