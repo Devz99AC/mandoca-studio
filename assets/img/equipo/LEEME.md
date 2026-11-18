@@ -1,7 +1,7 @@
 # Fotos del equipo
 
-- **En WordPress:** cada foto se sube desde *Team → editar al integrante → Photo* (imagen destacada). Cuadrada, 400×400 px o más.
-- **En la vista previa (Live Server):** guarda aquí la misma foto con estos nombres exactos:
+- **En WordPress:** al activar el tema (o con `wp mandoca seed`), las fotos de esta carpeta se suben solas a la Biblioteca de medios y quedan como foto de cada integrante. Para cambiar una: *Team → editar al integrante → Photo* (imagen destacada). Cuadrada, 400×400 px o más.
+- **En la vista previa (Live Server):** `preview/index.html` usa estos mismos archivos, con estos nombres exactos:
 
 | Integrante  | Archivo           |
 |-------------|-------------------|
@@ -10,6 +10,5 @@
 | Devz        | `devz.webp`       |
 | CrimReaper  | `crimreaper.webp` |
 | Momoye      | `momoye.webp`     |
-| GLDNWTCH    | `gldnwtch.webp`   |
 
 Si una foto falta, el sitio muestra las iniciales de la persona en su lugar (en los dos).
