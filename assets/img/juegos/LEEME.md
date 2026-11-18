@@ -1,6 +1,13 @@
-# Capturas de los juegos
+# Arte de los juegos
 
-Opcional. Mientras no haya capturas, el sitio muestra un arte provisional hecho con CSS.
+Una imagen por juego, horizontal (16:9 o 16:10), en formato `.webp`, con estos nombres exactos:
 
-1. Guarda la imagen aquí (`skathos.webp` o `void-mask.webp`, horizontal 16:10).
-2. En `index.html`, busca el comentario `<!-- <img src="assets/img/juegos/... -->` y quítale los `<!--` y `-->`.
+| Juego                         | Archivo                          | Origen                                                                                 |
+| ----------------------------- | -------------------------------- | -------------------------------------------------------------------------------------- |
+| Meteor Strike                 | `meteor-strike.webp`             | Pixel art de 300×200 con su fondo extendido a 340×400, ampliado 5× sin suavizado      |
+| Echoes                        | `echoes.webp`                    | Arte del juego (1092×614)                                                              |
+| Tadventure: Road to Neverpond | `tadventure-road-neverpond.webp` | Fondo del menú (3840×2160) con el logo original del juego encima, reducido a 1920×1080 |
+| Unknown Project               | `unknown-project.webp`           | *Pendiente*                                                                            |
+
+- **En WordPress:** al activar el tema (o con `wp mandoca seed`) las imágenes de esta carpeta se suben solas a la Biblioteca de medios y quedan como arte de cada juego, si el juego todavía no tiene uno. Para cambiarlas: *Games → editar el juego → Game art*.
+- Si un juego no tiene imagen, se muestra un arte provisional hecho con CSS.

@@ -1,0 +1,144 @@
+<?php
+/**
+ * Textos por defecto de cada sección.
+ *
+ * Son los textos actuales del sitio. Los usan:
+ * - los widgets de Elementor como valor inicial de cada campo;
+ * - la portada cuando Elementor no está activo (respaldo).
+ *
+ * @package Mandoca_Studio
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Devuelve los textos por defecto de una sección.
+ *
+ * @param string $section Nombre de la sección (igual que el archivo en template-parts/).
+ * @return array
+ */
+function mandoca_defaults( $section ) {
+	$defaults = array(
+		'site'     => array(
+			'meta_description' => 'Mandoca Studio es un estudio independiente formado por amigos que desarrollan juegos creativos e imaginativos.',
+		),
+
+		'cabecera' => array(
+			'layout'   => 'top', // "top" (barra arriba) o "sidebar" (barra lateral, como Thunderful).
+			'logo_url' => '',
+			'brand'    => 'Mandoca.Studio',
+			'links'    => array(
+				array(
+					'text' => 'Juegos',
+					'url'  => '#juegos',
+				),
+				array(
+					'text' => 'Estudio',
+					'url'  => '#estudio',
+				),
+				array(
+					'text' => 'Equipo',
+					'url'  => '#equipo',
+				),
+			),
+			'cta_text' => 'Contacto',
+			'cta_url'  => '#contacto',
+		),
+
+		'hero'     => array(
+			'section_id'   => 'inicio',
+			'eyebrow'      => 'Estudio independiente de videojuegos',
+			'title'        => 'Desarrollamos juegos *creativos* e *imaginativos*.',
+			'quote'        => '“La lucha por llegar a la cima basta para llenar el corazón de un hombre. Hay que imaginar a Sísifo feliz.”',
+			'cite'         => '— Albert Camus',
+			'btn1_text'    => 'Mira lo que estamos haciendo',
+			'btn1_url'     => '#juegos',
+			'btn2_text'    => 'Conoce al equipo',
+			'btn2_url'     => '#equipo',
+			'scroll_text'  => 'scroll',
+			'scroll_url'   => '#juegos',
+			'scroll_label' => 'Bajar a Juegos',
+			'show_socials' => true,
+		),
+
+		'marquee'  => array(
+			'text'      => 'CREATIVE · IMAGINATIVE · GAMES',
+			'speed'     => 90, // Píxeles por segundo.
+			'direction' => 'left',
+		),
+
+		'juegos'   => array(
+			'section_id' => 'juegos',
+			'layout'     => 'showcase', // "showcase" (vitrina tipo Thunderful) o "blocks" (zig-zag).
+			'alt'        => false,
+			'eyebrow'    => '01 — Juegos',
+			'title'      => 'En qué estamos trabajando',
+			'zigzag'     => true,
+			'limit'      => -1,
+			'link_text'  => 'Ver juego', // Texto del botón si el juego tiene enlace pero no texto propio.
+			'games'      => null, // null = leer los juegos del panel.
+		),
+
+		'destacados' => array(
+			'section_id'  => 'destacados',
+			'alt'         => true,
+			'title'       => 'Destacados',
+			'button_text' => 'Ver todos los juegos',
+			'button_url'  => '#juegos',
+			'card_url'    => '#juegos',
+			'tab_text'    => 'Ver juego',
+			'speed'       => 45, // Píxeles por segundo.
+			'limit'       => -1,
+			'games'       => null, // null = leer los juegos del panel.
+		),
+
+		'estudio'  => array(
+			'section_id' => 'estudio',
+			'alt'        => false,
+			'eyebrow'    => '02 — Estudio',
+			'title'      => 'Un grupo de amigos haciendo los juegos que nos gustaría jugar',
+			'text'       => 'Mandoca Studio nació como un grupo de amigos cercanos. Queremos hacer juegos divertidos que nos representen como personas y que lleven dentro mucho de lo que amamos, para que otros también lo disfruten.',
+			'stats'      => array(
+				array(
+					'number' => '5',
+					'label'  => 'integrantes',
+				),
+				array(
+					'number' => '4',
+					'label'  => 'juegos',
+				),
+				array(
+					'number' => '2026',
+					'label'  => 'año de fundación',
+				),
+			),
+		),
+
+		'equipo'   => array(
+			'section_id'      => 'equipo',
+			'alt'             => false,
+			'eyebrow'         => '03 — Equipo',
+			'title'           => 'Quiénes somos',
+			'lead'            => 'Cinco personas, cinco oficios. Filtra por área para ver quién hace qué.',
+			'show_filters'    => true,
+			'all_label'       => 'Todos',
+			'filter_label'    => 'Filtrar equipo por área',
+			'favorites_label' => 'Juegos favoritos',
+			'playing_label'   => 'Jugando ahora',
+			'members'         => null, // null = leer los integrantes del panel.
+			'areas'           => null,
+		),
+
+		'pie'      => array(
+			'contact_eyebrow' => 'Contacto',
+			'contact_title'   => '¿Quieres hablar con el equipo?',
+			'contact_text'    => 'Para consultas generales, prensa o colaboraciones, escríbenos.',
+			'email'           => 'Contact@MandocaStudio.com',
+			'brand'           => 'Mandoca.Studio',
+			'show_socials'    => true, // Las redes se editan en Apariencia > Personalizar.
+			'copy'            => '© {year} Mandoca Studio · Proyecto académico',
+		),
+	);
+
+	return isset( $defaults[ $section ] ) ? $defaults[ $section ] : array();
+}

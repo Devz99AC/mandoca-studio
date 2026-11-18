@@ -1,7 +1,9 @@
 # Fotos del equipo
 
-Guarda aquí una foto cuadrada por integrante (400×400 px o más, formato `.webp` o `.jpg`).
-Usa exactamente estos nombres para que el sitio las encuentre:
+Fotos tomadas de [mandocastudio.com/about-us](https://www.mandocastudio.com/about-us/). Se usan con fines académicos.
+
+- **En WordPress:** al activar el tema (o con `wp mandoca seed`), las fotos de esta carpeta se suben solas a la Biblioteca de medios y quedan como foto de cada integrante. Para cambiar una: *Team → editar al integrante → Photo* (imagen destacada). Cuadrada, 400×400 px o más.
+- **Nombres de los archivos:** el tema busca la foto de cada integrante por su alias, con estos nombres exactos:
 
 | Integrante  | Archivo           |
 |-------------|-------------------|
@@ -10,7 +12,5 @@ Usa exactamente estos nombres para que el sitio las encuentre:
 | Devz        | `devz.webp`       |
 | CrimReaper  | `crimreaper.webp` |
 | Momoye      | `momoye.webp`     |
-| GLDNWTCH    | `gldnwtch.webp`   |
 
 Si una foto falta, el sitio muestra las iniciales de la persona en su lugar.
-Si usan otro formato (por ejemplo `.jpg`), cambien también la extensión en `index.html`.
