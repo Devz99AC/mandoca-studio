@@ -4,7 +4,7 @@ Una imagen por juego, horizontal (16:9 o 16:10), en formato `.webp`, con estos n
 
 | Juego                         | Archivo                          | Origen                                                                                 |
 | ----------------------------- | -------------------------------- | -------------------------------------------------------------------------------------- |
-| Meteor Strike                 | `meteor-strike.webp`             | Portada del juego (pixel art de 300×200, ampliada 5× sin suavizado). Ajuste: *Contain* |
+| Meteor Strike                 | `meteor-strike.webp`             | Pixel art de 300×200 con su fondo extendido a 340×400, ampliado 5× sin suavizado      |
 | Echoes                        | `echoes.webp`                    | Arte del juego (1092×614)                                                              |
 | Tadventure: Road to Neverpond | `tadventure-road-neverpond.webp` | Fondo del menú (3840×2160) con el logo original del juego encima, reducido a 1920×1080 |
 | Unknown Project               | `unknown-project.webp`           | *Pendiente*                                                                            |
