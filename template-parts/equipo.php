@@ -76,7 +76,33 @@ $mandoca_areas   = is_array( $args['areas'] ) ? $args['areas'] : mandoca_get_are
 					<?php if ( $mandoca_member['role'] ) : ?>
 						<p class="member-role"><?php echo esc_html( $mandoca_member['role'] ); ?></p>
 					<?php endif; ?>
-					<div class="member-bio"><?php echo wp_kses_post( wpautop( $mandoca_member['bio'] ) ); ?></div>
+					<?php if ( ! empty( $mandoca_member['quote'] ) ) : ?>
+						<blockquote class="member-quote">
+							<p>“<?php echo esc_html( $mandoca_member['quote'] ); ?>”</p>
+							<?php if ( ! empty( $mandoca_member['quote_source'] ) ) : ?>
+								<cite>— <?php echo esc_html( $mandoca_member['quote_source'] ); ?></cite>
+							<?php endif; ?>
+						</blockquote>
+					<?php endif; ?>
+					<?php if ( ! empty( $mandoca_member['favorites'] ) || ! empty( $mandoca_member['playing'] ) ) : ?>
+						<dl class="member-facts">
+							<?php if ( ! empty( $mandoca_member['favorites'] ) ) : ?>
+								<div>
+									<dt><?php echo esc_html( $args['favorites_label'] ); ?></dt>
+									<dd><?php echo esc_html( $mandoca_member['favorites'] ); ?></dd>
+								</div>
+							<?php endif; ?>
+							<?php if ( ! empty( $mandoca_member['playing'] ) ) : ?>
+								<div>
+									<dt><?php echo esc_html( $args['playing_label'] ); ?></dt>
+									<dd><?php echo esc_html( $mandoca_member['playing'] ); ?></dd>
+								</div>
+							<?php endif; ?>
+						</dl>
+					<?php endif; ?>
+					<?php if ( '' !== trim( (string) $mandoca_member['bio'] ) ) : ?>
+						<div class="member-bio"><?php echo wp_kses_post( wpautop( $mandoca_member['bio'] ) ); ?></div>
+					<?php endif; ?>
 				</li>
 			<?php endforeach; ?>
 		</ul>
