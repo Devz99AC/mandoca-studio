@@ -106,8 +106,8 @@ function mandoca_defaults( $section ) {
 					'label'  => 'integrantes',
 				),
 				array(
-					'number' => '2',
-					'label'  => 'proyectos activos',
+					'number' => '4',
+					'label'  => 'juegos',
 				),
 				array(
 					'number' => '2026',
