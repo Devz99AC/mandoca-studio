@@ -133,11 +133,15 @@ function mandoca_get_members() {
 	foreach ( $posts as $post ) {
 		$areas     = get_the_terms( $post, 'area' );
 		$members[] = array(
-			'name'     => get_the_title( $post ),
-			'role'     => get_post_meta( $post->ID, '_mandoca_rol', true ),
-			'bio'      => $post->post_content,
-			'area'     => ( $areas && ! is_wp_error( $areas ) ) ? $areas[0]->slug : '',
-			'photo_id' => get_post_thumbnail_id( $post ),
+			'name'         => get_the_title( $post ),
+			'role'         => get_post_meta( $post->ID, '_mandoca_rol', true ),
+			'quote'        => get_post_meta( $post->ID, '_mandoca_cita', true ),
+			'quote_source' => get_post_meta( $post->ID, '_mandoca_fuente', true ),
+			'favorites'    => get_post_meta( $post->ID, '_mandoca_favoritos', true ),
+			'playing'      => get_post_meta( $post->ID, '_mandoca_jugando', true ),
+			'bio'          => $post->post_content,
+			'area'         => ( $areas && ! is_wp_error( $areas ) ) ? $areas[0]->slug : '',
+			'photo_id'     => get_post_thumbnail_id( $post ),
 		);
 	}
 

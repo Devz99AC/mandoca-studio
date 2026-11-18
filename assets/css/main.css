@@ -675,6 +675,24 @@ body.menu-open { overflow: hidden; }
   font-family: var(--font-mono); font-size: .78rem; letter-spacing: .04em;
   color: var(--ember); margin-bottom: .75rem; padding-inline: .25rem;
 }
+/* Cita favorita (en su idioma original) con su fuente */
+.member-quote {
+  margin: 0 .25rem 1rem; padding-left: .85rem;
+  border-left: 2px solid var(--gold);
+}
+.member-quote p { margin: 0; color: var(--bone); font-style: italic; font-size: .95rem; line-height: 1.5; }
+.member-quote cite {
+  display: block; margin-top: .4rem;
+  font-family: var(--font-mono); font-style: normal; font-size: .72rem; color: var(--muted);
+}
+/* Juegos favoritos y lo que está jugando */
+.member-facts { display: grid; gap: .65rem; margin: 0 0 .75rem; padding-inline: .25rem; }
+.member-facts dt {
+  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--muted);
+}
+.member-facts dd { margin: .15rem 0 0; color: var(--bone); font-size: .92rem; }
+.member-facts:last-child { margin-bottom: 0; }
 .member-bio { padding-inline: .25rem; }
 .member-bio p { color: var(--muted); font-size: .95rem; margin: 0 0 .6em; }
 .member-bio p:last-child { margin-bottom: 0; }

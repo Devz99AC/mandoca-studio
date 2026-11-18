@@ -24,11 +24,33 @@ function mandoca_meta_fields() {
 		'miembro' => array(
 			'title'  => __( 'Member details', 'mandoca-studio' ),
 			'fields' => array(
-				'rol' => array(
+				'rol'       => array(
 					'label'       => __( 'Role', 'mandoca-studio' ),
 					'type'        => 'text',
 					'placeholder' => 'Compositor y diseñador de sonido',
 					'description' => __( 'Shown in orange under the alias. Choose the area for the filter in the "Areas" box.', 'mandoca-studio' ),
+				),
+				'cita'      => array(
+					'label'       => __( 'Quote', 'mandoca-studio' ),
+					'type'        => 'textarea',
+					'placeholder' => 'I am here to Even the Odds.',
+					'description' => __( 'Favorite quote, without quotation marks (the theme adds them).', 'mandoca-studio' ),
+				),
+				'fuente'    => array(
+					'label'       => __( 'Quote source', 'mandoca-studio' ),
+					'type'        => 'text',
+					'placeholder' => 'Final Fantasy XVI',
+					'description' => __( 'Where the quote comes from. Leave empty if it is the member\'s own.', 'mandoca-studio' ),
+				),
+				'favoritos' => array(
+					'label'       => __( 'Favorite games', 'mandoca-studio' ),
+					'type'        => 'text',
+					'placeholder' => 'The Witcher 3, Metaphor: ReFantazio',
+				),
+				'jugando'   => array(
+					'label'       => __( 'Currently playing', 'mandoca-studio' ),
+					'type'        => 'text',
+					'placeholder' => 'Xenoblade Chronicles 3',
 				),
 			),
 		),

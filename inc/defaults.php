@@ -116,16 +116,18 @@ function mandoca_defaults( $section ) {
 		),
 
 		'equipo'   => array(
-			'section_id'   => 'equipo',
-			'alt'          => false,
-			'eyebrow'      => '03 — Equipo',
-			'title'        => 'Quiénes somos',
-			'lead'         => 'Cinco personas, cinco oficios. Filtra por área para ver quién hace qué.',
-			'show_filters' => true,
-			'all_label'    => 'Todos',
-			'filter_label' => 'Filtrar equipo por área',
-			'members'      => null, // null = leer los integrantes del panel.
-			'areas'        => null,
+			'section_id'      => 'equipo',
+			'alt'             => false,
+			'eyebrow'         => '03 — Equipo',
+			'title'           => 'Quiénes somos',
+			'lead'            => 'Cinco personas, cinco oficios. Filtra por área para ver quién hace qué.',
+			'show_filters'    => true,
+			'all_label'       => 'Todos',
+			'filter_label'    => 'Filtrar equipo por área',
+			'favorites_label' => 'Juegos favoritos',
+			'playing_label'   => 'Jugando ahora',
+			'members'         => null, // null = leer los integrantes del panel.
+			'areas'           => null,
 		),
 
 		'contacto' => array(
