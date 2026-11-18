@@ -448,6 +448,8 @@ body.menu-open { overflow: hidden; }
   .showcase.is-ready .showcase-item.is-active .showcase-tint { opacity: 0; }
   .showcase.is-ready .showcase-info { position: absolute; left: 0; bottom: 0; width: var(--slice, 25%); padding: 1.5rem; }
   .showcase.is-ready .showcase-title { font-size: clamp(1.5rem, calc(var(--slice, 260px) * .13), 2.75rem); }
+  /* Títulos con palabras largas: letra más chica para no partir la palabra */
+  .showcase.is-ready .showcase-title.is-long { font-size: clamp(1.15rem, calc(var(--slice, 260px) * .095), 2rem); }
   .showcase.is-ready .showcase-more {
     position: absolute; left: var(--slice, 25%); bottom: 0;
     width: calc(var(--expanded, 50%) - var(--slice, 25%));
@@ -462,6 +464,10 @@ body.menu-open { overflow: hidden; }
   .showcase.is-ready .showcase-art.fit-contain .showcase-img { top: 0; height: 66%; padding: 5% 6% 0; }
   .showcase.is-ready .showcase-art.fit-cover .showcase-img { top: -6%; height: 112%; }
   .showcase.is-ready .showcase-more { text-shadow: 0 2px 12px rgba(0, 0, 0, .6); }
+  /* Fondo oscuro detrás del texto, para que se lea sobre arte claro */
+  .showcase.is-ready .showcase-more {
+    background: linear-gradient(180deg, rgba(10, 10, 10, 0), rgba(10, 10, 10, .78) 3.5rem, rgba(10, 10, 10, .9));
+  }
 }
 
 /* ---------- Carrusel de destacados (como "Featured" de Thunderful) ---------- */
