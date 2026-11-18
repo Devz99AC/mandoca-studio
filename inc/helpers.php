@@ -200,15 +200,17 @@ function mandoca_get_games( $limit = -1 ) {
 	foreach ( $posts as $post ) {
 		$credits = (string) get_post_meta( $post->ID, '_mandoca_equipo', true );
 		$games[] = array(
-			'slug'     => $post->post_name,
-			'title'    => get_the_title( $post ),
-			'content'  => $post->post_content,
-			'status'   => get_post_meta( $post->ID, '_mandoca_estado', true ),
-			'genre'    => get_post_meta( $post->ID, '_mandoca_genero', true ),
-			'year'     => get_post_meta( $post->ID, '_mandoca_anio', true ),
-			'credits'  => array_values( array_filter( array_map( 'trim', explode( "\n", $credits ) ) ) ),
-			'fit'      => get_post_meta( $post->ID, '_mandoca_ajuste', true ) === 'contain' ? 'contain' : 'cover',
-			'image_id' => get_post_thumbnail_id( $post ),
+			'slug'      => $post->post_name,
+			'title'     => get_the_title( $post ),
+			'content'   => $post->post_content,
+			'status'    => get_post_meta( $post->ID, '_mandoca_estado', true ),
+			'genre'     => get_post_meta( $post->ID, '_mandoca_genero', true ),
+			'year'      => get_post_meta( $post->ID, '_mandoca_anio', true ),
+			'credits'   => array_values( array_filter( array_map( 'trim', explode( "\n", $credits ) ) ) ),
+			'fit'       => get_post_meta( $post->ID, '_mandoca_ajuste', true ) === 'contain' ? 'contain' : 'cover',
+			'link'      => get_post_meta( $post->ID, '_mandoca_enlace', true ),
+			'link_text' => get_post_meta( $post->ID, '_mandoca_enlace_texto', true ),
+			'image_id'  => get_post_thumbnail_id( $post ),
 		);
 	}
 
@@ -248,6 +250,37 @@ function mandoca_game_image( $game, $class ) {
  */
 function mandoca_game_meta( $game, $separator ) {
 	return implode( $separator, array_filter( array( $game['genre'], $game['year'] ) ) );
+}
+
+/**
+ * ¿El título tiene alguna palabra larga? ("Tadventure", "Neverpond"…)
+ * En las franjas estrechas de la vitrina esos títulos usan letra más chica
+ * para no partirse a mitad de palabra.
+ *
+ * @param string $title Título del juego.
+ * @return bool
+ */
+function mandoca_has_long_word( $title ) {
+	$words = preg_split( '/\s+/u', trim( (string) $title ) );
+	return max( array_map( 'mb_strlen', $words ) ) > 8;
+}
+
+/**
+ * Botón con el enlace externo de un juego (itch.io, Steam…), si lo tiene.
+ * Se abre en otra pestaña.
+ *
+ * @param array  $game     Datos del juego.
+ * @param string $fallback Texto del botón si el juego no tiene uno propio.
+ */
+function mandoca_game_link( $game, $fallback ) {
+	if ( empty( $game['link'] ) ) {
+		return;
+	}
+	printf(
+		'<a class="btn btn-primary game-link" href="%s" target="_blank" rel="noopener">%s <span aria-hidden="true">↗</span></a>',
+		esc_url( $game['link'] ),
+		esc_html( ! empty( $game['link_text'] ) ? $game['link_text'] : $fallback )
+	);
 }
 
 /**

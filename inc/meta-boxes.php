@@ -57,29 +57,29 @@ function mandoca_meta_fields() {
 		'juego'   => array(
 			'title'  => __( 'Game details', 'mandoca-studio' ),
 			'fields' => array(
-				'estado'  => array(
+				'estado'       => array(
 					'label'       => __( 'Status', 'mandoca-studio' ),
 					'type'        => 'text',
 					'placeholder' => 'En desarrollo',
 					'description' => __( 'Shown as a tag, e.g. "En desarrollo" or "Prototipo".', 'mandoca-studio' ),
 				),
-				'genero'  => array(
+				'genero'       => array(
 					'label'       => __( 'Genre', 'mandoca-studio' ),
 					'type'        => 'text',
 					'placeholder' => 'Acción · Aventura',
 				),
-				'anio'    => array(
+				'anio'         => array(
 					'label'       => __( 'Year', 'mandoca-studio' ),
 					'type'        => 'number',
 					'placeholder' => '2026',
 				),
-				'equipo'  => array(
+				'equipo'       => array(
 					'label'       => __( 'Team credits', 'mandoca-studio' ),
 					'type'        => 'textarea',
 					'placeholder' => "Arte: CrimReaper\nMúsica: JackRevon",
 					'description' => __( 'One credit per line. Each line becomes a pill under the description.', 'mandoca-studio' ),
 				),
-				'ajuste'  => array(
+				'ajuste'       => array(
 					'label'       => __( 'Image fit', 'mandoca-studio' ),
 					'type'        => 'select',
 					'options'     => array(
@@ -88,9 +88,37 @@ function mandoca_meta_fields() {
 					),
 					'description' => __( 'How the game art fits inside its 16:10 frame.', 'mandoca-studio' ),
 				),
+				'enlace'       => array(
+					'label'       => __( 'Link', 'mandoca-studio' ),
+					'type'        => 'url',
+					'placeholder' => 'https://mandocastudio.itch.io/echoes',
+					'description' => __( 'Optional. Where to play or see the game (itch.io, Steam…). Clicking its card opens this link.', 'mandoca-studio' ),
+				),
+				'enlace_texto' => array(
+					'label'       => __( 'Link text', 'mandoca-studio' ),
+					'type'        => 'text',
+					'placeholder' => 'Jugar en itch.io',
+					'description' => __( 'Button text. Empty = "Ver juego".', 'mandoca-studio' ),
+				),
 			),
 		),
 	);
+}
+
+/**
+ * Función que limpia el valor de un campo según su tipo.
+ *
+ * @param string $type Tipo del campo (text, textarea, url…).
+ * @return string Nombre de la función de WordPress que lo limpia.
+ */
+function mandoca_meta_sanitizer( $type ) {
+	if ( 'textarea' === $type ) {
+		return 'sanitize_textarea_field';
+	}
+	if ( 'url' === $type ) {
+		return 'esc_url_raw';
+	}
+	return 'sanitize_text_field';
 }
 
 /**
@@ -106,7 +134,7 @@ function mandoca_register_meta() {
 					'type'              => 'string',
 					'single'            => true,
 					'show_in_rest'      => true,
-					'sanitize_callback' => 'textarea' === $field['type'] ? 'sanitize_textarea_field' : 'sanitize_text_field',
+					'sanitize_callback' => mandoca_meta_sanitizer( $field['type'] ),
 					'auth_callback'     => function () {
 						return current_user_can( 'edit_posts' );
 					},
@@ -185,7 +213,7 @@ function mandoca_render_meta_box( $post, $box ) {
 			default:
 				printf(
 					'<input type="%1$s" id="%2$s" name="%3$s" class="regular-text" value="%4$s" placeholder="%5$s">',
-					esc_attr( 'number' === $field['type'] ? 'number' : 'text' ),
+					esc_attr( in_array( $field['type'], array( 'number', 'url' ), true ) ? $field['type'] : 'text' ),
 					esc_attr( $id ),
 					esc_attr( $name ),
 					esc_attr( $value ),
@@ -241,6 +269,9 @@ function mandoca_save_meta( $post_id, $post ) {
 				break;
 			case 'number':
 				$value = '' === trim( $raw ) ? '' : (string) absint( $raw );
+				break;
+			case 'url':
+				$value = esc_url_raw( trim( $raw ) );
 				break;
 			case 'select':
 				$value = array_key_exists( $raw, $field['options'] ) ? $raw : (string) key( $field['options'] );

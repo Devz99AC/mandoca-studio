@@ -85,57 +85,68 @@ function mandoca_seed_members() {
 }
 
 /**
- * Los 4 juegos con sus datos actuales (textos provisionales hasta que el
- * equipo los confirme; Proyecto 03 y 04 son espacios reservados).
+ * Los 4 juegos del estudio.
+ *
+ * El arte de cada uno va en assets/img/juegos/<slug>.webp. Si todavía no
+ * está, se ve un arte provisional; cuando se agregue el archivo, el seed lo
+ * pone solo (al activar el tema o con `wp mandoca seed`).
+ * Los textos son provisionales hasta que el equipo los confirme.
  *
  * @return array
  */
 function mandoca_seed_games() {
 	return array(
 		array(
-			'title'   => 'Skathos',
-			'slug'    => 'skathos',
-			'content' => 'Un mundo oscuro y vertical donde cada ascenso cuesta y cada caída enseña algo. Nuestra primera apuesta por un juego que mezcle exploración, combate y una historia contada a través del entorno.',
-			'estado'  => 'En desarrollo',
-			'genero'  => 'Acción · Aventura',
-			'anio'    => '2026',
-			'equipo'  => "Arte: CrimReaper\nMúsica: JackRevon",
-			'ajuste'  => 'cover',
-			'image'   => 'assets/img/juegos/skathos.webp',
+			'title'        => 'Meteor Strike',
+			'slug'         => 'meteor-strike',
+			'content'      => "Después de ganar la guerra contra los humanos, los animales conquistaron las estrellas y fundaron una Federación Galáctica. Todo era paz hasta que llegó, en meteoritos, un parásito malvado que da comezón. La Federación envía a sus dos mejores soldados, Chicharrón y Pepperoni, a proteger a todos los animales.\n\nHecho para la Juntos Game Jam, a beneficio de los afectados por el terremoto en Venezuela.",
+			'estado'       => 'Game jam',
+			'genero'       => '',
+			'anio'         => '2026',
+			'equipo'       => '',
+			'ajuste'       => 'cover',
+			'enlace'       => '',
+			'enlace_texto' => '',
+			'image'        => 'assets/img/juegos/meteor-strike.webp',
 		),
 		array(
-			'title'   => 'Void Mask',
-			'slug'    => 'void-mask',
-			'content' => 'Una máscara que deja ver lo que el mundo esconde. Un prototipo de puzzles narrativos donde cambiar de perspectiva es la única forma de avanzar.',
-			'estado'  => 'Prototipo',
-			'genero'  => 'Puzzle · Narrativo',
-			'anio'    => '2026',
-			'equipo'  => "Mecánicas: Jhonken099\nGameplay: Devz\n3D y animación: Momoye",
-			'ajuste'  => 'contain',
-			'image'   => 'assets/img/juegos/void-mask.webp',
-		),
-		// Juegos 3 y 4: placeholder hasta que el equipo los anuncie (se editan en Games).
-		array(
-			'title'   => 'Proyecto 03',
-			'slug'    => 'proyecto-03',
-			'content' => 'Muy pronto compartiremos más sobre este proyecto.',
-			'estado'  => 'Próximamente',
-			'genero'  => 'Por anunciar',
-			'anio'    => '',
-			'equipo'  => '',
-			'ajuste'  => 'cover',
-			'image'   => '',
+			'title'        => 'Echoes',
+			'slug'         => 'echoes',
+			'content'      => 'Descubre Echoes en su página de itch.io.',
+			'estado'       => 'En itch.io',
+			'genero'       => '',
+			'anio'         => '',
+			'equipo'       => '',
+			'ajuste'       => 'cover',
+			'enlace'       => 'https://mandocastudio.itch.io/echoes',
+			'enlace_texto' => 'Ver en itch.io',
+			'image'        => 'assets/img/juegos/echoes.webp',
 		),
 		array(
-			'title'   => 'Proyecto 04',
-			'slug'    => 'proyecto-04',
-			'content' => 'Muy pronto compartiremos más sobre este proyecto.',
-			'estado'  => 'Próximamente',
-			'genero'  => 'Por anunciar',
-			'anio'    => '',
-			'equipo'  => '',
-			'ajuste'  => 'cover',
-			'image'   => '',
+			'title'        => 'Tadventure Road: Neverpond',
+			'slug'         => 'tadventure-road-neverpond',
+			'content'      => 'Hecho para la Global Game Jam 2025.',
+			'estado'       => 'Game jam',
+			'genero'       => '',
+			'anio'         => '2025',
+			'equipo'       => '',
+			'ajuste'       => 'cover',
+			'enlace'       => '',
+			'enlace_texto' => '',
+			'image'        => 'assets/img/juegos/tadventure-road-neverpond.webp',
+		),
+		array(
+			'title'        => 'Unknown Project',
+			'slug'         => 'unknown-project',
+			'content'      => 'Muy pronto compartiremos más sobre este proyecto.',
+			'estado'       => 'En desarrollo',
+			'genero'       => '',
+			'anio'         => '',
+			'equipo'       => '',
+			'ajuste'       => 'cover',
+			'enlace'       => '',
+			'enlace_texto' => '',
+			'image'        => 'assets/img/juegos/unknown-project.webp',
 		),
 	);
 }
@@ -200,29 +211,36 @@ function mandoca_seed_content( $force = false ) {
 
 	// Juegos.
 	foreach ( mandoca_seed_games() as $order => $game ) {
-		if ( get_page_by_path( $game['slug'], OBJECT, 'juego' ) ) {
-			continue;
+		$existing = get_page_by_path( $game['slug'], OBJECT, 'juego' );
+		$id       = $existing ? $existing->ID : 0;
+
+		if ( ! $id ) {
+			$id = wp_insert_post(
+				array(
+					'post_type'    => 'juego',
+					'post_status'  => 'publish',
+					'post_title'   => $game['title'],
+					'post_name'    => $game['slug'],
+					'post_content' => $game['content'],
+					'menu_order'   => $order,
+				),
+				true
+			);
+			if ( is_wp_error( $id ) ) {
+				continue;
+			}
+			foreach ( array( 'estado', 'genero', 'anio', 'equipo', 'ajuste', 'enlace', 'enlace_texto' ) as $key ) {
+				update_post_meta( $id, '_mandoca_' . $key, $game[ $key ] );
+			}
 		}
-		$id = wp_insert_post(
-			array(
-				'post_type'    => 'juego',
-				'post_status'  => 'publish',
-				'post_title'   => $game['title'],
-				'post_name'    => $game['slug'],
-				'post_content' => $game['content'],
-				'menu_order'   => $order,
-			),
-			true
-		);
-		if ( is_wp_error( $id ) ) {
-			continue;
-		}
-		foreach ( array( 'estado', 'genero', 'anio', 'equipo', 'ajuste' ) as $key ) {
-			update_post_meta( $id, '_mandoca_' . $key, $game[ $key ] );
-		}
-		$image_id = $game['image'] ? mandoca_seed_image( $game['image'], $game['title'], $id ) : 0;
-		if ( $image_id ) {
-			set_post_thumbnail( $id, $image_id );
+
+		// Arte: solo si el archivo existe y el juego todavía no tiene imagen
+		// (no reemplaza la que se suba desde el panel).
+		if ( $game['image'] && ! has_post_thumbnail( $id ) ) {
+			$image_id = mandoca_seed_image( $game['image'], $game['title'], $id );
+			if ( $image_id ) {
+				set_post_thumbnail( $id, $image_id );
+			}
 		}
 	}
 
