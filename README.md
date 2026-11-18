@@ -268,10 +268,10 @@ Son las personas que han hecho commits en el repositorio. GitHub los cuenta solo
 
 | Nombre | Usuario de GitHub | Aporte |
 |--------|-------------------|--------|
-| Devinzon Acosta | [@Devz99AC](https://github.com/Devz99AC) | Coordinación y desarrollo del tema: WordPress, Elementor, animaciones con GSAP, vista previa, pruebas y README |
-| José Figueredo | [@momoyeus](https://github.com/momoyeus) | Front-end y diseño: fotos del equipo |
-| Carlos Mogollon | [@verladoth](https://github.com/verladoth) | Guía de Git: ramas y commits del proyecto |
-| Alejandro Mendez | [@AleGpu](https://github.com/AleGpu) | Licencia y dependencias del proyecto |
+| Devinzon Acosta | [@Devz99AC](https://github.com/Devz99AC) | Coordinación y base del tema: WordPress, widgets y plantillas de Elementor, barra superior, contacto en el pie, enlaces de los juegos y README |
+| José Figueredo | [@momoyeus](https://github.com/momoyeus) | Front-end y diseño: animaciones con GSAP (ScrollTrigger y Flip), vitrina y carrusel de juegos, y fotos del equipo |
+| Carlos Mogollon | [@verladoth](https://github.com/verladoth) | Contenido: tipos de contenido Team y Games, datos del equipo y de los juegos, y guía de Git |
+| Alejandro Mendez | [@AleGpu](https://github.com/AleGpu) | Pruebas y arreglos, portadas de los juegos, hero sin manchas, licencia y dependencias |
 
 ### Conceptos de WordPress y de animación
 
