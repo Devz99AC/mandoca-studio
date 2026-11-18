@@ -199,12 +199,17 @@ Hay dos tipos:
 - **`dependencies`**: las necesita el sitio para funcionar en producción (por ejemplo, una librería de animaciones).
 - **`devDependencies`**: solo se usan mientras se desarrolla (formatear código, servidor local).
 
-Este proyecto tiene **0 dependencias** de producción y **2 dependencias de desarrollo**, ambas opcionales:
+Este proyecto tiene **1 dependencia del sitio** y **2 dependencias de desarrollo**:
 
-| Paquete | Tipo | Para qué |
-|---------|------|----------|
-| `live-server` | devDependency | Servidor local desde la terminal (igual que la extensión Live Server) |
-| `prettier` | devDependency | Ordena y formatea el código automáticamente |
+| Paquete | Tipo | Versión | Para qué |
+|---------|------|---------|----------|
+| `gsap` | dependency (del sitio) | `3.13.0` | Todas las animaciones: el núcleo de GSAP y sus plugins ScrollTrigger, Flip y SplitText (desde la versión 3.13 todos sus plugins son gratis) |
+| `live-server` | devDependency | `^1.2.2` | Servidor local desde la terminal (igual que la extensión Live Server) |
+| `prettier` | devDependency | `^3.3.3` | Ordena y formatea el código automáticamente |
+
+Para que el sitio funcione **no hace falta** `npm install`. WordPress (`functions.php`) y la vista previa (`preview/index.html`) cargan GSAP desde **jsDelivr** con la misma versión fija; en `package.json` queda anotada para que todos sepan cuál usamos. Si algún día se cambia la versión, hay que cambiarla en los tres lugares: `package.json`, `MANDOCA_GSAP_VERSION` en `functions.php` y `preview/index.html`.
+
+**Elementor** también es una dependencia, pero de otro tipo: es un plugin de WordPress, no un paquete de npm, y se instala desde el panel (ver *Cómo verlo*).
 
 ### ¿Qué son los gestores de paquetes?
 
@@ -219,8 +224,8 @@ Son programas que instalan, actualizan y eliminan dependencias. Leen `package.js
 El equipo usa **npm**. Lo importante es que todos usen el mismo gestor, para no mezclar archivos lock.
 
 ```bash
-npm install        # instala las devDependencies
-npm run dev        # abre el sitio con live-server
+npm install        # instala las dependencias de package.json
+npm run preview    # abre preview/index.html con live-server
 npm run format     # formatea el código con prettier
 ```
 
@@ -230,13 +235,30 @@ Una rama es una línea de trabajo paralela dentro del repositorio. Permite que c
 
 Este repositorio usa **3 tipos de ramas**:
 
-| Rama | Qué contiene |
+| Tipo | Qué contiene |
 |------|--------------|
-| `main` | Versión estable, la que se entrega y se publica |
+| `main` | Versión estable, la que se entrega |
 | `develop` | Donde se juntan los cambios antes de pasar a `main` |
-| `feature/<nombre>` | Una rama temporal por tarea, por ejemplo `feature/seccion-equipo` |
+| `feature/<tarea>` | Una rama por tarea; al terminar se une a `develop` |
 
-Para ver cuántas ramas hay: en GitHub Desktop, menú **Current Branch**; en la terminal, `git branch -a`.
+En total hay **12 ramas**:
+
+| Rama | Para qué sirvió |
+|------|-----------------|
+| `main` | Entrega final (recibe `develop` con un Pull Request) |
+| `develop` | Integración de todas las tareas |
+| `feature/tema-base` | Pasar el sitio estático a un tema de WordPress |
+| `feature/custom-post-types` | Tipos de contenido Team y Games, meta boxes y datos iniciales |
+| `feature/elementor` | Widgets Mandoca, cabecera y pie como plantillas, y colores y fuentes globales |
+| `feature/animaciones` | Todas las animaciones con GSAP, la vitrina y el carrusel |
+| `feature/quitar-circulo` | Quitar la sección del círculo con física, que se descartó |
+| `feature/preview-live-server` | Vista previa estática y configuración de Live Server |
+| `feature/cabecera-arriba` | Cambiar la barra lateral por una barra superior |
+| `feature/pruebas` | Pruebas en 3 tamaños de pantalla, arreglos y captura del tema |
+| `feature/equipo` | Equipo real de 5 integrantes y fotos desde el seed |
+| `feature/readme` | Este README |
+
+Para verlas: en GitHub Desktop, menú **Current Branch**; en la terminal, `git branch -a`. El detalle de cada rama y sus commits está en [`docs/GUIA-GIT.md`](docs/GUIA-GIT.md).
 
 ### ¿Qué son los contribuyentes?
 
@@ -244,12 +266,29 @@ Son las personas que han hecho commits en el repositorio. GitHub los cuenta solo
 
 | Nombre | Usuario de GitHub | Aporte |
 |--------|-------------------|--------|
-| _Integrante 1_ | `@usuario1` | Estructura HTML y README |
-| _Integrante 2_ | `@usuario2` | Estilos y responsive |
-| _Integrante 3_ | `@usuario3` | JavaScript e interacciones |
-| _Integrante 4_ | `@usuario4` | Fotos y textos del equipo |
+| Devinzon Acosta | [@Devz99AC](https://github.com/Devz99AC) | Coordinación y desarrollo del tema: WordPress, Elementor, animaciones con GSAP, vista previa, pruebas y README |
+| José Figueredo | [@momoyeus](https://github.com/momoyeus) | Front-end y diseño: fotos del equipo |
+| Carlos Mogollon | [@verladoth](https://github.com/verladoth) | Guía de Git: ramas y commits del proyecto |
+| Alejandro Mendez | [@AleGpu](https://github.com/AleGpu) | Licencia y dependencias del proyecto |
 
-> Reemplacen esta tabla con sus nombres y usuarios reales.
+### Conceptos de WordPress y de animación
+
+| Concepto | Qué es, en una frase | Dónde está |
+|----------|----------------------|------------|
+| **Tema** | La carpeta que decide cómo se ve un sitio de WordPress: plantillas PHP, CSS y JavaScript | Todo este repositorio |
+| **Template part** | Un pedazo de HTML reutilizable; aquí, una sección de la página | `template-parts/` |
+| **Custom Post Type (CPT)** | Un tipo de contenido propio, como las entradas, pero para integrantes (*Team*) y juegos (*Games*) | `inc/cpt.php` |
+| **Taxonomía** | Una forma de agrupar contenido, como las categorías; aquí, las áreas del equipo | `inc/cpt.php` |
+| **Meta box** | Una caja extra en la pantalla de edición con campos propios (rol, estado, año…) | `inc/meta-boxes.php` |
+| **Nonce** | Un código de un solo uso que prueba que el formulario salió de nuestro panel | `inc/meta-boxes.php` |
+| **Enqueue** | La forma correcta de cargar CSS y JS en WordPress: se piden con `wp_enqueue_style` / `wp_enqueue_script` y WordPress los imprime en orden | `functions.php` |
+| **Seed** | Los datos iniciales que el tema crea al activarse, sin duplicar | `inc/seed.php` |
+| **Widget de Elementor** | Un bloque que se arrastra en el editor; los nuestros usan las mismas template parts | `inc/widgets/` |
+| **GSAP** | Librería de animación; aquí solo anima `transform` y `opacity`, para ir a 60 fps | `assets/js/animations.js` |
+| **ScrollTrigger** | Plugin de GSAP que lanza una animación cuando una sección llega a cierta posición del scroll | `assets/js/animations.js` |
+| **Flip** | Plugin de GSAP que guarda dónde está cada tarjeta, deja que el filtro cambie el orden y anima la diferencia | `assets/js/animations.js` |
+| **SplitText** | Plugin de GSAP que divide un texto en palabras o líneas para animarlas una por una | `assets/js/animations.js` |
+| **Reducir movimiento** | Una opción del sistema operativo; con `gsap.matchMedia()` el sitio la respeta y no mueve nada | `assets/js/animations.js` |
 
 ---
 
@@ -263,14 +302,14 @@ tipo(alcance): descripción corta en minúsculas
 
 | Tipo | Cuándo se usa | Ejemplo |
 |------|---------------|---------|
-| `feat` | Nueva funcionalidad | `feat(equipo): agregar filtro por área` |
-| `fix` | Corrección de un error | `fix(menu): cerrar el menú al tocar un enlace` |
-| `docs` | Solo documentación | `docs(readme): agregar estructura de carpetas` |
+| `feat` | Nueva funcionalidad | `feat(anim): reordenar equipo con flip al filtrar` |
+| `fix` | Corrección de un error | `fix(css): evitar el scroll horizontal por la entrada del carrusel` |
+| `docs` | Solo documentación | `docs(readme): explicar cómo verlo con live server y localwp` |
 | `style` | Formato, sin cambiar lógica | `style: aplicar prettier` |
-| `refactor` | Reorganizar código sin cambiar lo que hace | `refactor(css): mover colores a variables` |
+| `refactor` | Reorganizar código sin cambiar lo que hace | `refactor(js): reemplazar intersection observer por scrolltrigger` |
 | `perf` | Mejora de rendimiento | `perf(img): convertir fotos a webp` |
-| `chore` | Tareas de mantenimiento | `chore: agregar .gitignore` |
-| `build` | Dependencias o configuración | `build: agregar prettier como devDependency` |
+| `chore` | Tareas de mantenimiento | `chore(vscode): agregar configuración de live server` |
+| `build` | Dependencias o configuración | `build: encolar gsap y sus plugins desde jsdelivr` |
 
 La guía completa, con el orden de commits sugerido y el paso a paso en GitHub Desktop, está en [`docs/GUIA-GIT.md`](docs/GUIA-GIT.md).
 
@@ -278,6 +317,6 @@ La guía completa, con el orden de commits sugerido y el paso a paso en GitHub D
 
 ## Licencia
 
-Este proyecto está bajo la **Licencia MIT**. Ver el archivo [`LICENSE`](LICENSE).
+Este proyecto está bajo la **Licencia MIT**, a nombre de los cuatro integrantes del equipo. Ver el archivo [`LICENSE`](LICENSE).
 
 El nombre, el logo y las imágenes de Mandoca Studio pertenecen a la marca y se usan solo con fines académicos.
