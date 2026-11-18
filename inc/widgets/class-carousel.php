@@ -67,8 +67,6 @@ class Mandoca_Carousel_Widget extends Mandoca_Widget_Base {
 		$this->add_content_note( esc_html__( 'The cards show the games from Dashboard → Games. Clicking a card opens that game in the Games showcase.', 'mandoca-studio' ), 'juego' );
 		$this->add_section_fields();
 		$this->add_text( 'title', esc_html__( 'Title', 'mandoca-studio' ) );
-		$this->add_text( 'button_text', esc_html__( 'Button text', 'mandoca-studio' ) );
-		$this->add_link( 'button_link', esc_html__( 'Button link', 'mandoca-studio' ), $this->default_value( 'button_url' ) );
 		$this->add_text( 'tab_text', esc_html__( 'Card side tab text', 'mandoca-studio' ) );
 		$this->add_link( 'card_link', esc_html__( 'Card link', 'mandoca-studio' ), $this->default_value( 'card_url' ) );
 		$this->add_control(
@@ -141,15 +139,13 @@ class Mandoca_Carousel_Widget extends Mandoca_Widget_Base {
 
 		$this->render_part(
 			array(
-				'section_id'  => $s['section_id'],
-				'alt'         => 'yes' === $s['alt'],
-				'title'       => $s['title'],
-				'button_text' => $s['button_text'],
-				'button_url'  => $this->url( $s['button_link'] ),
-				'tab_text'    => $s['tab_text'],
-				'card_url'    => $this->url( $s['card_link'] ),
-				'speed'       => (int) $s['speed'],
-				'games'       => $games,
+				'section_id' => $s['section_id'],
+				'alt'        => 'yes' === $s['alt'],
+				'title'      => $s['title'],
+				'tab_text'   => $s['tab_text'],
+				'card_url'   => $this->url( $s['card_link'] ),
+				'speed'      => (int) $s['speed'],
+				'games'      => $games,
 			)
 		);
 	}

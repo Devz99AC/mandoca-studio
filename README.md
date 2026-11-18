@@ -216,7 +216,7 @@ Este repositorio usa **3 tipos de ramas**:
 | `develop` | Donde se juntan los cambios antes de pasar a `main` |
 | `feature/<tarea>` | Una rama por tarea; al terminar se une a `develop` |
 
-En total hay **23 ramas**:
+En total hay **24 ramas**:
 
 | Rama | Para qué sirvió |
 |------|-----------------|
@@ -242,6 +242,7 @@ En total hay **23 ramas**:
 | `feature/quitar-live-server` | Quitar la vista previa estática y Live Server; el sitio se ve solo con LocalWP |
 | `feature/guia-git` | Guía de Git con la tabla de ramas y commits |
 | `feature/portada-meteor` | Extender el fondo de la portada de Meteor Strike para que llene la vitrina |
+| `feature/quitar-boton-destacados` | Quitar el botón "Ver todos los juegos" del carrusel de destacados |
 | `feature/readme` | Este README |
 
 Para verlas: en GitHub Desktop, menú **Current Branch**; en la terminal, `git branch -a`. El detalle de cada rama y sus commits está en [`docs/GUIA-GIT.md`](docs/GUIA-GIT.md).

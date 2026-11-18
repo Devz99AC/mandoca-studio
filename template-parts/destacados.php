@@ -25,9 +25,6 @@ if ( ! $mandoca_games ) {
 			<svg class="featured-icon" viewBox="0 0 24 24" width="40" height="40" aria-hidden="true" focusable="false"><path fill="currentColor" d="M7 7h10a5 5 0 0 1 4.9 6l-.8 3.9a2.6 2.6 0 0 1-4.4 1.3L14.2 16H9.8l-2.5 2.2a2.6 2.6 0 0 1-4.4-1.3L2.1 13A5 5 0 0 1 7 7zm0 3v1.5H5.5V13H7v1.5h1.5V13H10v-1.5H8.5V10H7zm9.5 0a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zm-2 2.6a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg>
 			<h2 class="featured-title"><?php echo esc_html( $args['title'] ); ?></h2>
 		</div>
-		<?php if ( $args['button_text'] ) : ?>
-			<a class="btn btn-primary" href="<?php echo esc_url( mandoca_section_url( $args['button_url'] ) ); ?>"><?php echo esc_html( $args['button_text'] ); ?> <span aria-hidden="true">›</span></a>
-		<?php endif; ?>
 	</div>
 
 	<div class="carousel" data-loop data-speed="<?php echo esc_attr( (int) $args['speed'] ); ?>" data-pause-hover data-draggable>

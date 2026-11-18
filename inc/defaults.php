@@ -80,16 +80,14 @@ function mandoca_defaults( $section ) {
 		),
 
 		'destacados' => array(
-			'section_id'  => 'destacados',
-			'alt'         => true,
-			'title'       => 'Destacados',
-			'button_text' => 'Ver todos los juegos',
-			'button_url'  => '#juegos',
-			'card_url'    => '#juegos',
-			'tab_text'    => 'Ver juego',
-			'speed'       => 45, // Píxeles por segundo.
-			'limit'       => -1,
-			'games'       => null, // null = leer los juegos del panel.
+			'section_id' => 'destacados',
+			'alt'        => true,
+			'title'      => 'Destacados',
+			'card_url'   => '#juegos',
+			'tab_text'   => 'Ver juego',
+			'speed'      => 45, // Píxeles por segundo.
+			'limit'      => -1,
+			'games'      => null, // null = leer los juegos del panel.
 		),
 
 		'estudio'  => array(
