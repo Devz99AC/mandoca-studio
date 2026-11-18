@@ -59,7 +59,6 @@ function mandoca_defaults( $section ) {
 			'scroll_text'  => 'scroll',
 			'scroll_url'   => '#juegos',
 			'scroll_label' => 'Bajar a Juegos',
-			'show_orbs'    => true,
 			'show_socials' => true,
 		),
 
