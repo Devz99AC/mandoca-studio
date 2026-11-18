@@ -216,7 +216,7 @@ Este repositorio usa **3 tipos de ramas**:
 | `develop` | Donde se juntan los cambios antes de pasar a `main` |
 | `feature/<tarea>` | Una rama por tarea; al terminar se une a `develop` |
 
-En total hay **16 ramas**:
+En total hay **22 ramas**:
 
 | Rama | Para qué sirvió |
 |------|-----------------|
@@ -227,7 +227,7 @@ En total hay **16 ramas**:
 | `feature/elementor` | Widgets Mandoca, cabecera y pie como plantillas, y colores y fuentes globales |
 | `feature/animaciones` | Todas las animaciones con GSAP, la vitrina y el carrusel |
 | `feature/quitar-circulo` | Quitar la sección del círculo con física, que se descartó |
-| `feature/preview-live-server` | Vista previa estática y configuración de Live Server |
+| `feature/preview-live-server` | Vista previa estática y configuración de Live Server (se quitaron después) |
 | `feature/cabecera-arriba` | Cambiar la barra lateral por una barra superior |
 | `feature/pruebas` | Pruebas en 3 tamaños de pantalla, arreglos y captura del tema |
 | `feature/equipo` | Equipo real de 5 integrantes y fotos desde el seed |
@@ -235,6 +235,12 @@ En total hay **16 ramas**:
 | `feature/juegos-nuevos` | Los 4 juegos del estudio y el enlace externo de cada juego |
 | `feature/portadas-hd` | Portadas de los juegos en mejor calidad y sus descripciones reales |
 | `feature/contacto-en-pie` | Quitar el formulario de suscripción y pasar el contacto al pie |
+| `feature/hero-sin-manchas` | Quitar las manchas del fondo del hero |
+| `feature/enlaces-juegos` | Enlazar Meteor Strike a itch.io y Tadventure a la Global Game Jam |
+| `feature/fotos-equipo` | Fotos de los 5 integrantes y de dónde salen |
+| `feature/licencia` | Licencia MIT con los nombres del equipo y GSAP como dependencia en `package.json` |
+| `feature/quitar-live-server` | Quitar la vista previa estática y Live Server; el sitio se ve solo con LocalWP |
+| `feature/guia-git` | Guía de Git con la tabla de ramas y commits |
 | `feature/readme` | Este README |
 
 Para verlas: en GitHub Desktop, menú **Current Branch**; en la terminal, `git branch -a`. El detalle de cada rama y sus commits está en [`docs/GUIA-GIT.md`](docs/GUIA-GIT.md).
