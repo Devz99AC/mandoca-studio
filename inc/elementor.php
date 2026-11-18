@@ -61,15 +61,14 @@ add_action( 'elementor/elements/categories_registered', 'mandoca_elementor_categ
  */
 function mandoca_elementor_widget_list() {
 	return array(
-		'header'    => 'Mandoca_Header_Widget',
-		'footer'    => 'Mandoca_Footer_Widget',
-		'hero'      => 'Mandoca_Hero_Widget',
-		'marquee'   => 'Mandoca_Marquee_Widget',
-		'games'     => 'Mandoca_Games_Widget',
-		'carousel'  => 'Mandoca_Carousel_Widget',
-		'studio'    => 'Mandoca_Studio_Widget',
-		'team'      => 'Mandoca_Team_Widget',
-		'community' => 'Mandoca_Community_Widget',
+		'header'   => 'Mandoca_Header_Widget',
+		'footer'   => 'Mandoca_Footer_Widget',
+		'hero'     => 'Mandoca_Hero_Widget',
+		'marquee'  => 'Mandoca_Marquee_Widget',
+		'games'    => 'Mandoca_Games_Widget',
+		'carousel' => 'Mandoca_Carousel_Widget',
+		'studio'   => 'Mandoca_Studio_Widget',
+		'team'     => 'Mandoca_Team_Widget',
 	);
 }
 

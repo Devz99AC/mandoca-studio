@@ -707,40 +707,6 @@ body.menu-open { overflow: hidden; }
 .member-bio p { color: var(--muted); font-size: .95rem; margin: 0 0 .6em; }
 .member-bio p:last-child { margin-bottom: 0; }
 
-/* ---------- Comunidad / contacto ---------- */
-.cta-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 1.5rem; }
-.cta-card {
-  background: var(--ink-3); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: clamp(2rem, 4vw, 3rem);
-  min-width: 0;
-}
-.cta-card h2 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); }
-.cta-card > p { color: var(--muted); }
-
-.newsletter { margin-top: 1.75rem; }
-.newsletter label { display: block; font-size: .85rem; font-weight: 700; margin-bottom: .5rem; }
-.field-row { display: flex; gap: .6rem; }
-.field-row input {
-  flex: 1; min-width: 0;
-  font: inherit; color: var(--bone);
-  background: var(--ink); border: 1px solid var(--line); border-radius: 999px;
-  padding: .85rem 1.2rem;
-}
-.field-row input:focus { outline: none; border-color: var(--gold); }
-.field-row input[aria-invalid="true"] { border-color: var(--ember); }
-.form-msg { min-height: 1.5em; margin: .75rem 0 0; font-size: .9rem; }
-.form-msg.is-error { color: var(--ember-2); }
-.form-msg.is-ok { color: var(--gold); }
-
-.cta-contact { display: flex; flex-direction: column; }
-.mail-link {
-  margin-top: auto;
-  font-family: var(--font-display); font-weight: 800; font-size: clamp(1.1rem, 2.2vw, 1.5rem);
-  color: var(--bone); text-decoration: none; word-break: break-all;
-  border-bottom: 2px solid var(--ember); align-self: flex-start; padding-bottom: .2rem;
-}
-.mail-link:hover { color: var(--ember-2); }
-
 /* ---------- Redes sociales (íconos) ---------- */
 .socials { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .6rem; }
 .socials a {
@@ -759,7 +725,21 @@ body.menu-open { overflow: hidden; }
 .hero-top { position: absolute; top: 1.5rem; inset-inline: 0; z-index: 1; }
 
 /* ---------- Pie ---------- */
-.site-footer { padding: 3rem 0; }
+.site-footer { padding: clamp(3.5rem, 7vw, 5rem) 0 3rem; border-top: 1px solid var(--line); }
+/* Contacto: el texto a la izquierda y el correo a la derecha (se apilan en celular). */
+.footer-contact {
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.5rem 3rem;
+  padding-bottom: 2.5rem; margin-bottom: 2.5rem; border-bottom: 1px solid var(--line);
+}
+.footer-contact-text { max-width: 36rem; }
+.footer-contact-title { font-size: clamp(1.6rem, 3.2vw, 2.25rem); margin: 0 0 .5rem; }
+.footer-contact-desc { color: var(--muted); margin: 0; }
+.mail-link {
+  font-family: var(--font-display); font-weight: 800; font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  color: var(--bone); text-decoration: none; word-break: break-all;
+  border-bottom: 2px solid var(--ember); padding-bottom: .2rem;
+}
+.mail-link:hover { color: var(--ember-2); }
 .footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
 .footer-brand { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; margin: 0; }
 .footer-socials { gap: 1.5rem; }
@@ -785,14 +765,12 @@ body.menu-open { overflow: hidden; }
 /* ---------- Responsive ---------- */
 @media (max-width: 960px) {
   .team { grid-template-columns: repeat(2, 1fr); }
-  .game, .studio, .cta-grid { grid-template-columns: 1fr; }
+  .game, .studio { grid-template-columns: 1fr; }
   .game-reverse .game-art { order: 0; }
 }
 
 @media (max-width: 720px) {
   .team { grid-template-columns: 1fr; }
-  .field-row { flex-direction: column; }
-  .field-row .btn { justify-content: center; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
 }
 

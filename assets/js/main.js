@@ -128,53 +128,7 @@
     });
   }
 
-  /* 5. Validación del formulario de newsletter ------------- */
-  function initNewsletter(form) {
-    const input = form.querySelector('input[type="email"]');
-    const msg = form.querySelector('.form-msg');
-    if (!input || !msg) return;
-
-    // Los textos se escriben en el panel (Elementor) y llegan como data-*
-    const text = {
-      empty: form.dataset.msgEmpty || 'Escribe tu correo para suscribirte.',
-      invalid: form.dataset.msgInvalid || 'Ese correo no parece válido. Revisa que tenga @ y un dominio.',
-      ok: form.dataset.msgOk || '¡Listo! Te avisaremos en {email}.',
-    };
-
-    const showMsg = (value, type) => {
-      msg.textContent = value;
-      msg.className = `form-msg is-${type}`;
-    };
-
-    const fail = (value) => {
-      input.setAttribute('aria-invalid', 'true');
-      showMsg(value, 'error');
-      input.focus();
-    };
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const value = input.value.trim();
-
-      if (!value) return fail(text.empty);
-      if (!input.checkValidity()) return fail(text.invalid);
-
-      // Aquí iría el envío real (por ejemplo, a un servicio de newsletter).
-      input.removeAttribute('aria-invalid');
-      showMsg(text.ok.replace('{email}', value), 'ok');
-      form.reset();
-    });
-
-    // Quita el error en cuanto la persona corrige el campo
-    input.addEventListener('input', () => {
-      if (input.getAttribute('aria-invalid') === 'true' && input.checkValidity()) {
-        input.removeAttribute('aria-invalid');
-        msg.textContent = '';
-      }
-    });
-  }
-
-  /* 6. Arranque -------------------------------------------- */
+  /* 5. Arranque -------------------------------------------- */
   function boot(root = document) {
     $$(root, '.site-header').forEach((header) => {
       if (!firstTime(header, 'Header')) return;
@@ -184,7 +138,6 @@
     $$(root, '.brand-logo').forEach((img) => firstTime(img, 'Logo') && initLogo(img));
     $$(root, '.member-photo').forEach((img) => firstTime(img, 'Photo') && initPhoto(img));
     $$(root, '[data-team]').forEach((section) => firstTime(section, 'Team') && initTeam(section));
-    $$(root, '.newsletter').forEach((form) => firstTime(form, 'Form') && initNewsletter(form));
     // Año automático en el pie de página
     $$(root, '[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
   }
