@@ -3,7 +3,7 @@
 Fotos tomadas de [mandocastudio.com/about-us](https://www.mandocastudio.com/about-us/). Se usan con fines académicos.
 
 - **En WordPress:** al activar el tema (o con `wp mandoca seed`), las fotos de esta carpeta se suben solas a la Biblioteca de medios y quedan como foto de cada integrante. Para cambiar una: *Team → editar al integrante → Photo* (imagen destacada). Cuadrada, 400×400 px o más.
-- **En la vista previa (Live Server):** `preview/index.html` usa estos mismos archivos, con estos nombres exactos:
+- **Nombres de los archivos:** el tema busca la foto de cada integrante por su alias, con estos nombres exactos:
 
 | Integrante  | Archivo           |
 |-------------|-------------------|
@@ -13,4 +13,4 @@ Fotos tomadas de [mandocastudio.com/about-us](https://www.mandocastudio.com/abou
 | CrimReaper  | `crimreaper.webp` |
 | Momoye      | `momoye.webp`     |
 
-Si una foto falta, el sitio muestra las iniciales de la persona en su lugar (en los dos).
+Si una foto falta, el sitio muestra las iniciales de la persona en su lugar.

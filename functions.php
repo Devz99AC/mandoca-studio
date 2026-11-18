@@ -18,7 +18,7 @@ define( 'MANDOCA_URI', get_template_directory_uri() );
 // aunque el panel de WordPress esté en inglés).
 define( 'MANDOCA_CONTENT_LANG', 'es' );
 
-// Versión fija de GSAP, la librería de animación (la misma en preview/index.html).
+// Versión fija de GSAP, la librería de animación (la misma que en package.json).
 define( 'MANDOCA_GSAP_VERSION', '3.13.0' );
 
 require_once MANDOCA_DIR . '/inc/helpers.php';

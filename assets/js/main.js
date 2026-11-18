@@ -1,8 +1,7 @@
 /* =========================================================
    Mandoca Studio — interacciones del sitio
-   JavaScript puro (sin librerías). Funciona igual en:
-   - WordPress (con o sin Elementor), y
-   - la vista previa estática (preview/index.html con Live Server).
+   JavaScript puro (sin librerías). Funciona igual en WordPress con o sin
+   Elementor.
    Todos los datos se leen del HTML (atributos data-*), nunca de PHP.
    ========================================================= */
 
