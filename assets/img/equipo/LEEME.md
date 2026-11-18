@@ -1,5 +1,7 @@
 # Fotos del equipo
 
+Fotos tomadas de [mandocastudio.com/about-us](https://www.mandocastudio.com/about-us/). Se usan con fines académicos.
+
 - **En WordPress:** al activar el tema (o con `wp mandoca seed`), las fotos de esta carpeta se suben solas a la Biblioteca de medios y quedan como foto de cada integrante. Para cambiar una: *Team → editar al integrante → Photo* (imagen destacada). Cuadrada, 400×400 px o más.
 - **En la vista previa (Live Server):** `preview/index.html` usa estos mismos archivos, con estos nombres exactos:
 
