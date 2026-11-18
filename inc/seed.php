@@ -7,8 +7,6 @@
  * se guarda una marca en la opción "mandoca_seed_content" y además se revisa
  * si cada integrante o juego ya existe antes de crearlo.
  *
- * Si cambias estos datos, cambia también preview/index.html.
- *
  * @package Mandoca_Studio
  */
 

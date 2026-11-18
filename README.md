@@ -27,8 +27,6 @@ Tema de WordPress propio para **Mandoca Studio**, un estudio independiente de vi
 4. **Equipo con filtro por área animado.** Los botones Todos / Programación / Arte / Audio reacomodan las tarjetas con **GSAP Flip**. Si un integrante no tiene foto, se muestran sus iniciales.
 5. **Responsive, con menú a pantalla completa.** Se adapta a escritorio, tablet y celular. El menú se abre a pantalla completa y se cierra con la tecla Escape. El correo de contacto del estudio está en el pie, y el botón *Contacto* de la cabecera lleva hasta ahí.
 
-**Extra:** una vista previa estática (`preview/index.html`) con el mismo HTML que genera WordPress, para ver los cambios de diseño y animación al instante con **Live Server**.
-
 ---
 
 ## Stack tecnológico
@@ -43,7 +41,6 @@ Tema de WordPress propio para **Mandoca Studio**, un estudio independiente de vi
 | Interacción | **JavaScript** (ES6) | Menú y filtro del equipo |
 | Tipografías | **Google Fonts** | Montserrat (títulos) e Inter (texto), las mismas de mandocastudio.com, y JetBrains Mono para etiquetas |
 | Entorno WordPress | **LocalWP** | Correr WordPress en la computadora, sin hosting |
-| Vista previa | **Live Server** (extensión de VS Code) | Ver `preview/index.html` y recargar al guardar |
 | Editor | **Visual Studio Code** | Escribir el código |
 | Asistente | **Claude Code** (extensión de VS Code) | Apoyo para generar, probar y revisar código |
 | Control de versiones | **Git** + **GitHub Desktop** | Commits, ramas y subir el código a GitHub |
@@ -109,13 +106,10 @@ mandoca-studio/
 │       ├── logo.png, logo-mark.png
 │       ├── juegos/            # Arte de los juegos (.webp)
 │       └── equipo/            # Fotos de los integrantes (.webp)
-├── preview/
-│   └── index.html             # Vista previa estática para Live Server (mismo HTML que WordPress)
 ├── docs/
 │   └── GUIA-GIT.md            # Ramas, commits y flujo con GitHub Desktop
 ├── .vscode/
-│   ├── extensions.json        # Extensiones recomendadas (Live Server, Claude Code…)
-│   └── settings.json          # Configuración de Live Server (puerto 5500)
+│   └── extensions.json        # Extensiones recomendadas (Claude Code, Prettier…)
 ├── .editorconfig              # Mismo formato de código para todos
 ├── .gitattributes             # Finales de línea y archivos binarios
 ├── .gitignore                 # Archivos que Git no debe subir
@@ -128,24 +122,9 @@ mandoca-studio/
 
 ## Cómo verlo
 
-Hay dos formas, y las dos usan los mismos archivos de `assets/` (CSS, JavaScript e imágenes):
+El sitio se ve con **LocalWP**, que corre WordPress completo (con Elementor) en la computadora, sin hosting.
 
-| Para qué | Herramienta | Qué se abre |
-|----------|-------------|-------------|
-| Ajustar colores, espacios y animaciones al instante | **Live Server** | `preview/index.html`, una copia estática de la portada |
-| Ver el sitio real y editarlo desde el panel | **LocalWP** | WordPress completo, con Elementor |
-
-### 1. Diseño y animaciones al instante: Live Server
-
-1. Clona el repositorio con **GitHub Desktop** (`File → Clone repository`) y abre en **VS Code** la carpeta del tema, la que tiene `style.css`.
-2. Clic derecho sobre `preview/index.html` → **Open with Live Server**. Se abre en `http://127.0.0.1:5500/preview/index.html`.
-3. Cada vez que guardas `main.css`, `main.js` o `animations.js`, la página se recarga sola.
-
-Por terminal también se puede: `npm install` y después `npm run preview`.
-
-> Live Server no ejecuta PHP. Por eso existe `preview/index.html`, con el mismo HTML que genera WordPress. **Regla del equipo:** si cambias una plantilla PHP (`template-parts/`) o los datos de `inc/seed.php`, actualiza también `preview/index.html` en el mismo commit.
-
-### 2. Sitio real con WordPress: LocalWP
+### Paso a paso con LocalWP
 
 1. **Crear el sitio.** En LocalWP: **+** → *Create a new site* → nombre `mandoca-studio` → *Preferred* → crea tu usuario y contraseña de administrador. Pulsa **Start site**.
 2. **Poner el tema.** Clona (o copia) este repositorio dentro de la carpeta del sitio, en `app/public/wp-content/themes/mandoca-studio`. En Windows la carpeta del sitio suele ser `C:\Users\<tu usuario>\Local Sites\mandoca-studio\`; en Mac, `~/Local Sites/mandoca-studio/`. Con GitHub Desktop: `File → Clone repository` y en *Local path* eliges esa carpeta.
@@ -195,17 +174,16 @@ Son paquetes de código hechos por otras personas que un proyecto necesita para 
 Hay dos tipos:
 
 - **`dependencies`**: las necesita el sitio para funcionar en producción (por ejemplo, una librería de animaciones).
-- **`devDependencies`**: solo se usan mientras se desarrolla (formatear código, servidor local).
+- **`devDependencies`**: solo se usan mientras se desarrolla (por ejemplo, para formatear el código).
 
-Este proyecto tiene **1 dependencia del sitio** y **2 dependencias de desarrollo**:
+Este proyecto tiene **1 dependencia del sitio** y **1 dependencia de desarrollo**:
 
 | Paquete | Tipo | Versión | Para qué |
 |---------|------|---------|----------|
 | `gsap` | dependency (del sitio) | `3.13.0` | Todas las animaciones: el núcleo de GSAP y sus plugins ScrollTrigger, Flip y SplitText (desde la versión 3.13 todos sus plugins son gratis) |
-| `live-server` | devDependency | `^1.2.2` | Servidor local desde la terminal (igual que la extensión Live Server) |
 | `prettier` | devDependency | `^3.3.3` | Ordena y formatea el código automáticamente |
 
-Para que el sitio funcione **no hace falta** `npm install`. WordPress (`functions.php`) y la vista previa (`preview/index.html`) cargan GSAP desde **jsDelivr** con la misma versión fija; en `package.json` queda anotada para que todos sepan cuál usamos. Si algún día se cambia la versión, hay que cambiarla en los tres lugares: `package.json`, `MANDOCA_GSAP_VERSION` en `functions.php` y `preview/index.html`.
+Para que el sitio funcione **no hace falta** `npm install`. WordPress (`functions.php`) carga GSAP desde **jsDelivr** con una versión fija; en `package.json` queda anotada para que todos sepan cuál usamos. Si algún día se cambia la versión, hay que cambiarla en los dos lugares: `package.json` y `MANDOCA_GSAP_VERSION` en `functions.php`.
 
 **Elementor** también es una dependencia, pero de otro tipo: es un plugin de WordPress, no un paquete de npm, y se instala desde el panel (ver *Cómo verlo*).
 
@@ -223,7 +201,6 @@ El equipo usa **npm**. Lo importante es que todos usen el mismo gestor, para no 
 
 ```bash
 npm install        # instala las dependencias de package.json
-npm run preview    # abre preview/index.html con live-server
 npm run format     # formatea el código con prettier
 ```
 

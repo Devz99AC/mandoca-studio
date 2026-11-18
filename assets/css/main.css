@@ -33,7 +33,7 @@
    Elementor guarda sus colores y fuentes globales (Site Settings) como
    variables --e-global-* en el <body>. Aquí las conectamos con las del tema:
    si el diseñador cambia el naranja en Elementor, cambia en todo el sitio.
-   Sin Elementor (vista previa con Live Server) se usan los mismos valores
+   Sin Elementor se usan los mismos valores
    de :root, por eso se repiten como respaldo. */
 body {
   --ink: var(--e-global-color-primary, #0a0a0a);
