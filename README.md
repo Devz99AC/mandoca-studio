@@ -1,23 +1,34 @@
-# Mandoca Studio — Sitio web
+# Mandoca Studio — Tema de WordPress
 
-Sitio web de una sola página para **Mandoca Studio**, un estudio independiente de videojuegos formado por un grupo de amigos. Presenta los juegos en desarrollo, la historia del estudio y a cada integrante con su foto y lo que hace.
+Tema de WordPress propio para **Mandoca Studio**, un estudio independiente de videojuegos formado por un grupo de amigos. Es un sitio de una sola página que presenta los juegos, la historia del estudio y a cada integrante con su foto y lo que hace. Se edita con **Elementor** (versión gratis) y tiene animaciones hechas con **GSAP**.
 
 - **Marca:** [mandocastudio.com](https://www.mandocastudio.com/)
-- **Referencia de diseño:** [thunderfulgames.com](https://thunderfulgames.com/) (juegos destacados en grande, bloques por juego, llamada a la comunidad y pie con redes)
+- **Referencia de diseño y animación:** [thunderfulgames.com](https://thunderfulgames.com/): vitrina de juegos tipo acordeón, carrusel de destacados, cinta animada, menú a pantalla completa y entradas al hacer scroll, con la paleta de Mandoca.
 
-> Proyecto académico. Los textos de los juegos (Skathos y Void Mask) son de ejemplo y deben confirmarse con la marca.
+> Proyecto académico. Las fotos, alias y roles del equipo salen de [mandocastudio.com/about-us](https://www.mandocastudio.com/about-us/). Los textos de los juegos son provisionales, y *Proyecto 03* y *Proyecto 04* son espacios reservados para juegos que todavía no se anuncian.
 
 ---
 
 ## Funcionalidades
 
-1. **Diseño responsive con menú móvil.** El sitio se adapta a escritorio, tablet y celular; en pantallas pequeñas el menú se convierte en un botón hamburguesa que se cierra al elegir una opción o con la tecla Escape.
-2. **Sección de juegos estilo vitrina.** Cada juego tiene su bloque con arte, género, año, estado (en desarrollo / prototipo) y quién del equipo trabaja en él, al estilo de Thunderful Games.
-3. **Equipo con foto y descripción.** Una tarjeta por integrante con foto, alias, rol y qué hace. Si falta una foto, se muestran sus iniciales automáticamente.
-4. **Filtro del equipo por área.** Botones para ver solo Programación, Arte o Audio y narrativa.
-5. **Formulario de newsletter con validación.** Revisa el correo en el navegador y muestra mensajes claros de error o de éxito, sin recargar la página.
+1. **Editable con Elementor, sin tocar código.** La portada es una página de Elementor armada con **9 widgets propios** (categoría *Mandoca*): Header, Hero, Marquee, Games, Featured Carousel, Studio Intro, Team, Community & Contact y Footer. Se pueden combinar con los widgets nativos de Elementor. La cabecera y el pie son plantillas de Elementor, y los colores y las fuentes globales de Elementor están conectados con los del tema.
+2. **Contenido administrable desde el panel de WordPress.** Hay dos tipos de contenido propios: **Team** (alias, rol, área y foto de cada integrante) y **Games** (estado, género, año, créditos y arte de cada juego). Las redes sociales y el logo se cambian en *Appearance → Customize*. Al activar el tema se cargan solos los datos iniciales, sin duplicar nada.
+3. **Animaciones estilo Thunderful con GSAP:**
+   - el título del hero entra palabra por palabra;
+   - los orbes del fondo siguen al mouse;
+   - la cinta se acelera con el scroll;
+   - la vitrina de juegos se abre como acordeón;
+   - el carrusel de destacados es infinito y se puede arrastrar;
+   - las cifras cuentan desde cero;
+   - los encabezados se revelan con una línea naranja;
+   - la cabecera se oculta al bajar;
+   - los botones son magnéticos.
 
-Extra: animaciones de entrada al hacer scroll, que se desactivan si el sistema tiene activado “reducir movimiento”.
+   Con *reducir movimiento* activado en el sistema, nada se mueve y todo se ve al instante.
+4. **Equipo con filtro por área animado.** Los botones Todos / Programación / Arte / Audio reacomodan las tarjetas con **GSAP Flip**. Si un integrante no tiene foto, se muestran sus iniciales.
+5. **Responsive, con menú a pantalla completa y newsletter validado.** Se adapta a escritorio, tablet y celular. El menú se abre a pantalla completa y se cierra con la tecla Escape. El formulario revisa el correo y muestra mensajes de error o de éxito sin recargar la página; esos mensajes también se editan en Elementor.
+
+**Extra:** una vista previa estática (`preview/index.html`) con el mismo HTML que genera WordPress, para ver los cambios de diseño y animación al instante con **Live Server**.
 
 ---
 
@@ -25,31 +36,37 @@ Extra: animaciones de entrada al hacer scroll, que se desactivan si el sistema t
 
 | Capa | Herramienta | Para qué la usamos |
 |------|-------------|--------------------|
-| Estructura | **HTML5** | Contenido y secciones de la página |
-| Estilos | **CSS3** (variables, Grid, Flexbox) | Diseño, colores de la marca y responsive |
-| Interacción | **JavaScript** (ES6, sin librerías) | Menú, filtro, validación y animaciones |
+| CMS | **WordPress** | Panel para administrar el contenido (juegos, equipo, redes, logo) |
+| Lenguaje del servidor | **PHP** | Tema de WordPress: plantillas, tipos de contenido, meta boxes y widgets |
+| Constructor visual | **Elementor** (gratis) | Editar la portada, la cabecera y el pie arrastrando bloques |
+| Animación | **GSAP** 3.13 (ScrollTrigger, Flip, SplitText) | Todas las animaciones del sitio. Se carga desde jsDelivr |
+| Estructura y estilos | **HTML5** + **CSS3** (variables, Grid, Flexbox) | Secciones, colores de la marca y diseño responsive |
+| Interacción | **JavaScript** (ES6) | Menú, filtro del equipo y validación del formulario |
 | Tipografías | **Google Fonts** | Montserrat (títulos) e Inter (texto), las mismas de mandocastudio.com, y JetBrains Mono para etiquetas |
+| Entorno WordPress | **LocalWP** | Correr WordPress en la computadora, sin hosting |
+| Vista previa | **Live Server** (extensión de VS Code) | Ver `preview/index.html` y recargar al guardar |
 | Editor | **Visual Studio Code** | Escribir el código |
-| Asistente | **Claude Code** (extensión de VS Code) | Apoyo para generar y revisar código |
-| Vista previa | **Live Server** (extensión de VS Code) | Ver los cambios en el navegador al guardar |
+| Asistente | **Claude Code** (extensión de VS Code) | Apoyo para generar, probar y revisar código |
 | Control de versiones | **Git** + **GitHub Desktop** | Commits, ramas y subir el código a GitHub |
 | Repositorio | **GitHub** | Guardar el proyecto y trabajar en equipo |
-| Entorno WordPress | **LocalWP** | Correr en local una copia WordPress del sitio original de la marca para compararlo (opcional) |
 
 ---
 
 ## Colorimetría
 
-La paleta sale del logo de Mandoca, que es monocromo (negro, blanco y gris), más el naranja de acento que usa su sitio web. Todos los colores están como variables al inicio de `css/styles.css`.
+La paleta sale del logo de Mandoca, que es monocromo (negro, blanco y gris), más el naranja de acento que usa su sitio web. Los colores están en dos lugares conectados entre sí:
 
-| Color | Hex | Origen | Uso en el sitio |
-|-------|-----|--------|-----------------|
-| Negro | `#0A0A0A` | Logo | Fondo principal |
-| Blanco | `#FFFFFF` | Logo | Títulos y texto |
-| Gris claro | `#ADADAD` | Logo | Texto secundario |
-| Gris oscuro | `#585858` | Sitio de la marca | Detalles y avatares |
-| Naranja | `#E55901` | Sitio de la marca | Botones y acentos (con moderación) |
-| Crema | `#FEF1E4` | Sitio de la marca | Línea de la cita y foco |
+- como **variables CSS** al inicio de `assets/css/main.css`;
+- como **colores globales de Elementor** (*Site Settings → Global Colors*). Si el diseñador cambia un color en Elementor, cambia en todo el sitio.
+
+| Color | Hex | Origen | En Elementor | Uso en el sitio |
+|-------|-----|--------|--------------|-----------------|
+| Negro | `#0A0A0A` | Logo | Primary · *Black (background)* | Fondo principal |
+| Blanco | `#FFFFFF` | Logo | Secondary · *White (text)* | Títulos y texto |
+| Gris claro | `#ADADAD` | Logo | Text · *Light gray (secondary text)* | Texto secundario |
+| Gris oscuro | `#585858` | Sitio de la marca | *Dark gray (details)* | Orbe del hero, arte provisional de los juegos e iniciales |
+| Naranja | `#E55901` | Sitio de la marca | Accent · *Orange (accent)* | Botones y acentos (con moderación) |
+| Crema | `#FEF1E4` | Sitio de la marca | *Cream (details)* | Línea de la cita, datos de los juegos, foco del teclado y mensaje de éxito |
 
 ---
 
