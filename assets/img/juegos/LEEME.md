@@ -4,7 +4,7 @@ Una imagen por juego, horizontal (16:9 o 16:10), en formato `.webp`, con estos n
 
 | Juego                      | Archivo                          | Origen |
 |----------------------------|----------------------------------|--------|
-| Meteor Strike              | `meteor-strike.webp`             | Arte del juego (pantalla de victoria) |
+| Meteor Strike              | `meteor-strike.webp`             | Portada del juego (pixel art de 300×200, ampliada 5× sin suavizado). Ajuste: *Contain* |
 | Echoes                     | `echoes.webp`                    | *Pendiente* |
 | Tadventure Road: Neverpond | `tadventure-road-neverpond.webp` | *Pendiente* (página de la Global Game Jam 2025) |
 | Unknown Project            | `unknown-project.webp`           | *Pendiente* |
