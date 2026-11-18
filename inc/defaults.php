@@ -131,28 +131,14 @@ function mandoca_defaults( $section ) {
 			'areas'           => null,
 		),
 
-		'contacto' => array(
-			'section_id'      => 'contacto',
-			'alt'             => true,
-			'eyebrow'         => '04 — Comunidad',
-			'title'           => 'Únete a nuestra comunidad',
-			'text'            => 'Recibe avances, devlogs y fechas de prueba antes que nadie.',
-			'label'           => 'Correo electrónico',
-			'placeholder'     => 'tu@correo.com',
-			'button'          => 'Suscribirme',
-			'msg_empty'       => 'Escribe tu correo para suscribirte.',
-			'msg_invalid'     => 'Ese correo no parece válido. Revisa que tenga @ y un dominio.',
-			'msg_ok'          => '¡Listo! Te avisaremos en {email}.',
+		'pie'      => array(
 			'contact_eyebrow' => 'Contacto',
 			'contact_title'   => '¿Quieres hablar con el equipo?',
 			'contact_text'    => 'Para consultas generales, prensa o colaboraciones, escríbenos.',
 			'email'           => 'Contact@MandocaStudio.com',
-		),
-
-		'pie'      => array(
-			'brand'        => 'Mandoca.Studio',
-			'show_socials' => true, // Las redes se editan en Apariencia > Personalizar.
-			'copy'         => '© {year} Mandoca Studio · Proyecto académico',
+			'brand'           => 'Mandoca.Studio',
+			'show_socials'    => true, // Las redes se editan en Apariencia > Personalizar.
+			'copy'            => '© {year} Mandoca Studio · Proyecto académico',
 		),
 	);
 

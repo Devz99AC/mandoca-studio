@@ -575,7 +575,6 @@ function mandoca_seed_front_page() {
 		'mandoca-carousel'     => 'Destacados',
 		'mandoca-studio-intro' => 'Estudio',
 		'mandoca-team'         => 'Equipo',
-		'mandoca-community'    => 'Comunidad y contacto',
 	);
 	mandoca_el_save( $page_id, array_map( 'mandoca_el_section', array_keys( $sections ), $sections ), 'wp-page' );
 }
