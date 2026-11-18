@@ -289,14 +289,14 @@ tipo(alcance): descripción corta en minúsculas
 |------|---------------|---------|
 | `feat` | Nueva funcionalidad | `feat(anim): reordenar equipo con flip al filtrar` |
 | `fix` | Corrección de un error | `fix(css): evitar el scroll horizontal por la entrada del carrusel` |
-| `docs` | Solo documentación | `docs(readme): explicar cómo verlo con live server y localwp` |
+| `docs` | Solo documentación | `docs(readme): actualizar el aporte de cada integrante` |
 | `style` | Formato, sin cambiar lógica | `style: aplicar prettier` |
 | `refactor` | Reorganizar código sin cambiar lo que hace | `refactor(js): reemplazar intersection observer por scrolltrigger` |
 | `perf` | Mejora de rendimiento | `perf(img): convertir fotos a webp` |
-| `chore` | Tareas de mantenimiento | `chore(vscode): agregar configuración de live server` |
+| `chore` | Tareas de mantenimiento | `chore: importar sitio estático de mandoca studio` |
 | `build` | Dependencias o configuración | `build: encolar gsap y sus plugins desde jsdelivr` |
 
-La guía completa, con el orden de commits sugerido y el paso a paso en GitHub Desktop, está en [`docs/GUIA-GIT.md`](docs/GUIA-GIT.md).
+La guía completa, con la tabla de ramas y commits y el paso a paso en GitHub Desktop, está en [`docs/GUIA-GIT.md`](docs/GUIA-GIT.md).
 
 ---
 
