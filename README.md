@@ -5,14 +5,14 @@ Tema de WordPress propio para **Mandoca Studio**, un estudio independiente de vi
 - **Marca:** [mandocastudio.com](https://www.mandocastudio.com/)
 - **Referencia de diseño y animación:** [thunderfulgames.com](https://thunderfulgames.com/): vitrina de juegos tipo acordeón, carrusel de destacados, cinta animada, menú a pantalla completa y entradas al hacer scroll, con la paleta de Mandoca.
 
-> Proyecto académico. Las fotos, alias y roles del equipo salen de [mandocastudio.com/about-us](https://www.mandocastudio.com/about-us/). Los textos de los juegos son provisionales, y *Proyecto 03* y *Proyecto 04* son espacios reservados para juegos que todavía no se anuncian.
+> Proyecto académico. Los datos del equipo salen de [mandocastudio.com/about-us](https://www.mandocastudio.com/about-us/): fotos, alias, roles, citas y juegos favoritos. Las redes son las cuentas reales del estudio. Los juegos son los del estudio: *Meteor Strike*, *Echoes*, *Tadventure Road: Neverpond* y *Unknown Project*. Algunos de sus textos e imágenes todavía están pendientes.
 
 ---
 
 ## Funcionalidades
 
 1. **Editable con Elementor, sin tocar código.** La portada es una página de Elementor armada con **9 widgets propios** (categoría *Mandoca*): Header, Hero, Marquee, Games, Featured Carousel, Studio Intro, Team, Community & Contact y Footer. Se pueden combinar con los widgets nativos de Elementor. La cabecera y el pie son plantillas de Elementor, y los colores y las fuentes globales de Elementor están conectados con los del tema.
-2. **Contenido administrable desde el panel de WordPress.** Hay dos tipos de contenido propios: **Team** (alias, rol, área y foto de cada integrante) y **Games** (estado, género, año, créditos y arte de cada juego). Las redes sociales y el logo se cambian en *Appearance → Customize*. Al activar el tema se cargan solos los datos iniciales, sin duplicar nada.
+2. **Contenido administrable desde el panel de WordPress.** Hay dos tipos de contenido propios: **Team** (alias, rol, área, foto, cita favorita y juegos favoritos de cada integrante) y **Games** (estado, género, año, créditos, arte y un enlace, por ejemplo a itch.io, de cada juego). Las redes sociales y el logo se cambian en *Appearance → Customize*. Al activar el tema se cargan solos los datos iniciales, sin duplicar nada.
 3. **Animaciones estilo Thunderful con GSAP:**
    - el título del hero entra palabra por palabra;
    - los orbes del fondo siguen al mouse;
@@ -153,7 +153,7 @@ Por terminal también se puede: `npm install` y después `npm run preview`.
 2. **Poner el tema.** Clona (o copia) este repositorio dentro de la carpeta del sitio, en `app/public/wp-content/themes/mandoca-studio`. En Windows la carpeta del sitio suele ser `C:\Users\<tu usuario>\Local Sites\mandoca-studio\`; en Mac, `~/Local Sites/mandoca-studio/`. Con GitHub Desktop: `File → Clone repository` y en *Local path* eliges esa carpeta.
 3. **Instalar Elementor.** Botón **WP Admin** → *Plugins → Add New Plugin* → busca **Elementor** (*Elementor Website Builder*) → *Install Now* → *Activate*. Conviene hacerlo antes de activar el tema; si lo instalas después, la portada se arma sola la próxima vez que entres al panel.
 4. **Activar el tema.** *Appearance → Themes → Mandoca Studio → Activate*. Se crean solos:
-   - las áreas, los 5 integrantes con su foto y los 4 juegos con su arte;
+   - las áreas, los 5 integrantes con su foto y los 4 juegos con su arte (el de cada juego cuya imagen ya está en `assets/img/juegos/`);
    - el logo;
    - con Elementor, además: la página *Inicio* como portada, las plantillas *Header* y *Footer*, y los colores y fuentes globales.
 
@@ -174,9 +174,9 @@ El panel está en inglés; el contenido del sitio, en español.
 | Textos, botones y orden de las secciones de la portada | *Pages → Inicio → Edit with Elementor* |
 | La cabecera o el pie | *Templates → Saved Templates → Header / Footer → Edit with Elementor* |
 | Colores y fuentes de todo el sitio | En el editor de Elementor: *Site Settings → Global Colors / Global Fonts* |
-| Integrantes: alias, rol, área, qué hace y foto | *Team* |
+| Integrantes: alias, rol, área, foto, cita y juegos favoritos | *Team* |
 | Las áreas del filtro | *Team → Areas* |
-| Juegos: texto, estado, género, año, créditos y arte | *Games* |
+| Juegos: texto, estado, género, año, créditos, arte y enlace (itch.io, Steam…) | *Games* |
 | Redes sociales (íconos del hero, el menú y el pie) | *Appearance → Customize → Social networks* (un campo vacío oculta esa red) |
 | Logo | *Appearance → Customize → Site Identity → Logo* |
 
@@ -241,7 +241,7 @@ Este repositorio usa **3 tipos de ramas**:
 | `develop` | Donde se juntan los cambios antes de pasar a `main` |
 | `feature/<tarea>` | Una rama por tarea; al terminar se une a `develop` |
 
-En total hay **12 ramas**:
+En total hay **14 ramas**:
 
 | Rama | Para qué sirvió |
 |------|-----------------|
@@ -256,6 +256,8 @@ En total hay **12 ramas**:
 | `feature/cabecera-arriba` | Cambiar la barra lateral por una barra superior |
 | `feature/pruebas` | Pruebas en 3 tamaños de pantalla, arreglos y captura del tema |
 | `feature/equipo` | Equipo real de 5 integrantes y fotos desde el seed |
+| `feature/textos-equipo` | Citas y juegos favoritos de cada integrante, y redes reales del estudio |
+| `feature/juegos-nuevos` | Los 4 juegos del estudio y el enlace externo de cada juego |
 | `feature/readme` | Este README |
 
 Para verlas: en GitHub Desktop, menú **Current Branch**; en la terminal, `git branch -a`. El detalle de cada rama y sus commits está en [`docs/GUIA-GIT.md`](docs/GUIA-GIT.md).
