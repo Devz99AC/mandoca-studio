@@ -11,7 +11,7 @@ Tema de WordPress propio para **Mandoca Studio**, un estudio independiente de vi
 
 ## Funcionalidades
 
-1. **Editable con Elementor, sin tocar código.** La portada es una página de Elementor armada con **9 widgets propios** (categoría *Mandoca*): Header, Hero, Marquee, Games, Featured Carousel, Studio Intro, Team, Community & Contact y Footer. Se pueden combinar con los widgets nativos de Elementor. La cabecera y el pie son plantillas de Elementor, y los colores y las fuentes globales de Elementor están conectados con los del tema.
+1. **Editable con Elementor, sin tocar código.** La portada es una página de Elementor armada con **8 widgets propios** (categoría *Mandoca*): Header, Hero, Marquee, Games, Featured Carousel, Studio Intro, Team y Footer. Se pueden combinar con los widgets nativos de Elementor. La cabecera y el pie son plantillas de Elementor, y los colores y las fuentes globales de Elementor están conectados con los del tema.
 2. **Contenido administrable desde el panel de WordPress.** Hay dos tipos de contenido propios: **Team** (alias, rol, área, foto, cita favorita y juegos favoritos de cada integrante) y **Games** (estado, género, año, créditos, arte y un enlace, por ejemplo a itch.io, de cada juego). Las redes sociales y el logo se cambian en *Appearance → Customize*. Al activar el tema se cargan solos los datos iniciales, sin duplicar nada.
 3. **Animaciones estilo Thunderful con GSAP:**
    - el título del hero entra palabra por palabra;
@@ -26,7 +26,7 @@ Tema de WordPress propio para **Mandoca Studio**, un estudio independiente de vi
 
    Con *reducir movimiento* activado en el sistema, nada se mueve y todo se ve al instante.
 4. **Equipo con filtro por área animado.** Los botones Todos / Programación / Arte / Audio reacomodan las tarjetas con **GSAP Flip**. Si un integrante no tiene foto, se muestran sus iniciales.
-5. **Responsive, con menú a pantalla completa y newsletter validado.** Se adapta a escritorio, tablet y celular. El menú se abre a pantalla completa y se cierra con la tecla Escape. El formulario revisa el correo y muestra mensajes de error o de éxito sin recargar la página; esos mensajes también se editan en Elementor.
+5. **Responsive, con menú a pantalla completa.** Se adapta a escritorio, tablet y celular. El menú se abre a pantalla completa y se cierra con la tecla Escape. El correo de contacto del estudio está en el pie, y el botón *Contacto* de la cabecera lleva hasta ahí.
 
 **Extra:** una vista previa estática (`preview/index.html`) con el mismo HTML que genera WordPress, para ver los cambios de diseño y animación al instante con **Live Server**.
 
@@ -41,7 +41,7 @@ Tema de WordPress propio para **Mandoca Studio**, un estudio independiente de vi
 | Constructor visual | **Elementor** (gratis) | Editar la portada, la cabecera y el pie arrastrando bloques |
 | Animación | **GSAP** 3.13 (ScrollTrigger, Flip, SplitText) | Todas las animaciones del sitio. Se carga desde jsDelivr |
 | Estructura y estilos | **HTML5** + **CSS3** (variables, Grid, Flexbox) | Secciones, colores de la marca y diseño responsive |
-| Interacción | **JavaScript** (ES6) | Menú, filtro del equipo y validación del formulario |
+| Interacción | **JavaScript** (ES6) | Menú y filtro del equipo |
 | Tipografías | **Google Fonts** | Montserrat (títulos) e Inter (texto), las mismas de mandocastudio.com, y JetBrains Mono para etiquetas |
 | Entorno WordPress | **LocalWP** | Correr WordPress en la computadora, sin hosting |
 | Vista previa | **Live Server** (extensión de VS Code) | Ver `preview/index.html` y recargar al guardar |
@@ -66,7 +66,7 @@ La paleta sale del logo de Mandoca, que es monocromo (negro, blanco y gris), má
 | Gris claro | `#ADADAD` | Logo | Text · *Light gray (secondary text)* | Texto secundario |
 | Gris oscuro | `#585858` | Sitio de la marca | *Dark gray (details)* | Orbe del hero, arte provisional de los juegos e iniciales |
 | Naranja | `#E55901` | Sitio de la marca | Accent · *Orange (accent)* | Botones y acentos (con moderación) |
-| Crema | `#FEF1E4` | Sitio de la marca | *Cream (details)* | Línea de la cita, datos de los juegos, foco del teclado y mensaje de éxito |
+| Crema | `#FEF1E4` | Sitio de la marca | *Cream (details)* | Línea de la cita, datos de los juegos y foco del teclado |
 
 ---
 
@@ -91,7 +91,7 @@ mandoca-studio/
 │   ├── meta-boxes.php         # Campos extra: rol, estado, género, año, créditos, ajuste de imagen
 │   ├── seed.php               # Datos iniciales y el comando `wp mandoca seed`
 │   ├── elementor.php          # Conexión con Elementor: categoría, widgets, cabecera y pie
-│   └── widgets/               # Los 9 widgets Mandoca (más su clase base)
+│   └── widgets/               # Los 8 widgets Mandoca (más su clase base)
 ├── template-parts/            # El HTML de cada sección (lo usan los widgets y la portada)
 │   ├── cabecera.php           # Cabecera y menú a pantalla completa
 │   ├── hero.php
@@ -100,11 +100,10 @@ mandoca-studio/
 │   ├── destacados.php         # Carrusel de destacados
 │   ├── estudio.php
 │   ├── equipo.php             # Equipo con filtro
-│   ├── contacto.php           # Comunidad (newsletter) y contacto
-│   └── pie.php
+│   └── pie.php                # Pie: contacto, marca, redes y derechos
 ├── assets/
 │   ├── css/main.css           # Todos los estilos (los colores, como variables al inicio)
-│   ├── js/main.js             # Menú, filtro del equipo y formulario (JavaScript puro)
+│   ├── js/main.js             # Menú y filtro del equipo (JavaScript puro)
 │   ├── js/animations.js       # Todas las animaciones (GSAP)
 │   └── img/
 │       ├── favicon.svg        # Ícono de la pestaña
@@ -172,7 +171,7 @@ El panel está en inglés; el contenido del sitio, en español.
 | Quiero cambiar… | Dónde |
 |-----------------|-------|
 | Textos, botones y orden de las secciones de la portada | *Pages → Inicio → Edit with Elementor* |
-| La cabecera o el pie | *Templates → Saved Templates → Header / Footer → Edit with Elementor* |
+| La cabecera o el pie (incluido el correo de contacto) | *Templates → Saved Templates → Header / Footer → Edit with Elementor* |
 | Colores y fuentes de todo el sitio | En el editor de Elementor: *Site Settings → Global Colors / Global Fonts* |
 | Integrantes: alias, rol, área, foto, cita y juegos favoritos | *Team* |
 | Las áreas del filtro | *Team → Areas* |
@@ -241,7 +240,7 @@ Este repositorio usa **3 tipos de ramas**:
 | `develop` | Donde se juntan los cambios antes de pasar a `main` |
 | `feature/<tarea>` | Una rama por tarea; al terminar se une a `develop` |
 
-En total hay **14 ramas**:
+En total hay **16 ramas**:
 
 | Rama | Para qué sirvió |
 |------|-----------------|
@@ -258,6 +257,8 @@ En total hay **14 ramas**:
 | `feature/equipo` | Equipo real de 5 integrantes y fotos desde el seed |
 | `feature/textos-equipo` | Citas y juegos favoritos de cada integrante, y redes reales del estudio |
 | `feature/juegos-nuevos` | Los 4 juegos del estudio y el enlace externo de cada juego |
+| `feature/portadas-hd` | Portadas de los juegos en mejor calidad y sus descripciones reales |
+| `feature/contacto-en-pie` | Quitar el formulario de suscripción y pasar el contacto al pie |
 | `feature/readme` | Este README |
 
 Para verlas: en GitHub Desktop, menú **Current Branch**; en la terminal, `git branch -a`. El detalle de cada rama y sus commits está en [`docs/GUIA-GIT.md`](docs/GUIA-GIT.md).
