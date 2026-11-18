@@ -49,7 +49,7 @@ $mandoca_layout = 'blocks' === $args['layout'] ? 'blocks' : 'showcase';
 						<?php if ( $mandoca_game['status'] ) : ?>
 							<span class="badge" data-badge><?php echo esc_html( $mandoca_game['status'] ); ?></span>
 						<?php endif; ?>
-						<h3 class="showcase-title"><?php echo esc_html( $mandoca_game['title'] ); ?></h3>
+						<h3 class="showcase-title<?php echo mandoca_has_long_word( $mandoca_game['title'] ) ? ' is-long' : ''; ?>"><?php echo esc_html( $mandoca_game['title'] ); ?></h3>
 						<?php if ( mandoca_game_meta( $mandoca_game, ' / ' ) ) : ?>
 							<p class="showcase-meta"><?php echo esc_html( mandoca_game_meta( $mandoca_game, ' / ' ) ); ?></p>
 						<?php endif; ?>

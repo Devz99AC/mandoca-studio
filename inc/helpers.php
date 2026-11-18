@@ -253,6 +253,19 @@ function mandoca_game_meta( $game, $separator ) {
 }
 
 /**
+ * ¿El título tiene alguna palabra larga? ("Tadventure", "Neverpond"…)
+ * En las franjas estrechas de la vitrina esos títulos usan letra más chica
+ * para no partirse a mitad de palabra.
+ *
+ * @param string $title Título del juego.
+ * @return bool
+ */
+function mandoca_has_long_word( $title ) {
+	$words = preg_split( '/\s+/u', trim( (string) $title ) );
+	return max( array_map( 'mb_strlen', $words ) ) > 8;
+}
+
+/**
  * Botón con el enlace externo de un juego (itch.io, Steam…), si lo tiene.
  * Se abre en otra pestaña.
  *
