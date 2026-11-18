@@ -2,8 +2,8 @@
 /**
  * Datos iniciales ("seed").
  *
- * Al activar el tema, y una sola vez, se crean las áreas, los 6 integrantes,
- * los 2 juegos y el logo. Si el tema se activa de nuevo no se duplica nada:
+ * Al activar el tema, y una sola vez, se crean las áreas, los 5 integrantes,
+ * los 4 juegos y el logo. Si el tema se activa de nuevo no se duplica nada:
  * se guarda una marca en la opción "mandoca_seed_content" y además se revisa
  * si cada integrante o juego ya existe antes de crearlo.
  *
@@ -21,14 +21,15 @@ defined( 'ABSPATH' ) || exit;
  */
 function mandoca_seed_areas() {
 	return array(
-		'programacion'    => 'Programación',
-		'arte'            => 'Arte',
-		'audio-narrativa' => 'Audio y narrativa',
+		'programacion' => 'Programación',
+		'arte'         => 'Arte',
+		'audio'        => 'Audio',
 	);
 }
 
 /**
- * Los 6 integrantes con sus roles y descripciones actuales.
+ * Los 5 integrantes con sus roles y descripciones actuales
+ * (los mismos de mandocastudio.com/about-us).
  *
  * @return array
  */
@@ -36,7 +37,7 @@ function mandoca_seed_members() {
 	return array(
 		array(
 			'name' => 'JackRevon',
-			'area' => 'audio-narrativa',
+			'area' => 'audio',
 			'role' => 'Compositor y diseñador de sonido',
 			'bio'  => 'Compone la música original y crea los efectos de sonido. Se encarga de que cada mundo tenga su propia atmósfera.',
 		),
@@ -64,18 +65,12 @@ function mandoca_seed_members() {
 			'role' => 'Generalista 3D, animador y diseñador',
 			'bio'  => 'Modela, texturiza y anima en 3D. Lleva los conceptos de papel a modelos que se mueven dentro del juego.',
 		),
-		array(
-			'name' => 'GLDNWTCH',
-			'area' => 'audio-narrativa',
-			'role' => 'Guionista y planificador de escenarios',
-			'bio'  => 'Escribe la historia, los diálogos y el orden de los escenarios para que cada nivel cuente algo.',
-		),
 	);
 }
 
 /**
- * Los 2 juegos con sus datos actuales (textos provisionales hasta que el
- * equipo los confirme).
+ * Los 4 juegos con sus datos actuales (textos provisionales hasta que el
+ * equipo los confirme; Proyecto 03 y 04 son espacios reservados).
  *
  * @return array
  */
@@ -88,7 +83,7 @@ function mandoca_seed_games() {
 			'estado'  => 'En desarrollo',
 			'genero'  => 'Acción · Aventura',
 			'anio'    => '2026',
-			'equipo'  => "Arte: CrimReaper\nMúsica: JackRevon\nHistoria: GLDNWTCH",
+			'equipo'  => "Arte: CrimReaper\nMúsica: JackRevon",
 			'ajuste'  => 'cover',
 			'image'   => 'assets/img/juegos/skathos.webp',
 		),

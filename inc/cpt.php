@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  * - Contenido = qué hace.
  * - Imagen destacada = foto.
  * - Rol = campo personalizado (meta box en inc/meta-boxes.php).
- * - Área = taxonomía que usa el filtro (Programación, Arte, Audio y narrativa).
+ * - Área = taxonomía que usa el filtro (Programación, Arte, Audio).
  */
 function mandoca_register_member_type() {
 	register_post_type(

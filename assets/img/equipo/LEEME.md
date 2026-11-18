@@ -10,6 +10,5 @@
 | Devz        | `devz.webp`       |
 | CrimReaper  | `crimreaper.webp` |
 | Momoye      | `momoye.webp`     |
-| GLDNWTCH    | `gldnwtch.webp`   |
 
 Si una foto falta, el sitio muestra las iniciales de la persona en su lugar (en los dos).
