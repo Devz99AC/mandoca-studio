@@ -72,28 +72,58 @@ La paleta sale del logo de Mandoca, que es monocromo (negro, blanco y gris), má
 
 ## Estructura de carpetas
 
+Es la carpeta del tema. En WordPress vive en `wp-content/themes/mandoca-studio/`.
+
 ```
-mandoca-studio-web/
-├── index.html              # Página principal (todas las secciones)
-├── css/
-│   └── styles.css          # Estilos: variables, secciones y responsive
-├── js/
-│   └── main.js             # Menú, filtro, validación, animaciones
+mandoca-studio/
+├── style.css                  # Cabecera del tema (nombre, versión, licencia); los estilos están en assets/
+├── functions.php              # Configura el tema y carga el CSS, el JS y GSAP (versión fija)
+├── header.php                 # <head>, apertura de la página y cabecera
+├── footer.php                 # Pie y cierre de la página
+├── front-page.php             # Portada: la página de Elementor o, sin Elementor, las secciones del tema
+├── index.php                  # Plantilla general (otras páginas y entradas)
+├── screenshot.png             # Captura que se ve en Appearance → Themes (1200×900)
+├── inc/
+│   ├── helpers.php            # Funciones de ayuda (leer juegos e integrantes, iniciales…)
+│   ├── defaults.php           # Textos por defecto de cada sección
+│   ├── socials.php            # Redes sociales (Customize → Social networks)
+│   ├── cpt.php                # Tipos de contenido Team y Games, y la taxonomía Areas
+│   ├── meta-boxes.php         # Campos extra: rol, estado, género, año, créditos, ajuste de imagen
+│   ├── seed.php               # Datos iniciales y el comando `wp mandoca seed`
+│   ├── elementor.php          # Conexión con Elementor: categoría, widgets, cabecera y pie
+│   └── widgets/               # Los 9 widgets Mandoca (más su clase base)
+├── template-parts/            # El HTML de cada sección (lo usan los widgets y la portada)
+│   ├── cabecera.php           # Cabecera y menú a pantalla completa
+│   ├── hero.php
+│   ├── marquee.php            # Cinta animada
+│   ├── juegos.php             # Vitrina de juegos
+│   ├── destacados.php         # Carrusel de destacados
+│   ├── estudio.php
+│   ├── equipo.php             # Equipo con filtro
+│   ├── contacto.php           # Comunidad (newsletter) y contacto
+│   └── pie.php
 ├── assets/
+│   ├── css/main.css           # Todos los estilos (los colores, como variables al inicio)
+│   ├── js/main.js             # Menú, filtro del equipo y formulario (JavaScript puro)
+│   ├── js/animations.js       # Todas las animaciones (GSAP)
 │   └── img/
-│       ├── favicon.svg     # Ícono de la pestaña
-│       ├── logo.png        # Logo de la marca (agregar)
-│       ├── equipo/         # Fotos de los integrantes
-│       └── juegos/         # Capturas de los juegos (opcional)
+│       ├── favicon.svg        # Ícono de la pestaña
+│       ├── logo.png, logo-mark.png
+│       ├── juegos/            # Arte de los juegos (.webp)
+│       └── equipo/            # Fotos de los integrantes (.webp)
+├── preview/
+│   └── index.html             # Vista previa estática para Live Server (mismo HTML que WordPress)
 ├── docs/
-│   └── GUIA-GIT.md         # Ramas, commits y flujo con GitHub Desktop
+│   └── GUIA-GIT.md            # Ramas, commits y flujo con GitHub Desktop
 ├── .vscode/
-│   └── extensions.json     # Extensiones recomendadas (Live Server, Claude Code…)
-├── .editorconfig           # Mismo formato de código para todos
-├── .gitignore              # Archivos que Git no debe subir
-├── package.json            # Datos del proyecto y dependencias de desarrollo
-├── LICENSE                 # Licencia MIT
-└── README.md               # Este archivo
+│   ├── extensions.json        # Extensiones recomendadas (Live Server, Claude Code…)
+│   └── settings.json          # Configuración de Live Server (puerto 5500)
+├── .editorconfig              # Mismo formato de código para todos
+├── .gitattributes             # Finales de línea y archivos binarios
+├── .gitignore                 # Archivos que Git no debe subir
+├── package.json               # Scripts y dependencias
+├── LICENSE                    # Licencia MIT
+└── README.md                  # Este archivo
 ```
 
 ---
