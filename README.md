@@ -15,7 +15,6 @@ Tema de WordPress propio para **Mandoca Studio**, un estudio independiente de vi
 2. **Contenido administrable desde el panel de WordPress.** Hay dos tipos de contenido propios: **Team** (alias, rol, área, foto, cita favorita y juegos favoritos de cada integrante) y **Games** (estado, género, año, créditos, arte y un enlace, por ejemplo a itch.io, de cada juego). Las redes sociales y el logo se cambian en *Appearance → Customize*. Al activar el tema se cargan solos los datos iniciales, sin duplicar nada.
 3. **Animaciones estilo Thunderful con GSAP:**
    - el título del hero entra palabra por palabra;
-   - los orbes del fondo siguen al mouse;
    - la cinta se acelera con el scroll;
    - la vitrina de juegos se abre como acordeón;
    - el carrusel de destacados es infinito y se puede arrastrar;
@@ -64,7 +63,7 @@ La paleta sale del logo de Mandoca, que es monocromo (negro, blanco y gris), má
 | Negro | `#0A0A0A` | Logo | Primary · *Black (background)* | Fondo principal |
 | Blanco | `#FFFFFF` | Logo | Secondary · *White (text)* | Títulos y texto |
 | Gris claro | `#ADADAD` | Logo | Text · *Light gray (secondary text)* | Texto secundario |
-| Gris oscuro | `#585858` | Sitio de la marca | *Dark gray (details)* | Orbe del hero, arte provisional de los juegos e iniciales |
+| Gris oscuro | `#585858` | Sitio de la marca | *Dark gray (details)* | Arte provisional de los juegos e iniciales |
 | Naranja | `#E55901` | Sitio de la marca | Accent · *Orange (accent)* | Botones y acentos (con moderación) |
 | Crema | `#FEF1E4` | Sitio de la marca | *Cream (details)* | Línea de la cita, datos de los juegos y foco del teclado |
 
