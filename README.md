@@ -5,7 +5,7 @@ Tema de WordPress propio para **Mandoca Studio**, un estudio independiente de vi
 - **Marca:** [mandocastudio.com](https://www.mandocastudio.com/)
 - **Referencia de diseño y animación:** [thunderfulgames.com](https://thunderfulgames.com/): vitrina de juegos tipo acordeón, carrusel de destacados, cinta animada, menú a pantalla completa y entradas al hacer scroll, con la paleta de Mandoca.
 
-> Proyecto académico. Los datos del equipo salen de [mandocastudio.com/about-us](https://www.mandocastudio.com/about-us/): fotos, alias, roles, citas y juegos favoritos. Las redes son las cuentas reales del estudio. Los juegos son los del estudio: *Meteor Strike*, *Echoes*, *Tadventure Road: Neverpond* y *Unknown Project*. Algunos de sus textos e imágenes todavía están pendientes.
+> Proyecto académico. Los datos del equipo salen de [mandocastudio.com/about-us](https://www.mandocastudio.com/about-us/): fotos, alias, roles, citas y juegos favoritos. Las redes son las cuentas reales del estudio. Los juegos son los del estudio: *Meteor Strike*, *Echoes*, *Tadventure: Road to Neverpond* y *Unknown Project*. Algunos de sus textos e imágenes todavía están pendientes.
 
 ---
 
