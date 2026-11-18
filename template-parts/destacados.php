@@ -3,7 +3,8 @@
  * Sección: carrusel de juegos destacados (como "Featured" de Thunderful).
  *
  * Las tarjetas corren sin fin, se detienen con el mouse encima y se pueden
- * arrastrar (animations.js). Al hacer clic se abre ese juego en la vitrina.
+ * arrastrar (animations.js). Al hacer clic se abre ese juego en la vitrina o,
+ * si el juego tiene enlace (Games → Link), esa página en otra pestaña.
  * Sin JavaScript o con "reducir movimiento" es una fila que se desliza a mano.
  *
  * @package Mandoca_Studio
@@ -33,8 +34,12 @@ if ( ! $mandoca_games ) {
 		<div class="loop-track">
 			<div class="loop-set">
 				<?php foreach ( $mandoca_games as $mandoca_game ) : ?>
-					<?php $mandoca_has_img = ! empty( $mandoca_game['image_id'] ) || ! empty( $mandoca_game['image_url'] ); ?>
-					<a class="card" href="<?php echo esc_url( mandoca_section_url( $args['card_url'] ) ); ?>" data-game="<?php echo esc_attr( $mandoca_game['slug'] ); ?>" draggable="false">
+					<?php
+					$mandoca_has_img = ! empty( $mandoca_game['image_id'] ) || ! empty( $mandoca_game['image_url'] );
+					// Si el juego tiene enlace (itch.io, Steam…), la tarjeta lo abre en otra pestaña.
+					$mandoca_link = ! empty( $mandoca_game['link'] );
+					?>
+					<a class="card" href="<?php echo esc_url( $mandoca_link ? $mandoca_game['link'] : mandoca_section_url( $args['card_url'] ) ); ?>"<?php echo $mandoca_link ? ' target="_blank" rel="noopener"' : ''; ?> data-game="<?php echo esc_attr( $mandoca_game['slug'] ); ?>" draggable="false">
 						<div class="card-art<?php echo $mandoca_has_img ? ' fit-' . esc_attr( $mandoca_game['fit'] ) : ' is-placeholder'; ?>" aria-hidden="true">
 							<?php mandoca_game_image( $mandoca_game, 'card-img' ); ?>
 						</div>

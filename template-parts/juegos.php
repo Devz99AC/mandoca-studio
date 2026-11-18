@@ -62,6 +62,7 @@ $mandoca_layout = 'blocks' === $args['layout'] ? 'blocks' : 'showcase';
 								<?php endforeach; ?>
 							</ul>
 						<?php endif; ?>
+						<?php mandoca_game_link( $mandoca_game, $args['link_text'] ); ?>
 					</div>
 				</article>
 			<?php endforeach; ?>
@@ -105,6 +106,7 @@ $mandoca_layout = 'blocks' === $args['layout'] ? 'blocks' : 'showcase';
 								<?php endforeach; ?>
 							</ul>
 						<?php endif; ?>
+						<?php mandoca_game_link( $mandoca_game, $args['link_text'] ); ?>
 					</div>
 				</article>
 			<?php endforeach; ?>

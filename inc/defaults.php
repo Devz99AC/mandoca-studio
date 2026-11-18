@@ -77,6 +77,7 @@ function mandoca_defaults( $section ) {
 			'title'      => 'En qué estamos trabajando',
 			'zigzag'     => true,
 			'limit'      => -1,
+			'link_text'  => 'Ver juego', // Texto del botón si el juego tiene enlace pero no texto propio.
 			'games'      => null, // null = leer los juegos del panel.
 		),
 
