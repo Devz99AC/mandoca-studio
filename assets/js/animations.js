@@ -103,39 +103,6 @@
     return () => split && split.revert();
   }, { editor: true });
 
-  /* ---------- 2a. Orbes del hero con el scroll ----------
-     Cada orbe se desplaza a una velocidad distinta al bajar. */
-  add('.hero', (el, env) => {
-    if (!env.motion) return;
-    el.querySelectorAll('.orb-layer').forEach((layer, i) => {
-      gsap.to(layer, {
-        yPercent: i % 2 ? -18 : 32,
-        ease: 'none',
-        scrollTrigger: { trigger: el, start: 'top top', end: 'bottom top', scrub: true },
-      });
-    });
-  });
-
-  /* ---------- 2b. Orbes del hero siguen al mouse (solo escritorio) ---------- */
-  add('.hero', (el) => {
-    const movers = Array.from(el.querySelectorAll('.orb-layer')).map((layer) => ({
-      x: gsap.quickTo(layer, 'x', { duration: 1.4, ease: 'power3' }),
-      y: gsap.quickTo(layer, 'y', { duration: 1.4, ease: 'power3' }),
-      depth: num(layer, 'depth', 40),
-    }));
-    const onMove = (e) => {
-      const r = el.getBoundingClientRect();
-      const nx = (e.clientX - r.left) / r.width - 0.5;
-      const ny = (e.clientY - r.top) / r.height - 0.5;
-      movers.forEach((m) => {
-        m.x(nx * m.depth);
-        m.y(ny * m.depth);
-      });
-    };
-    el.addEventListener('pointermove', onMove);
-    return () => el.removeEventListener('pointermove', onMove);
-  }, { desktop: true });
-
   /* ---------- 7. Cabecera ----------
      - Al pasar la primera pantalla se pone fondo sólido.
      - Cuando es barra superior (celular, o el diseño "Top bar"), se oculta al

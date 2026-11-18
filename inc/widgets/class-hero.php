@@ -74,8 +74,7 @@ class Mandoca_Hero_Widget extends Mandoca_Widget_Base {
 		$this->end_controls_section();
 
 		// Content: extras.
-		$this->start_controls_section( 'extras', array( 'label' => esc_html__( 'Background & scroll hint', 'mandoca-studio' ) ) );
-		$this->add_switch( 'show_orbs', esc_html__( 'Glowing background orbs', 'mandoca-studio' ) );
+		$this->start_controls_section( 'extras', array( 'label' => esc_html__( 'Socials & scroll hint', 'mandoca-studio' ) ) );
 		$this->add_switch( 'show_socials', esc_html__( 'Social network icons on top', 'mandoca-studio' ) );
 		$this->add_text(
 			'scroll_text',
@@ -118,22 +117,6 @@ class Mandoca_Hero_Widget extends Mandoca_Widget_Base {
 				'label'     => esc_html__( 'Background color', 'mandoca-studio' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( '{{WRAPPER}} .hero' => 'background-color: {{VALUE}};' ),
-			)
-		);
-		$this->add_control(
-			'orb1_color',
-			array(
-				'label'     => esc_html__( 'Orb 1 color', 'mandoca-studio' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array( '{{WRAPPER}} .orb-1' => 'background: {{VALUE}};' ),
-			)
-		);
-		$this->add_control(
-			'orb2_color',
-			array(
-				'label'     => esc_html__( 'Orb 2 color', 'mandoca-studio' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array( '{{WRAPPER}} .orb-2' => 'background: {{VALUE}};' ),
 			)
 		);
 		$this->end_controls_section();
@@ -206,7 +189,6 @@ class Mandoca_Hero_Widget extends Mandoca_Widget_Base {
 				'btn1_url'     => $this->url( $s['btn1_link'] ),
 				'btn2_text'    => $s['btn2_text'],
 				'btn2_url'     => $this->url( $s['btn2_link'] ),
-				'show_orbs'    => 'yes' === $s['show_orbs'],
 				'show_socials' => 'yes' === $s['show_socials'],
 				'scroll_text'  => $s['scroll_text'],
 				'scroll_url'   => $this->url( $s['scroll_link'] ),
