@@ -2,8 +2,8 @@
 /**
  * Datos iniciales ("seed").
  *
- * Al activar el tema, y una sola vez, se crean las áreas, los 6 integrantes,
- * los 2 juegos y el logo. Si el tema se activa de nuevo no se duplica nada:
+ * Al activar el tema, y una sola vez, se crean las áreas, los 5 integrantes
+ * (con su foto de assets/img/equipo/), los 4 juegos y el logo. Si el tema se activa de nuevo no se duplica nada:
  * se guarda una marca en la opción "mandoca_seed_content" y además se revisa
  * si cada integrante o juego ya existe antes de crearlo.
  *
@@ -21,14 +21,15 @@ defined( 'ABSPATH' ) || exit;
  */
 function mandoca_seed_areas() {
 	return array(
-		'programacion'    => 'Programación',
-		'arte'            => 'Arte',
-		'audio-narrativa' => 'Audio y narrativa',
+		'programacion' => 'Programación',
+		'arte'         => 'Arte',
+		'audio'        => 'Audio',
 	);
 }
 
 /**
- * Los 6 integrantes con sus roles y descripciones actuales.
+ * Los 5 integrantes con sus roles y descripciones actuales
+ * (los mismos de mandocastudio.com/about-us).
  *
  * @return array
  */
@@ -36,7 +37,7 @@ function mandoca_seed_members() {
 	return array(
 		array(
 			'name' => 'JackRevon',
-			'area' => 'audio-narrativa',
+			'area' => 'audio',
 			'role' => 'Compositor y diseñador de sonido',
 			'bio'  => 'Compone la música original y crea los efectos de sonido. Se encarga de que cada mundo tenga su propia atmósfera.',
 		),
@@ -64,18 +65,12 @@ function mandoca_seed_members() {
 			'role' => 'Generalista 3D, animador y diseñador',
 			'bio'  => 'Modela, texturiza y anima en 3D. Lleva los conceptos de papel a modelos que se mueven dentro del juego.',
 		),
-		array(
-			'name' => 'GLDNWTCH',
-			'area' => 'audio-narrativa',
-			'role' => 'Guionista y planificador de escenarios',
-			'bio'  => 'Escribe la historia, los diálogos y el orden de los escenarios para que cada nivel cuente algo.',
-		),
 	);
 }
 
 /**
- * Los 2 juegos con sus datos actuales (textos provisionales hasta que el
- * equipo los confirme).
+ * Los 4 juegos con sus datos actuales (textos provisionales hasta que el
+ * equipo los confirme; Proyecto 03 y 04 son espacios reservados).
  *
  * @return array
  */
@@ -88,7 +83,7 @@ function mandoca_seed_games() {
 			'estado'  => 'En desarrollo',
 			'genero'  => 'Acción · Aventura',
 			'anio'    => '2026',
-			'equipo'  => "Arte: CrimReaper\nMúsica: JackRevon\nHistoria: GLDNWTCH",
+			'equipo'  => "Arte: CrimReaper\nMúsica: JackRevon",
 			'ajuste'  => 'cover',
 			'image'   => 'assets/img/juegos/skathos.webp',
 		),
@@ -151,26 +146,37 @@ function mandoca_seed_content( $force = false ) {
 
 	// Integrantes.
 	foreach ( mandoca_seed_members() as $order => $member ) {
-		$slug = sanitize_title( $member['name'] );
-		if ( get_page_by_path( $slug, OBJECT, 'miembro' ) ) {
-			continue;
+		$slug     = sanitize_title( $member['name'] );
+		$existing = get_page_by_path( $slug, OBJECT, 'miembro' );
+		$id       = $existing ? $existing->ID : 0;
+
+		if ( ! $id ) {
+			$id = wp_insert_post(
+				array(
+					'post_type'    => 'miembro',
+					'post_status'  => 'publish',
+					'post_title'   => $member['name'],
+					'post_name'    => $slug,
+					'post_content' => $member['bio'],
+					'menu_order'   => $order,
+				),
+				true
+			);
+			if ( is_wp_error( $id ) ) {
+				continue;
+			}
+			update_post_meta( $id, '_mandoca_rol', $member['role'] );
+			wp_set_object_terms( $id, $member['area'], 'area' );
 		}
-		$id = wp_insert_post(
-			array(
-				'post_type'    => 'miembro',
-				'post_status'  => 'publish',
-				'post_title'   => $member['name'],
-				'post_name'    => $slug,
-				'post_content' => $member['bio'],
-				'menu_order'   => $order,
-			),
-			true
-		);
-		if ( is_wp_error( $id ) ) {
-			continue;
+
+		// Foto: assets/img/equipo/<alias>.webp, solo si existe y el integrante
+		// todavía no tiene una (no reemplaza las que se suban desde el panel).
+		if ( ! has_post_thumbnail( $id ) ) {
+			$photo_id = mandoca_seed_image( 'assets/img/equipo/' . $slug . '.webp', $member['name'], $id );
+			if ( $photo_id ) {
+				set_post_thumbnail( $id, $photo_id );
+			}
 		}
-		update_post_meta( $id, '_mandoca_rol', $member['role'] );
-		wp_set_object_terms( $id, $member['area'], 'area' );
 	}
 
 	// Juegos.
