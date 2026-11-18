@@ -20,17 +20,17 @@ function mandoca_social_networks() {
 	return array(
 		'instagram' => array(
 			'label'   => 'Instagram',
-			'default' => 'https://www.instagram.com/',
+			'default' => 'https://www.instagram.com/mandocastudio/',
 			'icon'    => '<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/>',
 		),
 		'x'         => array(
 			'label'   => 'X',
-			'default' => 'https://x.com/',
+			'default' => 'https://x.com/mandocastudio',
 			'icon'    => '<path fill="currentColor" d="M4 4l6.8 9.1L4.3 20h2.2l5.3-5.7 4.3 5.7H20l-7.1-9.6L19 4h-2.2l-4.9 5.3L8 4H4z"/>',
 		),
 		'youtube'   => array(
 			'label'   => 'YouTube',
-			'default' => 'https://www.youtube.com/',
+			'default' => 'https://www.youtube.com/@MandocaStudio',
 			'icon'    => '<path fill="currentColor" fill-rule="evenodd" d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8c1.6.4 7.8.4 7.8.4s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15.2 15.2 12 10 8.8z"/>',
 		),
 		'tiktok'    => array(
