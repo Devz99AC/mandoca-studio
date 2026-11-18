@@ -65,7 +65,7 @@ class Mandoca_Team_Widget extends Mandoca_Widget_Base {
 	 */
 	protected function register_controls() {
 		$this->start_controls_section( 'content', array( 'label' => esc_html__( 'Content', 'mandoca-studio' ) ) );
-		$this->add_content_note( esc_html__( 'Members (alias, photo, role, area) are edited in Dashboard → Team. Use the "Order" field to sort them.', 'mandoca-studio' ), 'miembro' );
+		$this->add_content_note( esc_html__( 'Members (alias, photo, role, quote, favorite games, area) are edited in Dashboard → Team. Use the "Order" field to sort them.', 'mandoca-studio' ), 'miembro' );
 		$this->add_section_fields();
 		$this->add_text( 'eyebrow', esc_html__( 'Eyebrow', 'mandoca-studio' ) );
 		$this->add_text( 'title', esc_html__( 'Title', 'mandoca-studio' ) );
@@ -76,6 +76,8 @@ class Mandoca_Team_Widget extends Mandoca_Widget_Base {
 			esc_html__( '"All" button text', 'mandoca-studio' ),
 			array( 'condition' => array( 'show_filters' => 'yes' ) )
 		);
+		$this->add_text( 'favorites_label', esc_html__( '"Favorite games" label', 'mandoca-studio' ) );
+		$this->add_text( 'playing_label', esc_html__( '"Currently playing" label', 'mandoca-studio' ) );
 		$this->add_responsive_control(
 			'columns',
 			array(
@@ -102,6 +104,8 @@ class Mandoca_Team_Widget extends Mandoca_Widget_Base {
 		$this->add_text_style( 'lead', esc_html__( 'Intro text', 'mandoca-studio' ), '{{WRAPPER}} .section-lead' );
 		$this->add_text_style( 'name', esc_html__( 'Member alias', 'mandoca-studio' ), '{{WRAPPER}} .member h3' );
 		$this->add_text_style( 'role', esc_html__( 'Member role', 'mandoca-studio' ), '{{WRAPPER}} .member-role' );
+		$this->add_text_style( 'quote', esc_html__( 'Member quote', 'mandoca-studio' ), '{{WRAPPER}} .member-quote p' );
+		$this->add_text_style( 'facts', esc_html__( 'Favorite games / playing', 'mandoca-studio' ), '{{WRAPPER}} .member-facts dd' );
 		$this->add_text_style( 'bio', esc_html__( 'Member description', 'mandoca-studio' ), '{{WRAPPER}} .member-bio p' );
 		$this->end_controls_section();
 
@@ -160,14 +164,16 @@ class Mandoca_Team_Widget extends Mandoca_Widget_Base {
 
 		$this->render_part(
 			array(
-				'section_id'   => $s['section_id'],
-				'alt'          => 'yes' === $s['alt'],
-				'eyebrow'      => $s['eyebrow'],
-				'title'        => $s['title'],
-				'lead'         => $s['lead'],
-				'show_filters' => 'yes' === $s['show_filters'],
-				'all_label'    => $s['all_label'],
-				'members'      => $members,
+				'section_id'      => $s['section_id'],
+				'alt'             => 'yes' === $s['alt'],
+				'eyebrow'         => $s['eyebrow'],
+				'title'           => $s['title'],
+				'lead'            => $s['lead'],
+				'show_filters'    => 'yes' === $s['show_filters'],
+				'all_label'       => $s['all_label'],
+				'favorites_label' => $s['favorites_label'],
+				'playing_label'   => $s['playing_label'],
+				'members'         => $members,
 			)
 		);
 	}

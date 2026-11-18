@@ -28,42 +28,58 @@ function mandoca_seed_areas() {
 }
 
 /**
- * Los 5 integrantes con sus roles y descripciones actuales
- * (los mismos de mandocastudio.com/about-us).
+ * Los 5 integrantes, con los datos de mandocastudio.com/about-us: rol
+ * (traducido), cita favorita (en su idioma original), juegos favoritos y
+ * lo que están jugando.
  *
  * @return array
  */
 function mandoca_seed_members() {
 	return array(
 		array(
-			'name' => 'JackRevon',
-			'area' => 'audio',
-			'role' => 'Compositor y diseñador de sonido',
-			'bio'  => 'Compone la música original y crea los efectos de sonido. Se encarga de que cada mundo tenga su propia atmósfera.',
+			'name'      => 'JackRevon',
+			'area'      => 'audio',
+			'role'      => 'Compositor y diseñador de sonido',
+			'cita'      => 'Why worry about a problem if it has a solution? And if it doesn’t, why worry?',
+			'fuente'    => '',
+			'favoritos' => 'Factorio, OSRS, Darkwood, Jak and Daxter Saga',
+			'jugando'   => 'Elden Ring',
 		),
 		array(
-			'name' => 'Jhonken099',
-			'area' => 'programacion',
-			'role' => 'Programador de mecánicas y UI',
-			'bio'  => 'Programa las mecánicas principales y las interfaces: menús, HUD e inventarios que el jugador usa en todo momento.',
+			'name'      => 'Jhonken099',
+			'area'      => 'programacion',
+			'role'      => 'Programador de mecánicas y UI',
+			'cita'      => 'The past can hurt. But the way I see it, you can either run from it or learn from it.',
+			'fuente'    => 'The Lion King',
+			'favoritos' => 'GOW Ragnarok, Mass Effect 2, Enter the Gungeon, TLOU 2',
+			'jugando'   => 'SMT and Persona Series',
 		),
 		array(
-			'name' => 'Devz',
-			'area' => 'programacion',
-			'role' => 'Programador de gameplay y herramientas',
-			'bio'  => 'Construye el gameplay y las herramientas internas que aceleran el trabajo del resto del equipo dentro del motor.',
+			'name'      => 'Devz',
+			'area'      => 'programacion',
+			'role'      => 'Programador de gameplay y herramientas',
+			'cita'      => 'I am here to Even the Odds.',
+			'fuente'    => 'Final Fantasy XVI',
+			'favoritos' => 'The Witcher 3, Metaphor: ReFantazio, Warcraft Series',
+			'jugando'   => 'Xenoblade Chronicles 3',
 		),
 		array(
-			'name' => 'CrimReaper',
-			'area' => 'arte',
-			'role' => 'Artista conceptual e ilustrador',
-			'bio'  => 'Define el estilo visual: dibuja personajes, escenarios y las ilustraciones que sirven de guía para todo el arte del juego.',
+			'name'      => 'CrimReaper',
+			'area'      => 'arte',
+			'role'      => 'Artista conceptual e ilustrador',
+			'cita'      => 'I’m not talented at all. It’s just that I spend more time thinking about art than others',
+			'fuente'    => 'Blue Period',
+			'favoritos' => 'Hollow Knight, Patapon 2, Mario Galaxy, A Link to the Past',
+			'jugando'   => 'Final Fantasy IX',
 		),
 		array(
-			'name' => 'Momoye',
-			'area' => 'arte',
-			'role' => 'Generalista 3D, animador y diseñador',
-			'bio'  => 'Modela, texturiza y anima en 3D. Lleva los conceptos de papel a modelos que se mueven dentro del juego.',
+			'name'      => 'Momoye',
+			'area'      => 'arte',
+			'role'      => 'Generalista 3D, animador y diseñador',
+			'cita'      => 'I am the morning sun, come to vanquish this horrible night.',
+			'fuente'    => 'Castlevania: Order of Ecclesia',
+			'favoritos' => 'Symphony of The Night, Dark Souls, Persona 3, SF: 3rd Strike',
+			'jugando'   => 'The Legend of Zelda: Breath of the Wild',
 		),
 	);
 }
@@ -157,7 +173,7 @@ function mandoca_seed_content( $force = false ) {
 					'post_status'  => 'publish',
 					'post_title'   => $member['name'],
 					'post_name'    => $slug,
-					'post_content' => $member['bio'],
+					'post_content' => '',
 					'menu_order'   => $order,
 				),
 				true
@@ -166,6 +182,9 @@ function mandoca_seed_content( $force = false ) {
 				continue;
 			}
 			update_post_meta( $id, '_mandoca_rol', $member['role'] );
+			foreach ( array( 'cita', 'fuente', 'favoritos', 'jugando' ) as $key ) {
+				update_post_meta( $id, '_mandoca_' . $key, $member[ $key ] );
+			}
 			wp_set_object_terms( $id, $member['area'], 'area' );
 		}
 
