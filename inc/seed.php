@@ -112,7 +112,7 @@ function mandoca_seed_games() {
 		array(
 			'title'        => 'Echoes',
 			'slug'         => 'echoes',
-			'content'      => 'Descubre Echoes en su página de itch.io.',
+			'content'      => 'Explora las profundidades de un laboratorio abandonado en busca de algo importante. Usa tu fiel sonar para revisar lo que te rodea, pero intenta no hacer ruido: no sabes qué acecha en la oscuridad.',
 			'estado'       => 'En itch.io',
 			'genero'       => '',
 			'anio'         => '',
@@ -125,7 +125,7 @@ function mandoca_seed_games() {
 		array(
 			'title'        => 'Tadventure: Road to Neverpond',
 			'slug'         => 'tadventure-road-neverpond',
-			'content'      => 'Hecho para la Global Game Jam 2025.',
+			'content'      => "Un pequeño juego sobre una rana en un viaje peligroso por un bosque mágico lleno de burbujas, en busca de Neverpond, el estanque que concede deseos.\n\nHecho para la Global Game Jam 2025.",
 			'estado'       => 'Game jam',
 			'genero'       => '',
 			'anio'         => '2025',
