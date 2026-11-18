@@ -2,8 +2,8 @@
 /**
  * Datos iniciales ("seed").
  *
- * Al activar el tema, y una sola vez, se crean las áreas, los 5 integrantes,
- * los 4 juegos y el logo. Si el tema se activa de nuevo no se duplica nada:
+ * Al activar el tema, y una sola vez, se crean las áreas, los 5 integrantes
+ * (con su foto de assets/img/equipo/), los 4 juegos y el logo. Si el tema se activa de nuevo no se duplica nada:
  * se guarda una marca en la opción "mandoca_seed_content" y además se revisa
  * si cada integrante o juego ya existe antes de crearlo.
  *
@@ -146,26 +146,37 @@ function mandoca_seed_content( $force = false ) {
 
 	// Integrantes.
 	foreach ( mandoca_seed_members() as $order => $member ) {
-		$slug = sanitize_title( $member['name'] );
-		if ( get_page_by_path( $slug, OBJECT, 'miembro' ) ) {
-			continue;
+		$slug     = sanitize_title( $member['name'] );
+		$existing = get_page_by_path( $slug, OBJECT, 'miembro' );
+		$id       = $existing ? $existing->ID : 0;
+
+		if ( ! $id ) {
+			$id = wp_insert_post(
+				array(
+					'post_type'    => 'miembro',
+					'post_status'  => 'publish',
+					'post_title'   => $member['name'],
+					'post_name'    => $slug,
+					'post_content' => $member['bio'],
+					'menu_order'   => $order,
+				),
+				true
+			);
+			if ( is_wp_error( $id ) ) {
+				continue;
+			}
+			update_post_meta( $id, '_mandoca_rol', $member['role'] );
+			wp_set_object_terms( $id, $member['area'], 'area' );
 		}
-		$id = wp_insert_post(
-			array(
-				'post_type'    => 'miembro',
-				'post_status'  => 'publish',
-				'post_title'   => $member['name'],
-				'post_name'    => $slug,
-				'post_content' => $member['bio'],
-				'menu_order'   => $order,
-			),
-			true
-		);
-		if ( is_wp_error( $id ) ) {
-			continue;
+
+		// Foto: assets/img/equipo/<alias>.webp, solo si existe y el integrante
+		// todavía no tiene una (no reemplaza las que se suban desde el panel).
+		if ( ! has_post_thumbnail( $id ) ) {
+			$photo_id = mandoca_seed_image( 'assets/img/equipo/' . $slug . '.webp', $member['name'], $id );
+			if ( $photo_id ) {
+				set_post_thumbnail( $id, $photo_id );
+			}
 		}
-		update_post_meta( $id, '_mandoca_rol', $member['role'] );
-		wp_set_object_terms( $id, $member['area'], 'area' );
 	}
 
 	// Juegos.
