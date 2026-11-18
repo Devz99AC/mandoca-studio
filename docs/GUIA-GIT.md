@@ -44,7 +44,7 @@ feature/*    ●●    ●●    ●●    ●●    ●●    ●●           
 | `develop` | Donde se juntan las tareas terminadas y se prueban juntas. |
 | `feature/<tarea>` | Una rama por tarea. Sale de `develop` y vuelve a `develop` con un merge. |
 
-En total hay **22 ramas**: `main`, `develop` y 20 ramas `feature/*`. Para qué sirve cada una está en el README; sus commits, en la sección 5.
+En total hay **23 ramas**: `main`, `develop` y 21 ramas `feature/*`. Para qué sirve cada una está en el README; sus commits, en la sección 5.
 
 ### Crear una rama de tarea en GitHub Desktop
 
@@ -169,12 +169,14 @@ Todos los commits, en el orden en que entraron a `develop`. Los merges (`Merge b
 | 77 | `feature/guia-git` | Carlos | `docs(git): actualizar la guía con las ramas y commits del tema` |
 | 78 | `feature/guia-git` | Carlos | `docs(readme): sumar las ramas nuevas a la lista` |
 | 79 | `feature/guia-git` | Carlos | `docs(readme): usar ejemplos de commits actuales` |
+| 80 | `feature/portada-meteor` | Devinzon | `feat(juegos): extender el fondo de meteor strike para que llene la vitrina` |
+| 81 | `feature/portada-meteor` | Devinzon | `docs: sumar feature/portada-meteor al readme y a la guía de git` |
 
 ## 6. Qué hizo cada integrante
 
 | Integrante | Ramas | Commits | Qué hizo |
 |------------|-------|---------|----------|
-| Devinzon Acosta (`@Devz99AC`) | `main`, `feature/tema-base`, `feature/elementor`, `feature/preview-live-server`, `feature/readme`, `feature/cabecera-arriba`, `feature/contacto-en-pie`, `feature/enlaces-juegos`, `feature/quitar-live-server` | 29 | Coordinación, base del tema de WordPress, widgets y plantillas de Elementor, barra superior, contacto en el pie, enlaces de los juegos y README |
+| Devinzon Acosta (`@Devz99AC`) | `main`, `feature/tema-base`, `feature/elementor`, `feature/preview-live-server`, `feature/readme`, `feature/cabecera-arriba`, `feature/contacto-en-pie`, `feature/enlaces-juegos`, `feature/quitar-live-server`, `feature/portada-meteor` | 31 | Coordinación, base del tema de WordPress, widgets y plantillas de Elementor, barra superior, contacto en el pie, enlaces y portada de Meteor Strike, y README |
 | José Figueredo (`@momoyeus`) | `feature/animaciones`, `feature/fotos-equipo` | 18 | Front-end y diseño: animaciones con GSAP (ScrollTrigger y Flip), vitrina y carrusel de juegos, y fotos del equipo |
 | Carlos Mogollon (`@verladoth`) | `feature/custom-post-types`, `feature/equipo`, `feature/textos-equipo`, `feature/juegos-nuevos`, `feature/guia-git` | 17 | Contenido: tipos de contenido Team y Games, datos del equipo y de los juegos, y esta guía |
 | Alejandro Mendez (`@AleGpu`) | `feature/quitar-circulo`, `feature/pruebas`, `feature/portadas-hd`, `feature/hero-sin-manchas`, `feature/licencia` | 15 | Pruebas y arreglos, portadas de los juegos, hero sin manchas, licencia y dependencias |
