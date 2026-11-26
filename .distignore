@@ -1,0 +1,15 @@
+# Archivos y carpetas que NO deben entrar en el .zip del tema para WordPress.
+# El CI los excluye al empaquetar mandoca-studio.zip.
+
+.git
+.github
+.vscode
+.editorconfig
+.gitattributes
+.gitignore
+.distignore
+docs
+node_modules
+package.json
+package-lock.json
+README.md
