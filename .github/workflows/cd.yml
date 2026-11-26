@@ -1,0 +1,28 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    name: Publicar Release en GitHub
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Empaquetar el tema (sin archivos de desarrollo)
+        run: |
+          mkdir -p /tmp/build/mandoca-studio
+          rsync -av --exclude-from='.distignore' ./ /tmp/build/mandoca-studio/
+          cd /tmp/build
+          zip -r "${{ github.workspace }}/mandoca-studio.zip" mandoca-studio
+
+      - name: Crear GitHub Release con el .zip
+        uses: softprops/action-gh-release@v2
+        with:
+          files: mandoca-studio.zip
+          generate_release_notes: true

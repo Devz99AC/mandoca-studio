@@ -1,0 +1,130 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+
+jobs:
+  # ---- 1. Sintaxis PHP en 4 versiones ----
+  php-lint:
+    name: "Sintaxis PHP (${{ matrix.php }})"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ["7.4", "8.1", "8.2", "8.3"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Validar todos los archivos PHP
+        run: find . -name "*.php" -not -path "./vendor/*" -print0 | xargs -0 -n1 php -l
+
+  # ---- 2. Prettier y versiones ----
+  frontend-y-versiones:
+    name: Prettier y Versiones
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Verificar formato con Prettier
+        run: npm run format:check
+
+      - name: Verificar que las versiones coincidan
+        run: |
+          PKG_VER=$(node -p "require('./package.json').version")
+          PKG_GSAP=$(node -p "require('./package.json').dependencies.gsap")
+          STYLE_VER=$(grep -E '^\s*Version:' style.css | awk '{print $2}')
+          FUNC_VER=$(grep -oP "define\(\s*'MANDOCA_VERSION',\s*'\K[^']+" functions.php)
+          FUNC_GSAP=$(grep -oP "define\(\s*'MANDOCA_GSAP_VERSION',\s*'\K[^']+" functions.php)
+
+          echo "=== Versión del tema ==="
+          echo "  package.json:  $PKG_VER"
+          echo "  style.css:     $STYLE_VER"
+          echo "  functions.php: $FUNC_VER"
+          echo ""
+          echo "=== Versión de GSAP ==="
+          echo "  package.json:  $PKG_GSAP"
+          echo "  functions.php: $FUNC_GSAP"
+
+          ERRORES=0
+
+          if [ "$PKG_VER" != "$STYLE_VER" ]; then
+            echo "::error::La versión en package.json ($PKG_VER) no coincide con style.css ($STYLE_VER)"
+            ERRORES=1
+          fi
+
+          if [ "$PKG_VER" != "$FUNC_VER" ]; then
+            echo "::error::La versión en package.json ($PKG_VER) no coincide con MANDOCA_VERSION en functions.php ($FUNC_VER)"
+            ERRORES=1
+          fi
+
+          if [ "$PKG_GSAP" != "$FUNC_GSAP" ]; then
+            echo "::error::GSAP en package.json ($PKG_GSAP) no coincide con MANDOCA_GSAP_VERSION en functions.php ($FUNC_GSAP)"
+            ERRORES=1
+          fi
+
+          if [ "$ERRORES" -ne 0 ]; then
+            exit 1
+          fi
+
+          echo "✅ Todas las versiones coinciden."
+
+  # ---- 3. Título del PR con Conventional Commits ----
+  titulo-pr:
+    name: Título del PR (Conventional Commits)
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            style
+            refactor
+            perf
+            build
+            chore
+            revert
+
+  # ---- 4. Empaquetar el tema como .zip ----
+  empaquetar-tema:
+    name: Generar mandoca-studio.zip
+    needs: [php-lint, frontend-y-versiones]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Crear el zip del tema (sin archivos de desarrollo)
+        run: |
+          mkdir -p /tmp/build/mandoca-studio
+          rsync -av --exclude-from='.distignore' ./ /tmp/build/mandoca-studio/
+          cd /tmp/build
+          zip -r "${{ github.workspace }}/mandoca-studio.zip" mandoca-studio
+
+      - name: Subir el zip como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: mandoca-studio-theme
+          path: mandoca-studio.zip
+          retention-days: 14
