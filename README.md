@@ -5,14 +5,14 @@ Tema de WordPress propio para **Mandoca Studio**, un estudio independiente de vi
 - **Marca:** [mandocastudio.com](https://www.mandocastudio.com/)
 - **Referencia de diseño y animación:** [thunderfulgames.com](https://thunderfulgames.com/): vitrina de juegos tipo acordeón, carrusel de destacados, cinta animada, menú a pantalla completa y entradas al hacer scroll, con la paleta de Mandoca.
 
-> Proyecto académico. Los datos del equipo salen de [mandocastudio.com/about-us](https://www.mandocastudio.com/about-us/): fotos, alias, roles, citas y juegos favoritos. Las redes son las cuentas reales del estudio. Los juegos son los del estudio: *Meteor Strike*, *Echoes*, *Tadventure: Road to Neverpond* y *Unknown Project*. Algunos de sus textos e imágenes todavía están pendientes.
+> Proyecto académico. Los datos del equipo salen de [mandocastudio.com/about-us](https://www.mandocastudio.com/about-us/): fotos, alias, roles, citas y juegos favoritos. Las redes son las cuentas reales del estudio. Los juegos son los del estudio: _Meteor Strike_, _Echoes_, _Tadventure: Road to Neverpond_ y _Unknown Project_. Algunos de sus textos e imágenes todavía están pendientes.
 
 ---
 
 ## Funcionalidades
 
-1. **Editable con Elementor, sin tocar código.** La portada es una página de Elementor armada con **8 widgets propios** (categoría *Mandoca*): Header, Hero, Marquee, Games, Featured Carousel, Studio Intro, Team y Footer. Se pueden combinar con los widgets nativos de Elementor. La cabecera y el pie son plantillas de Elementor, y los colores y las fuentes globales de Elementor están conectados con los del tema.
-2. **Contenido administrable desde el panel de WordPress.** Hay dos tipos de contenido propios: **Team** (alias, rol, área, foto, cita favorita y juegos favoritos de cada integrante) y **Games** (estado, género, año, créditos, arte y un enlace, por ejemplo a itch.io, de cada juego). Las redes sociales y el logo se cambian en *Appearance → Customize*. Al activar el tema se cargan solos los datos iniciales, sin duplicar nada.
+1. **Editable con Elementor, sin tocar código.** La portada es una página de Elementor armada con **8 widgets propios** (categoría _Mandoca_): Header, Hero, Marquee, Games, Featured Carousel, Studio Intro, Team y Footer. Se pueden combinar con los widgets nativos de Elementor. La cabecera y el pie son plantillas de Elementor, y los colores y las fuentes globales de Elementor están conectados con los del tema.
+2. **Contenido administrable desde el panel de WordPress.** Hay dos tipos de contenido propios: **Team** (alias, rol, área, foto, cita favorita y juegos favoritos de cada integrante) y **Games** (estado, género, año, créditos, arte y un enlace, por ejemplo a itch.io, de cada juego). Las redes sociales y el logo se cambian en _Appearance → Customize_. Al activar el tema se cargan solos los datos iniciales, sin duplicar nada.
 3. **Animaciones estilo Thunderful con GSAP:**
    - el título del hero entra palabra por palabra;
    - la cinta se acelera con el scroll;
@@ -23,28 +23,29 @@ Tema de WordPress propio para **Mandoca Studio**, un estudio independiente de vi
    - la cabecera se oculta al bajar;
    - los botones son magnéticos.
 
-   Con *reducir movimiento* activado en el sistema, nada se mueve y todo se ve al instante.
+   Con _reducir movimiento_ activado en el sistema, nada se mueve y todo se ve al instante.
+
 4. **Equipo con filtro por área animado.** Los botones Todos / Programación / Arte / Audio reacomodan las tarjetas con **GSAP Flip**. Si un integrante no tiene foto, se muestran sus iniciales.
-5. **Responsive, con menú a pantalla completa.** Se adapta a escritorio, tablet y celular. El menú se abre a pantalla completa y se cierra con la tecla Escape. El correo de contacto del estudio está en el pie, y el botón *Contacto* de la cabecera lleva hasta ahí.
+5. **Responsive, con menú a pantalla completa.** Se adapta a escritorio, tablet y celular. El menú se abre a pantalla completa y se cierra con la tecla Escape. El correo de contacto del estudio está en el pie, y el botón _Contacto_ de la cabecera lleva hasta ahí.
 
 ---
 
 ## Stack tecnológico
 
-| Capa | Herramienta | Para qué la usamos |
-|------|-------------|--------------------|
-| CMS | **WordPress** | Panel para administrar el contenido (juegos, equipo, redes, logo) |
-| Lenguaje del servidor | **PHP** | Tema de WordPress: plantillas, tipos de contenido, meta boxes y widgets |
-| Constructor visual | **Elementor** (gratis) | Editar la portada, la cabecera y el pie arrastrando bloques |
-| Animación | **GSAP** 3.13 (ScrollTrigger, Flip, SplitText) | Todas las animaciones del sitio. Se carga desde jsDelivr |
-| Estructura y estilos | **HTML5** + **CSS3** (variables, Grid, Flexbox) | Secciones, colores de la marca y diseño responsive |
-| Interacción | **JavaScript** (ES6) | Menú y filtro del equipo |
-| Tipografías | **Google Fonts** | Montserrat (títulos) e Inter (texto), las mismas de mandocastudio.com, y JetBrains Mono para etiquetas |
-| Entorno WordPress | **LocalWP** | Correr WordPress en la computadora, sin hosting |
-| Editor | **Visual Studio Code** | Escribir el código |
-| Asistente | **Claude Code** (extensión de VS Code) | Apoyo para generar, probar y revisar código |
-| Control de versiones | **Git** + **GitHub Desktop** | Commits, ramas y subir el código a GitHub |
-| Repositorio | **GitHub** | Guardar el proyecto y trabajar en equipo |
+| Capa                  | Herramienta                                     | Para qué la usamos                                                                                     |
+| --------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| CMS                   | **WordPress**                                   | Panel para administrar el contenido (juegos, equipo, redes, logo)                                      |
+| Lenguaje del servidor | **PHP**                                         | Tema de WordPress: plantillas, tipos de contenido, meta boxes y widgets                                |
+| Constructor visual    | **Elementor** (gratis)                          | Editar la portada, la cabecera y el pie arrastrando bloques                                            |
+| Animación             | **GSAP** 3.13 (ScrollTrigger, Flip, SplitText)  | Todas las animaciones del sitio. Se carga desde jsDelivr                                               |
+| Estructura y estilos  | **HTML5** + **CSS3** (variables, Grid, Flexbox) | Secciones, colores de la marca y diseño responsive                                                     |
+| Interacción           | **JavaScript** (ES6)                            | Menú y filtro del equipo                                                                               |
+| Tipografías           | **Google Fonts**                                | Montserrat (títulos) e Inter (texto), las mismas de mandocastudio.com, y JetBrains Mono para etiquetas |
+| Entorno WordPress     | **LocalWP**                                     | Correr WordPress en la computadora, sin hosting                                                        |
+| Editor                | **Visual Studio Code**                          | Escribir el código                                                                                     |
+| Asistente             | **Claude Code** (extensión de VS Code)          | Apoyo para generar, probar y revisar código                                                            |
+| Control de versiones  | **Git** + **GitHub Desktop**                    | Commits, ramas y subir el código a GitHub                                                              |
+| Repositorio           | **GitHub**                                      | Guardar el proyecto y trabajar en equipo                                                               |
 
 ---
 
@@ -53,16 +54,16 @@ Tema de WordPress propio para **Mandoca Studio**, un estudio independiente de vi
 La paleta sale del logo de Mandoca, que es monocromo (negro, blanco y gris), más el naranja de acento que usa su sitio web. Los colores están en dos lugares conectados entre sí:
 
 - como **variables CSS** al inicio de `assets/css/main.css`;
-- como **colores globales de Elementor** (*Site Settings → Global Colors*). Si el diseñador cambia un color en Elementor, cambia en todo el sitio.
+- como **colores globales de Elementor** (_Site Settings → Global Colors_). Si el diseñador cambia un color en Elementor, cambia en todo el sitio.
 
-| Color | Hex | Origen | En Elementor | Uso en el sitio |
-|-------|-----|--------|--------------|-----------------|
-| Negro | `#0A0A0A` | Logo | Primary · *Black (background)* | Fondo principal |
-| Blanco | `#FFFFFF` | Logo | Secondary · *White (text)* | Títulos y texto |
-| Gris claro | `#ADADAD` | Logo | Text · *Light gray (secondary text)* | Texto secundario |
-| Gris oscuro | `#585858` | Sitio de la marca | *Dark gray (details)* | Arte provisional de los juegos e iniciales |
-| Naranja | `#E55901` | Sitio de la marca | Accent · *Orange (accent)* | Botones y acentos (con moderación) |
-| Crema | `#FEF1E4` | Sitio de la marca | *Cream (details)* | Línea de la cita, datos de los juegos y foco del teclado |
+| Color       | Hex       | Origen            | En Elementor                         | Uso en el sitio                                          |
+| ----------- | --------- | ----------------- | ------------------------------------ | -------------------------------------------------------- |
+| Negro       | `#0A0A0A` | Logo              | Primary · _Black (background)_       | Fondo principal                                          |
+| Blanco      | `#FFFFFF` | Logo              | Secondary · _White (text)_           | Títulos y texto                                          |
+| Gris claro  | `#ADADAD` | Logo              | Text · _Light gray (secondary text)_ | Texto secundario                                         |
+| Gris oscuro | `#585858` | Sitio de la marca | _Dark gray (details)_                | Arte provisional de los juegos e iniciales               |
+| Naranja     | `#E55901` | Sitio de la marca | Accent · _Orange (accent)_           | Botones y acentos (con moderación)                       |
+| Crema       | `#FEF1E4` | Sitio de la marca | _Cream (details)_                    | Línea de la cita, datos de los juegos y foco del teclado |
 
 ---
 
@@ -126,36 +127,37 @@ El sitio se ve con **LocalWP**, que corre WordPress completo (con Elementor) en 
 
 ### Paso a paso con LocalWP
 
-1. **Crear el sitio.** En LocalWP: **+** → *Create a new site* → nombre `mandoca-studio` → *Preferred* → crea tu usuario y contraseña de administrador. Pulsa **Start site**.
-2. **Poner el tema.** Clona (o copia) este repositorio dentro de la carpeta del sitio, en `app/public/wp-content/themes/mandoca-studio`. En Windows la carpeta del sitio suele ser `C:\Users\<tu usuario>\Local Sites\mandoca-studio\`; en Mac, `~/Local Sites/mandoca-studio/`. Con GitHub Desktop: `File → Clone repository` y en *Local path* eliges esa carpeta.
-3. **Instalar Elementor.** Botón **WP Admin** → *Plugins → Add New Plugin* → busca **Elementor** (*Elementor Website Builder*) → *Install Now* → *Activate*. Conviene hacerlo antes de activar el tema; si lo instalas después, la portada se arma sola la próxima vez que entres al panel.
-4. **Activar el tema.** *Appearance → Themes → Mandoca Studio → Activate*. Se crean solos:
+1. **Crear el sitio.** En LocalWP: **+** → _Create a new site_ → nombre `mandoca-studio` → _Preferred_ → crea tu usuario y contraseña de administrador. Pulsa **Start site**.
+2. **Poner el tema.** Clona (o copia) este repositorio dentro de la carpeta del sitio, en `app/public/wp-content/themes/mandoca-studio`. En Windows la carpeta del sitio suele ser `C:\Users\<tu usuario>\Local Sites\mandoca-studio\`; en Mac, `~/Local Sites/mandoca-studio/`. Con GitHub Desktop: `File → Clone repository` y en _Local path_ eliges esa carpeta.
+3. **Instalar Elementor.** Botón **WP Admin** → _Plugins → Add New Plugin_ → busca **Elementor** (_Elementor Website Builder_) → _Install Now_ → _Activate_. Conviene hacerlo antes de activar el tema; si lo instalas después, la portada se arma sola la próxima vez que entres al panel.
+4. **Activar el tema.** _Appearance → Themes → Mandoca Studio → Activate_. Se crean solos:
    - las áreas, los 5 integrantes con su foto y los 4 juegos con su arte (el de cada juego cuya imagen ya está en `assets/img/juegos/`);
    - el logo;
-   - con Elementor, además: la página *Inicio* como portada, las plantillas *Header* y *Footer*, y los colores y fuentes globales.
+   - con Elementor, además: la página _Inicio_ como portada, las plantillas _Header_ y _Footer_, y los colores y fuentes globales.
 
    Si el tema se activa otra vez, no se duplica nada.
-5. **Título del sitio.** *Settings → General* → *Site Title*: `Mandoca Studio` y *Tagline*: `Juegos creativos e imaginativos` → *Save Changes*. Es el texto de la pestaña del navegador.
+
+5. **Título del sitio.** _Settings → General_ → _Site Title_: `Mandoca Studio` y _Tagline_: `Juegos creativos e imaginativos` → _Save Changes_. Es el texto de la pestaña del navegador.
 6. **Fotos y logo.** Ya vienen cargados (salen de `assets/img/`). Para cambiarlos, mira la tabla de abajo.
 7. **Ver el sitio:** botón **Open site**.
 8. **Exportar el sitio completo.** En LocalWP: clic derecho sobre el sitio → **Export**. Se genera un `.zip` con los archivos y la base de datos. Para abrirlo en otra computadora, se arrastra ese `.zip` a LocalWP.
 
-Para volver a cargar los datos iniciales sin duplicar nada (por ejemplo, si se borró un integrante): en LocalWP, clic derecho sobre el sitio → *Open site shell* → `wp mandoca seed`.
+Para volver a cargar los datos iniciales sin duplicar nada (por ejemplo, si se borró un integrante): en LocalWP, clic derecho sobre el sitio → _Open site shell_ → `wp mandoca seed`.
 
 #### Qué se edita dónde
 
 El panel está en inglés; el contenido del sitio, en español.
 
-| Quiero cambiar… | Dónde |
-|-----------------|-------|
-| Textos, botones y orden de las secciones de la portada | *Pages → Inicio → Edit with Elementor* |
-| La cabecera o el pie (incluido el correo de contacto) | *Templates → Saved Templates → Header / Footer → Edit with Elementor* |
-| Colores y fuentes de todo el sitio | En el editor de Elementor: *Site Settings → Global Colors / Global Fonts* |
-| Integrantes: alias, rol, área, foto, cita y juegos favoritos | *Team* |
-| Las áreas del filtro | *Team → Areas* |
-| Juegos: texto, estado, género, año, créditos, arte y enlace (itch.io, Steam…) | *Games* |
-| Redes sociales (íconos del hero, el menú y el pie) | *Appearance → Customize → Social networks* (un campo vacío oculta esa red) |
-| Logo | *Appearance → Customize → Site Identity → Logo* |
+| Quiero cambiar…                                                               | Dónde                                                                      |
+| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Textos, botones y orden de las secciones de la portada                        | _Pages → Inicio → Edit with Elementor_                                     |
+| La cabecera o el pie (incluido el correo de contacto)                         | _Templates → Saved Templates → Header / Footer → Edit with Elementor_      |
+| Colores y fuentes de todo el sitio                                            | En el editor de Elementor: _Site Settings → Global Colors / Global Fonts_  |
+| Integrantes: alias, rol, área, foto, cita y juegos favoritos                  | _Team_                                                                     |
+| Las áreas del filtro                                                          | _Team → Areas_                                                             |
+| Juegos: texto, estado, género, año, créditos, arte y enlace (itch.io, Steam…) | _Games_                                                                    |
+| Redes sociales (íconos del hero, el menú y el pie)                            | _Appearance → Customize → Social networks_ (un campo vacío oculta esa red) |
+| Logo                                                                          | _Appearance → Customize → Site Identity → Logo_                            |
 
 #### ¿Por qué Elementor, si la regla es "sin plugins"?
 
@@ -178,24 +180,24 @@ Hay dos tipos:
 
 Este proyecto tiene **1 dependencia del sitio** y **1 dependencia de desarrollo**:
 
-| Paquete | Tipo | Versión | Para qué |
-|---------|------|---------|----------|
-| `gsap` | dependency (del sitio) | `3.13.0` | Todas las animaciones: el núcleo de GSAP y sus plugins ScrollTrigger, Flip y SplitText (desde la versión 3.13 todos sus plugins son gratis) |
-| `prettier` | devDependency | `^3.3.3` | Ordena y formatea el código automáticamente |
+| Paquete    | Tipo                   | Versión  | Para qué                                                                                                                                    |
+| ---------- | ---------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `gsap`     | dependency (del sitio) | `3.13.0` | Todas las animaciones: el núcleo de GSAP y sus plugins ScrollTrigger, Flip y SplitText (desde la versión 3.13 todos sus plugins son gratis) |
+| `prettier` | devDependency          | `^3.3.3` | Ordena y formatea el código automáticamente                                                                                                 |
 
 Para que el sitio funcione **no hace falta** `npm install`. WordPress (`functions.php`) carga GSAP desde **jsDelivr** con una versión fija; en `package.json` queda anotada para que todos sepan cuál usamos. Si algún día se cambia la versión, hay que cambiarla en los dos lugares: `package.json` y `MANDOCA_GSAP_VERSION` en `functions.php`.
 
-**Elementor** también es una dependencia, pero de otro tipo: es un plugin de WordPress, no un paquete de npm, y se instala desde el panel (ver *Cómo verlo*).
+**Elementor** también es una dependencia, pero de otro tipo: es un plugin de WordPress, no un paquete de npm, y se instala desde el panel (ver _Cómo verlo_).
 
 ### ¿Qué son los gestores de paquetes?
 
-Son programas que instalan, actualizan y eliminan dependencias. Leen `package.json` y guardan las versiones exactas en un archivo *lock*.
+Son programas que instalan, actualizan y eliminan dependencias. Leen `package.json` y guardan las versiones exactas en un archivo _lock_.
 
-| Gestor | Instalar todo | Agregar un paquete | Archivo lock |
-|--------|---------------|--------------------|--------------|
-| **npm** (viene con Node.js) | `npm install` | `npm install -D prettier` | `package-lock.json` |
-| **pnpm** (más rápido, ahorra espacio) | `pnpm install` | `pnpm add -D prettier` | `pnpm-lock.yaml` |
-| **Yarn** | `yarn` | `yarn add -D prettier` | `yarn.lock` |
+| Gestor                                | Instalar todo  | Agregar un paquete        | Archivo lock        |
+| ------------------------------------- | -------------- | ------------------------- | ------------------- |
+| **npm** (viene con Node.js)           | `npm install`  | `npm install -D prettier` | `package-lock.json` |
+| **pnpm** (más rápido, ahorra espacio) | `pnpm install` | `pnpm add -D prettier`    | `pnpm-lock.yaml`    |
+| **Yarn**                              | `yarn`         | `yarn add -D prettier`    | `yarn.lock`         |
 
 El equipo usa **npm**. Lo importante es que todos usen el mismo gestor, para no mezclar archivos lock.
 
@@ -206,44 +208,44 @@ npm run format     # formatea el código con prettier
 
 ### ¿Qué son las ramas?
 
-Una rama es una línea de trabajo paralela dentro del repositorio. Permite que cada persona haga cambios sin romper la versión que funciona; cuando el cambio está listo, se une (*merge*) a la rama principal.
+Una rama es una línea de trabajo paralela dentro del repositorio. Permite que cada persona haga cambios sin romper la versión que funciona; cuando el cambio está listo, se une (_merge_) a la rama principal.
 
 Este repositorio usa **3 tipos de ramas**:
 
-| Tipo | Qué contiene |
-|------|--------------|
-| `main` | Versión estable, la que se entrega |
-| `develop` | Donde se juntan los cambios antes de pasar a `main` |
-| `feature/<tarea>` | Una rama por tarea; al terminar se une a `develop` |
+| Tipo              | Qué contiene                                        |
+| ----------------- | --------------------------------------------------- |
+| `main`            | Versión estable, la que se entrega                  |
+| `develop`         | Donde se juntan los cambios antes de pasar a `main` |
+| `feature/<tarea>` | Una rama por tarea; al terminar se une a `develop`  |
 
 En total hay **24 ramas**:
 
-| Rama | Para qué sirvió |
-|------|-----------------|
-| `main` | Entrega final (recibe `develop` con un Pull Request) |
-| `develop` | Integración de todas las tareas |
-| `feature/tema-base` | Pasar el sitio estático a un tema de WordPress |
-| `feature/custom-post-types` | Tipos de contenido Team y Games, meta boxes y datos iniciales |
-| `feature/elementor` | Widgets Mandoca, cabecera y pie como plantillas, y colores y fuentes globales |
-| `feature/animaciones` | Todas las animaciones con GSAP, la vitrina y el carrusel |
-| `feature/quitar-circulo` | Quitar la sección del círculo con física, que se descartó |
-| `feature/preview-live-server` | Vista previa estática y configuración de Live Server (se quitaron después) |
-| `feature/cabecera-arriba` | Cambiar la barra lateral por una barra superior |
-| `feature/pruebas` | Pruebas en 3 tamaños de pantalla, arreglos y captura del tema |
-| `feature/equipo` | Equipo real de 5 integrantes y fotos desde el seed |
-| `feature/textos-equipo` | Citas y juegos favoritos de cada integrante, y redes reales del estudio |
-| `feature/juegos-nuevos` | Los 4 juegos del estudio y el enlace externo de cada juego |
-| `feature/portadas-hd` | Portadas de los juegos en mejor calidad y sus descripciones reales |
-| `feature/contacto-en-pie` | Quitar el formulario de suscripción y pasar el contacto al pie |
-| `feature/hero-sin-manchas` | Quitar las manchas del fondo del hero |
-| `feature/enlaces-juegos` | Enlazar Meteor Strike a itch.io y Tadventure a la Global Game Jam |
-| `feature/fotos-equipo` | Fotos de los 5 integrantes y de dónde salen |
-| `feature/licencia` | Licencia MIT con los nombres del equipo y GSAP como dependencia en `package.json` |
-| `feature/quitar-live-server` | Quitar la vista previa estática y Live Server; el sitio se ve solo con LocalWP |
-| `feature/guia-git` | Guía de Git con la tabla de ramas y commits |
-| `feature/portada-meteor` | Extender el fondo de la portada de Meteor Strike para que llene la vitrina |
-| `feature/quitar-boton-destacados` | Quitar el botón "Ver todos los juegos" del carrusel de destacados |
-| `feature/readme` | Este README |
+| Rama                              | Para qué sirvió                                                                   |
+| --------------------------------- | --------------------------------------------------------------------------------- |
+| `main`                            | Entrega final (recibe `develop` con un Pull Request)                              |
+| `develop`                         | Integración de todas las tareas                                                   |
+| `feature/tema-base`               | Pasar el sitio estático a un tema de WordPress                                    |
+| `feature/custom-post-types`       | Tipos de contenido Team y Games, meta boxes y datos iniciales                     |
+| `feature/elementor`               | Widgets Mandoca, cabecera y pie como plantillas, y colores y fuentes globales     |
+| `feature/animaciones`             | Todas las animaciones con GSAP, la vitrina y el carrusel                          |
+| `feature/quitar-circulo`          | Quitar la sección del círculo con física, que se descartó                         |
+| `feature/preview-live-server`     | Vista previa estática y configuración de Live Server (se quitaron después)        |
+| `feature/cabecera-arriba`         | Cambiar la barra lateral por una barra superior                                   |
+| `feature/pruebas`                 | Pruebas en 3 tamaños de pantalla, arreglos y captura del tema                     |
+| `feature/equipo`                  | Equipo real de 5 integrantes y fotos desde el seed                                |
+| `feature/textos-equipo`           | Citas y juegos favoritos de cada integrante, y redes reales del estudio           |
+| `feature/juegos-nuevos`           | Los 4 juegos del estudio y el enlace externo de cada juego                        |
+| `feature/portadas-hd`             | Portadas de los juegos en mejor calidad y sus descripciones reales                |
+| `feature/contacto-en-pie`         | Quitar el formulario de suscripción y pasar el contacto al pie                    |
+| `feature/hero-sin-manchas`        | Quitar las manchas del fondo del hero                                             |
+| `feature/enlaces-juegos`          | Enlazar Meteor Strike a itch.io y Tadventure a la Global Game Jam                 |
+| `feature/fotos-equipo`            | Fotos de los 5 integrantes y de dónde salen                                       |
+| `feature/licencia`                | Licencia MIT con los nombres del equipo y GSAP como dependencia en `package.json` |
+| `feature/quitar-live-server`      | Quitar la vista previa estática y Live Server; el sitio se ve solo con LocalWP    |
+| `feature/guia-git`                | Guía de Git con la tabla de ramas y commits                                       |
+| `feature/portada-meteor`          | Extender el fondo de la portada de Meteor Strike para que llene la vitrina        |
+| `feature/quitar-boton-destacados` | Quitar el botón "Ver todos los juegos" del carrusel de destacados                 |
+| `feature/readme`                  | Este README                                                                       |
 
 Para verlas: en GitHub Desktop, menú **Current Branch**; en la terminal, `git branch -a`. El detalle de cada rama y sus commits está en [`docs/GUIA-GIT.md`](docs/GUIA-GIT.md).
 
@@ -251,31 +253,31 @@ Para verlas: en GitHub Desktop, menú **Current Branch**; en la terminal, `git b
 
 Son las personas que han hecho commits en el repositorio. GitHub los cuenta solo y los muestra en **Insights → Contributors**.
 
-| Nombre | Usuario de GitHub | Aporte |
-|--------|-------------------|--------|
-| Devinzon Acosta | [@Devz99AC](https://github.com/Devz99AC) | Coordinación y base del tema: WordPress, widgets y plantillas de Elementor, barra superior, contacto en el pie, enlaces de los juegos y README |
-| José Figueredo | [@momoyeus](https://github.com/momoyeus) | Front-end y diseño: animaciones con GSAP (ScrollTrigger y Flip), vitrina y carrusel de juegos, y fotos del equipo |
-| Carlos Mogollon | [@verladoth](https://github.com/verladoth) | Contenido: tipos de contenido Team y Games, datos del equipo y de los juegos, y guía de Git |
-| Alejandro Mendez | [@AleGpu](https://github.com/AleGpu) | Pruebas y arreglos, portadas de los juegos, hero sin manchas, licencia y dependencias |
+| Nombre           | Usuario de GitHub                          | Aporte                                                                                                                                         |
+| ---------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Devinzon Acosta  | [@Devz99AC](https://github.com/Devz99AC)   | Coordinación y base del tema: WordPress, widgets y plantillas de Elementor, barra superior, contacto en el pie, enlaces de los juegos y README |
+| José Figueredo   | [@momoyeus](https://github.com/momoyeus)   | Front-end y diseño: animaciones con GSAP (ScrollTrigger y Flip), vitrina y carrusel de juegos, y fotos del equipo                              |
+| Carlos Mogollon  | [@verladoth](https://github.com/verladoth) | Contenido: tipos de contenido Team y Games, datos del equipo y de los juegos, y guía de Git                                                    |
+| Alejandro Mendez | [@AleGpu](https://github.com/AleGpu)       | Pruebas y arreglos, portadas de los juegos, hero sin manchas, licencia y dependencias                                                          |
 
 ### Conceptos de WordPress y de animación
 
-| Concepto | Qué es, en una frase | Dónde está |
-|----------|----------------------|------------|
-| **Tema** | La carpeta que decide cómo se ve un sitio de WordPress: plantillas PHP, CSS y JavaScript | Todo este repositorio |
-| **Template part** | Un pedazo de HTML reutilizable; aquí, una sección de la página | `template-parts/` |
-| **Custom Post Type (CPT)** | Un tipo de contenido propio, como las entradas, pero para integrantes (*Team*) y juegos (*Games*) | `inc/cpt.php` |
-| **Taxonomía** | Una forma de agrupar contenido, como las categorías; aquí, las áreas del equipo | `inc/cpt.php` |
-| **Meta box** | Una caja extra en la pantalla de edición con campos propios (rol, estado, año…) | `inc/meta-boxes.php` |
-| **Nonce** | Un código de un solo uso que prueba que el formulario salió de nuestro panel | `inc/meta-boxes.php` |
-| **Enqueue** | La forma correcta de cargar CSS y JS en WordPress: se piden con `wp_enqueue_style` / `wp_enqueue_script` y WordPress los imprime en orden | `functions.php` |
-| **Seed** | Los datos iniciales que el tema crea al activarse, sin duplicar | `inc/seed.php` |
-| **Widget de Elementor** | Un bloque que se arrastra en el editor; los nuestros usan las mismas template parts | `inc/widgets/` |
-| **GSAP** | Librería de animación; aquí solo anima `transform` y `opacity`, para ir a 60 fps | `assets/js/animations.js` |
-| **ScrollTrigger** | Plugin de GSAP que lanza una animación cuando una sección llega a cierta posición del scroll | `assets/js/animations.js` |
-| **Flip** | Plugin de GSAP que guarda dónde está cada tarjeta, deja que el filtro cambie el orden y anima la diferencia | `assets/js/animations.js` |
-| **SplitText** | Plugin de GSAP que divide un texto en palabras o líneas para animarlas una por una | `assets/js/animations.js` |
-| **Reducir movimiento** | Una opción del sistema operativo; con `gsap.matchMedia()` el sitio la respeta y no mueve nada | `assets/js/animations.js` |
+| Concepto                   | Qué es, en una frase                                                                                                                      | Dónde está                |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| **Tema**                   | La carpeta que decide cómo se ve un sitio de WordPress: plantillas PHP, CSS y JavaScript                                                  | Todo este repositorio     |
+| **Template part**          | Un pedazo de HTML reutilizable; aquí, una sección de la página                                                                            | `template-parts/`         |
+| **Custom Post Type (CPT)** | Un tipo de contenido propio, como las entradas, pero para integrantes (_Team_) y juegos (_Games_)                                         | `inc/cpt.php`             |
+| **Taxonomía**              | Una forma de agrupar contenido, como las categorías; aquí, las áreas del equipo                                                           | `inc/cpt.php`             |
+| **Meta box**               | Una caja extra en la pantalla de edición con campos propios (rol, estado, año…)                                                           | `inc/meta-boxes.php`      |
+| **Nonce**                  | Un código de un solo uso que prueba que el formulario salió de nuestro panel                                                              | `inc/meta-boxes.php`      |
+| **Enqueue**                | La forma correcta de cargar CSS y JS en WordPress: se piden con `wp_enqueue_style` / `wp_enqueue_script` y WordPress los imprime en orden | `functions.php`           |
+| **Seed**                   | Los datos iniciales que el tema crea al activarse, sin duplicar                                                                           | `inc/seed.php`            |
+| **Widget de Elementor**    | Un bloque que se arrastra en el editor; los nuestros usan las mismas template parts                                                       | `inc/widgets/`            |
+| **GSAP**                   | Librería de animación; aquí solo anima `transform` y `opacity`, para ir a 60 fps                                                          | `assets/js/animations.js` |
+| **ScrollTrigger**          | Plugin de GSAP que lanza una animación cuando una sección llega a cierta posición del scroll                                              | `assets/js/animations.js` |
+| **Flip**                   | Plugin de GSAP que guarda dónde está cada tarjeta, deja que el filtro cambie el orden y anima la diferencia                               | `assets/js/animations.js` |
+| **SplitText**              | Plugin de GSAP que divide un texto en palabras o líneas para animarlas una por una                                                        | `assets/js/animations.js` |
+| **Reducir movimiento**     | Una opción del sistema operativo; con `gsap.matchMedia()` el sitio la respeta y no mueve nada                                             | `assets/js/animations.js` |
 
 ---
 
@@ -287,16 +289,16 @@ Seguimos el estándar **[Conventional Commits](https://www.conventionalcommits.o
 tipo(alcance): descripción corta en minúsculas
 ```
 
-| Tipo | Cuándo se usa | Ejemplo |
-|------|---------------|---------|
-| `feat` | Nueva funcionalidad | `feat(anim): reordenar equipo con flip al filtrar` |
-| `fix` | Corrección de un error | `fix(css): evitar el scroll horizontal por la entrada del carrusel` |
-| `docs` | Solo documentación | `docs(readme): actualizar el aporte de cada integrante` |
-| `style` | Formato, sin cambiar lógica | `style: aplicar prettier` |
-| `refactor` | Reorganizar código sin cambiar lo que hace | `refactor(js): reemplazar intersection observer por scrolltrigger` |
-| `perf` | Mejora de rendimiento | `perf(img): convertir fotos a webp` |
-| `chore` | Tareas de mantenimiento | `chore: importar sitio estático de mandoca studio` |
-| `build` | Dependencias o configuración | `build: encolar gsap y sus plugins desde jsdelivr` |
+| Tipo       | Cuándo se usa                              | Ejemplo                                                             |
+| ---------- | ------------------------------------------ | ------------------------------------------------------------------- |
+| `feat`     | Nueva funcionalidad                        | `feat(anim): reordenar equipo con flip al filtrar`                  |
+| `fix`      | Corrección de un error                     | `fix(css): evitar el scroll horizontal por la entrada del carrusel` |
+| `docs`     | Solo documentación                         | `docs(readme): actualizar el aporte de cada integrante`             |
+| `style`    | Formato, sin cambiar lógica                | `style: aplicar prettier`                                           |
+| `refactor` | Reorganizar código sin cambiar lo que hace | `refactor(js): reemplazar intersection observer por scrolltrigger`  |
+| `perf`     | Mejora de rendimiento                      | `perf(img): convertir fotos a webp`                                 |
+| `chore`    | Tareas de mantenimiento                    | `chore: importar sitio estático de mandoca studio`                  |
+| `build`    | Dependencias o configuración               | `build: encolar gsap y sus plugins desde jsdelivr`                  |
 
 La guía completa, con la tabla de ramas y commits y el paso a paso en GitHub Desktop, está en [`docs/GUIA-GIT.md`](docs/GUIA-GIT.md).
 
